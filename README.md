@@ -2,6 +2,10 @@
 
 A reproducible benchmark of self-hosted headless browsers for AI agents and scrapers: **Steel Browser**, **Browserless** and **Obscura**, with plain headless Chromium as the reference. All four are driven by the same stock Playwright client over CDP, in identically limited containers, against a deterministic fixture site.
 
+![Real-time replay of each browser scraping 400 pages at its measured throughput](results/charts/race.gif)
+
+The animation replays measured median throughput at 8 connections in real time. It is drawn from the results data, not screen-recorded.
+
 Last run: 2026-11-24, 5 rounds. Full tables are in [results/RESULTS.md](results/RESULTS.md) and the raw samples in [results/raw](results/raw).
 
 ## The short version
@@ -16,22 +20,6 @@ There is no single winner. It depends on whether you need speed or Chromium-exac
 | A session API, live viewer and Apache-2.0 license | **Steel** | Slowest of the four here, with 3 flaky checks, but it bundles features the others do not. Those features were not scored. |
 
 Obscura's speed comes with a cost: it is its own engine, not Chromium, and it failed 10 of 84 checks in every round. See [what it could not do](#compatibility).
-
-## What was and was not tested
-
-The list this started from has seven tools. Three were benchmarked.
-
-| Tool | Status | Why |
-| --- | --- | --- |
-| Steel Browser | Benchmarked (self-hosted image) | |
-| Browserless | Benchmarked (self-hosted image) | |
-| Obscura | Benchmarked (self-hosted image) | |
-| Browserbase | **Not tested** | Hosted only. Needs an account and API key. |
-| Hyperbrowser | **Not tested** | Hosted only. Needs an account and API key. |
-| Anchor Browser | **Not tested** | Hosted only. Needs an account and API key. |
-| Browserable | **Not run** | An agent framework, not a browser. A separate task-success track is drafted in [agent-track](agent-track) and needs an LLM key. |
-
-The hosted versions of Steel and Browserless were also not tested. Nothing here says anything about hosted latency, proxies, CAPTCHA handling or pricing.
 
 ## Results
 
@@ -112,7 +100,7 @@ Image digests and browser versions are recorded in [results/raw/meta.json](resul
 ## Limitations
 
 - **One machine, one run date.** Images were pulled as `:latest` on 2026-11-24. Results will drift as the projects ship.
-- **Localhost network.** Client and browser are on the same machine, so network latency to a hosted service is absent.
+- **Self-hosted images only, on a localhost network.** Client and browser are on the same machine. Nothing here measures any hosted service.
 - **The reference is not tuned.** `chromedp/headless-shell` runs with its image defaults (old headless mode, SwiftShader, a socat proxy on the debug port). It is slower than Browserless on page loads, so treat it as a reference point and not as the ceiling for Chromium.
 - **Default configurations only.** No stealth flags, no proxies, no tuning of Steel or Browserless options.
 - **Small pages.** The fixtures are synthetic. The real-site set is seven pages and is there for correctness, not timing.
@@ -128,6 +116,7 @@ npm install
 npm run bench:quick   # about 5 minutes, 1 round, writes results/quick
 npm run bench         # about 45 minutes, 5 rounds, writes results/raw
 npm run report        # rebuilds results/RESULTS.md, summary.json and the charts
+npm run race          # rebuilds the animation (needs ffmpeg)
 ```
 
 Useful flags for `src/run.ts`: `--providers steel,obscura`, `--rounds 2`, `--only compat,fingerprint`, `--seed 1`. Set `BENCH_CPUS` and `BENCH_MEMORY_GB` to change container limits.
@@ -140,8 +129,8 @@ src/workloads.ts   the measured workloads
 src/compat.ts      the 84 compatibility checks
 src/run.ts         runner
 src/report.ts      aggregation, tables and charts
+src/race.ts        the animated replay
 fixtures/          the fixture site
-agent-track/       Browserable task set and runner (not run yet)
 results/           raw samples, summary, charts
 ```
 

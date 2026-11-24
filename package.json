@@ -6,7 +6,8 @@
     "bench": "tsx src/run.ts",
     "bench:quick": "tsx src/run.ts --quick",
     "report": "tsx src/report.ts",
-    "typecheck": "tsc"
+    "typecheck": "tsc",
+    "race": "tsx src/race.ts"
   },
   "keywords": [],
   "author": "",
