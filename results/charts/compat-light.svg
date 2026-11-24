@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 204" width="860" height="204" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-label="Playwright compatibility">
+<title>Playwright compatibility</title><desc>Checks passed in every round, out of 84. Higher is better.</desc>
+<rect width="860" height="204" rx="8" fill="#fcfcfb"/>
+<text x="24" y="32" font-size="16" font-weight="600" fill="#0b0b0b">Playwright compatibility</text>
+<text x="24" y="52" font-size="12" fill="#52514e">Checks passed in every round, out of 84. Higher is better.</text>
+<line x1="130.08" y1="68" x2="130.08" y2="182" stroke="#e7e6e1" stroke-width="1"/>
+<text x="120.08000000000001" y="80" font-size="12" text-anchor="end" fill="#0b0b0b">Plain Chromium</text>
+<path d="M130.08,68h623.04a4,4 0 0 1 4,4v8a4,4 0 0 1 -4,4h-623.04z" fill="#a3a29b"/>
+<text x="763.12" y="80" font-size="12" fill="#0b0b0b" style="font-variant-numeric: tabular-nums">84</text>
+<text x="120.08000000000001" y="110" font-size="12" text-anchor="end" fill="#0b0b0b">Browserless</text>
+<path d="M130.08,98h608.1104761904761a4,4 0 0 1 4,4v8a4,4 0 0 1 -4,4h-608.1104761904761z" fill="#2a78d6"/>
+<text x="748.1904761904761" y="110" font-size="12" fill="#0b0b0b" style="font-variant-numeric: tabular-nums">82</text>
+<text x="120.08000000000001" y="140" font-size="12" text-anchor="end" fill="#0b0b0b">Steel Browser</text>
+<path d="M130.08,128h593.1809523809524a4,4 0 0 1 4,4v8a4,4 0 0 1 -4,4h-593.1809523809524z" fill="#2a78d6"/>
+<text x="733.2609523809524" y="140" font-size="12" fill="#0b0b0b" style="font-variant-numeric: tabular-nums">80<tspan font-size="11" fill="#52514e">  3 flaky</tspan></text>
+<text x="120.08000000000001" y="170" font-size="12" text-anchor="end" fill="#0b0b0b">Obscura</text>
+<path d="M130.08,158h548.3923809523809a4,4 0 0 1 4,4v8a4,4 0 0 1 -4,4h-548.3923809523809z" fill="#2a78d6"/>
+<text x="688.472380952381" y="170" font-size="12" fill="#0b0b0b" style="font-variant-numeric: tabular-nums">74</text>
+</svg>

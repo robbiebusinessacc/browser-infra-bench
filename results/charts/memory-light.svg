@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 232" width="860" height="232" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-label="Container memory">
+<title>Container memory</title><desc>Working set in MB, lower is better. Median of rounds; whiskers show min and max.</desc>
+<rect width="860" height="232" rx="8" fill="#fcfcfb"/>
+<text x="24" y="32" font-size="16" font-weight="600" fill="#0b0b0b">Container memory</text>
+<text x="24" y="52" font-size="12" fill="#52514e">Working set in MB, lower is better. Median of rounds; whiskers show min and max.</text>
+<text x="24" y="76" font-size="12" font-weight="600" fill="#0b0b0b">Idle, no session</text>
+<line x1="130.08" y1="86" x2="130.08" y2="200" stroke="#e7e6e1" stroke-width="1"/>
+<text x="120.08000000000001" y="98" font-size="12" text-anchor="end" fill="#0b0b0b">Plain Chromium</text>
+<path d="M130.08,86h5.731399775552486a4,4 0 0 1 4,4v8a4,4 0 0 1 -4,4h-5.731399775552486z" fill="#a3a29b"/>
+<path d="M136.61985540400553,94H141.69884539019338M136.61985540400553,91v6M141.69884539019338,91v6" stroke="#0b0b0b" stroke-width="1" fill="none" opacity="0.75"/>
+<text x="147.69884539019338" y="98" font-size="12" fill="#0b0b0b" style="font-variant-numeric: tabular-nums">61</text>
+<text x="120.08000000000001" y="128" font-size="12" text-anchor="end" fill="#0b0b0b">Browserless</text>
+<path d="M130.08,116h49.248200966850824a4,4 0 0 1 4,4v8a4,4 0 0 1 -4,4h-49.248200966850824z" fill="#2a78d6"/>
+<path d="M180.5195170062155,124H184.4193219095304M180.5195170062155,121v6M184.4193219095304,121v6" stroke="#0b0b0b" stroke-width="1" fill="none" opacity="0.75"/>
+<text x="190.4193219095304" y="128" font-size="12" fill="#0b0b0b" style="font-variant-numeric: tabular-nums">333</text>
+<text x="120.08000000000001" y="158" font-size="12" text-anchor="end" fill="#0b0b0b">Steel Browser</text>
+<path d="M130.08,146h89.1287651070442a4,4 0 0 1 4,4v8a4,4 0 0 1 -4,4h-89.1287651070442z" fill="#2a78d6"/>
+<path d="M215.31047349792817,154H245.84M215.31047349792817,151v6M245.84,151v6" stroke="#0b0b0b" stroke-width="1" fill="none" opacity="0.75"/>
+<text x="251.84" y="158" font-size="12" fill="#0b0b0b" style="font-variant-numeric: tabular-nums">582</text>
+<text x="120.08000000000001" y="188" font-size="12" text-anchor="end" fill="#0b0b0b">Obscura</text>
+<path d="M130.08,176h0a2.489529523480663,2.489529523480663 0 0 1 2.489529523480663,2.489529523480663v11.020940953038675a2.489529523480663,2.489529523480663 0 0 1 -2.489529523480663,2.489529523480663h0z" fill="#2a78d6"/>
+<path d="M131.21484072859118,184H132.65571995856354M131.21484072859118,181v6M132.65571995856354,181v6" stroke="#0b0b0b" stroke-width="1" fill="none" opacity="0.75"/>
+<text x="138.65571995856354" y="188" font-size="12" fill="#0b0b0b" style="font-variant-numeric: tabular-nums">16</text>
+<text x="304" y="76" font-size="12" font-weight="600" fill="#0b0b0b">One tab open</text>
+<line x1="410.08000000000004" y1="86" x2="410.08000000000004" y2="200" stroke="#e7e6e1" stroke-width="1"/>
+<text x="400.08000000000004" y="98" font-size="12" text-anchor="end" fill="#0b0b0b">Plain Chromium</text>
+<path d="M410.08000000000004,86h15.391694470421431a4,4 0 0 1 4,4v8a4,4 0 0 1 -4,4h-15.391694470421431z" fill="#a3a29b"/>
+<path d="M423.24525988717613,94H434.7674813719871M423.24525988717613,91v6M434.7674813719871,91v6" stroke="#0b0b0b" stroke-width="1" fill="none" opacity="0.75"/>
+<text x="440.7674813719871" y="98" font-size="12" fill="#0b0b0b" style="font-variant-numeric: tabular-nums">130</text>
+<text x="400.08000000000004" y="128" font-size="12" text-anchor="end" fill="#0b0b0b">Browserless</text>
+<path d="M410.08000000000004,116h71.29690548734501a4,4 0 0 1 4,4v8a4,4 0 0 1 -4,4h-71.29690548734501z" fill="#2a78d6"/>
+<path d="M482.4749609339649,124H485.84601244884215M482.4749609339649,121v6M485.84601244884215,121v6" stroke="#0b0b0b" stroke-width="1" fill="none" opacity="0.75"/>
+<text x="491.84601244884215" y="128" font-size="12" fill="#0b0b0b" style="font-variant-numeric: tabular-nums">505</text>
+<text x="400.08000000000004" y="158" font-size="12" text-anchor="end" fill="#0b0b0b">Steel Browser</text>
+<path d="M410.08000000000004,146h90.97495309059096a4,4 0 0 1 4,4v8a4,4 0 0 1 -4,4h-90.97495309059096z" fill="#2a78d6"/>
+<path d="M497.00330829487064,154H525.84M497.00330829487064,151v6M525.84,151v6" stroke="#0b0b0b" stroke-width="1" fill="none" opacity="0.75"/>
+<text x="531.84" y="158" font-size="12" fill="#0b0b0b" style="font-variant-numeric: tabular-nums">637</text>
+<text x="400.08000000000004" y="188" font-size="12" text-anchor="end" fill="#0b0b0b">Obscura</text>
+<path d="M410.08000000000004,176h0a3.1423182197552464,3.1423182197552464 0 0 1 3.1423182197552464,3.1423182197552464v9.715363560489507a3.1423182197552464,3.1423182197552464 0 0 1 -3.1423182197552464,3.1423182197552464h0z" fill="#2a78d6"/>
+<path d="M411.6910273814193,184H413.34396009934943M411.6910273814193,181v6M413.34396009934943,181v6" stroke="#0b0b0b" stroke-width="1" fill="none" opacity="0.75"/>
+<text x="419.34396009934943" y="188" font-size="12" fill="#0b0b0b" style="font-variant-numeric: tabular-nums">21</text>
+<text x="584" y="76" font-size="12" font-weight="600" fill="#0b0b0b">Ten tabs open</text>
+<line x1="690.08" y1="86" x2="690.08" y2="200" stroke="#e7e6e1" stroke-width="1"/>
+<text x="680.08" y="98" font-size="12" text-anchor="end" fill="#0b0b0b">Plain Chromium</text>
+<path d="M690.08,86h31.838008216082983a4,4 0 0 1 4,4v8a4,4 0 0 1 -4,4h-31.838008216082983z" fill="#a3a29b"/>
+<path d="M722.9089364280579,94H728.2290615179213M722.9089364280579,91v6M728.2290615179213,91v6" stroke="#0b0b0b" stroke-width="1" fill="none" opacity="0.75"/>
+<text x="734.2290615179213" y="98" font-size="12" fill="#0b0b0b" style="font-variant-numeric: tabular-nums">533</text>
+<text x="680.08" y="128" font-size="12" text-anchor="end" fill="#0b0b0b">Browserless</text>
+<path d="M690.08,116h64.01831549758651a4,4 0 0 1 4,4v8a4,4 0 0 1 -4,4h-64.01831549758651z" fill="#2a78d6"/>
+<path d="M756.7332782171101,124H758.4035836499949M756.7332782171101,121v6M758.4035836499949,121v6" stroke="#0b0b0b" stroke-width="1" fill="none" opacity="0.75"/>
+<text x="764.4035836499949" y="128" font-size="12" fill="#0b0b0b" style="font-variant-numeric: tabular-nums">1,011</text>
+<text x="680.08" y="158" font-size="12" text-anchor="end" fill="#0b0b0b">Steel Browser</text>
+<path d="M690.08,146h89.5121468624833a4,4 0 0 1 4,4v8a4,4 0 0 1 -4,4h-89.5121468624833z" fill="#2a78d6"/>
+<path d="M779.205165040567,154H792.4000000000001M779.205165040567,151v6M792.4000000000001,151v6" stroke="#0b0b0b" stroke-width="1" fill="none" opacity="0.75"/>
+<text x="798.4000000000001" y="158" font-size="12" fill="#0b0b0b" style="font-variant-numeric: tabular-nums">1,390</text>
+<text x="680.08" y="188" font-size="12" text-anchor="end" fill="#0b0b0b">Obscura</text>
+<path d="M690.08,176h1.9813642805792337a4,4 0 0 1 4,4v8a4,4 0 0 1 -4,4h-1.9813642805792337z" fill="#2a78d6"/>
+<path d="M694.1128497483825,184H696.0668811748999M694.1128497483825,181v6M696.0668811748999,181v6" stroke="#0b0b0b" stroke-width="1" fill="none" opacity="0.75"/>
+<text x="702.0668811748999" y="188" font-size="12" fill="#0b0b0b" style="font-variant-numeric: tabular-nums">89</text>
+</svg>

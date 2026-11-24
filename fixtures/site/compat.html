@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Compat</title>
+<style>
+  body { margin: 0; font: 14px sans-serif; }
+  #box { position: absolute; left: 10px; top: 400px; width: 200px; height: 100px; background: rgb(255, 0, 0); }
+  #flex { display: flex; width: 300px; position: absolute; left: 0; top: 520px; }
+  #flex > div { flex: 1; height: 20px; }
+  #styled { color: rgb(0, 128, 0); }
+  @media (prefers-color-scheme: dark) { #styled { color: rgb(1, 2, 3); } }
+  #tall { position: absolute; top: 3000px; height: 10px; width: 10px; }
+</style>
+<script>window.__inlineRan = true;</script>
+</head>
+<body>
+<h1 id="h">Compat</h1>
+<div id="out"></div>
+<button id="btn" onclick="document.getElementById('out').textContent='clicked'">Click me</button>
+<button id="save" onclick="document.getElementById('out').textContent='saved'">Save changes</button>
+<button id="alert" onclick="alert('hello dialog'); document.getElementById('out').textContent='alerted'">Alert</button>
+<button id="log" onclick="console.log('bench-console-message')">Log</button>
+<label for="name">Full name</label>
+<input id="name" type="text">
+<span id="inputs">0</span>
+<form id="f"><input id="q" name="q" type="text"><button type="submit" id="go">Go</button></form>
+<select id="sel"><option value="a">A</option><option value="b">B</option><option value="c">C</option></select>
+<input id="cb" type="checkbox">
+<div id="hover" style="width:80px;height:20px;background:#ccc">hover</div>
+<input id="file" type="file">
+<a id="dl" href="/download">download</a>
+<a id="nav" href="/static">go static</a>
+<p id="styled">styled</p>
+<iframe id="fr" src="/frame.html" width="200" height="60"></iframe>
+<form id="login" method="post" action="/login">
+  <input id="user" name="user"><input id="pass" name="pass" type="password"><button id="signin" type="submit">Sign in</button>
+</form>
+<div id="box"></div>
+<div id="flex"><div id="fa"></div><div id="fb"></div><div id="fc"></div></div>
+<div id="tall"></div>
+<script>
+  let n = 0;
+  document.getElementById('name').addEventListener('input', () => { document.getElementById('inputs').textContent = String(++n); });
+  document.getElementById('f').addEventListener('submit', (e) => { e.preventDefault(); document.getElementById('out').textContent = 'submitted:' + document.getElementById('q').value; });
+  document.getElementById('hover').addEventListener('mouseover', (e) => { e.currentTarget.dataset.hovered = '1'; });
+</script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 204" width="860" height="204" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-label="Time to first page">
+<title>Time to first page</title><desc>Open a new session and load one page. Median ms, lower is better. Whiskers: 95% CI of the median.</desc>
+<rect width="860" height="204" rx="8" fill="#fcfcfb"/>
+<text x="24" y="32" font-size="16" font-weight="600" fill="#0b0b0b">Time to first page</text>
+<text x="24" y="52" font-size="12" fill="#52514e">Open a new session and load one page. Median ms, lower is better. Whiskers: 95% CI of the median.</text>
+<line x1="130.08" y1="68" x2="130.08" y2="182" stroke="#e7e6e1" stroke-width="1"/>
+<text x="120.08000000000001" y="80" font-size="12" text-anchor="end" fill="#0b0b0b">Plain Chromium</text>
+<path d="M130.08,68h282.24469635292706a4,4 0 0 1 4,4v8a4,4 0 0 1 -4,4h-282.24469635292706z" fill="#a3a29b"/>
+<path d="M407.3111142554286,76H435.09009772826255M407.3111142554286,73v6M435.09009772826255,73v6" stroke="#0b0b0b" stroke-width="1" fill="none" opacity="0.75"/>
+<text x="441.09009772826255" y="80" font-size="12" fill="#0b0b0b" style="font-variant-numeric: tabular-nums">166</text>
+<text x="120.08000000000001" y="110" font-size="12" text-anchor="end" fill="#0b0b0b">Browserless</text>
+<path d="M130.08,98h190.97043505648628a4,4 0 0 1 4,4v8a4,4 0 0 1 -4,4h-190.97043505648628z" fill="#2a78d6"/>
+<path d="M322.5402001037542,106H327.7297921638672M322.5402001037542,103v6M327.7297921638672,103v6" stroke="#0b0b0b" stroke-width="1" fill="none" opacity="0.75"/>
+<text x="333.7297921638672" y="110" font-size="12" fill="#0b0b0b" style="font-variant-numeric: tabular-nums">113</text>
+<text x="120.08000000000001" y="140" font-size="12" text-anchor="end" fill="#0b0b0b">Steel Browser</text>
+<path d="M130.08,128h657.4946377825776a4,4 0 0 1 4,4v8a4,4 0 0 1 -4,4h-657.4946377825776z" fill="#2a78d6"/>
+<path d="M778.9979669823108,136H805.84M778.9979669823108,133v6M805.84,133v6" stroke="#0b0b0b" stroke-width="1" fill="none" opacity="0.75"/>
+<text x="811.84" y="140" font-size="12" fill="#0b0b0b" style="font-variant-numeric: tabular-nums">384</text>
+<text x="120.08000000000001" y="170" font-size="12" text-anchor="end" fill="#0b0b0b">Obscura</text>
+<path d="M130.08,158h23.297545649076678a4,4 0 0 1 4,4v8a4,4 0 0 1 -4,4h-23.297545649076678z" fill="#2a78d6"/>
+<path d="M156.3961438814677,166H158.36361471032907M156.3961438814677,163v6M158.36361471032907,163v6" stroke="#0b0b0b" stroke-width="1" fill="none" opacity="0.75"/>
+<text x="164.36361471032907" y="170" font-size="12" fill="#0b0b0b" style="font-variant-numeric: tabular-nums">16</text>
+</svg>

@@ -1,0 +1,22 @@
+{
+  "name": "browser-infra-bench",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "bench": "tsx src/run.ts",
+    "bench:quick": "tsx src/run.ts --quick",
+    "report": "tsx src/report.ts",
+    "typecheck": "tsc"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/node": "^26.6.7",
+    "playwright-core": "^1.65.1",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2"
+  },
+  "type": "module",
+  "private": true
+}

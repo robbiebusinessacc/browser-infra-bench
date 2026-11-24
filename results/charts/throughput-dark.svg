@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 334" width="860" height="334" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-label="Scraping throughput">
+<title>Scraping throughput</title><desc>Verified pages per second at 1, 4 and 8 concurrent connections. Median of rounds, higher is better.</desc>
+<rect width="860" height="334" rx="8" fill="#1a1a19"/>
+<text x="24" y="32" font-size="16" font-weight="600" fill="#f0efec">Scraping throughput</text>
+<text x="24" y="52" font-size="12" fill="#c3c2b7">Verified pages per second at 1, 4 and 8 concurrent connections. Median of rounds, higher is better.</text>
+<rect x="24" y="66" width="12" height="12" rx="2" fill="#184f95"/><text x="42" y="76" font-size="12" fill="#c3c2b7">1 connection</text>
+<rect x="144.64000000000001" y="66" width="12" height="12" rx="2" fill="#3987e5"/><text x="162.64000000000001" y="76" font-size="12" fill="#c3c2b7">4 connections</text>
+<rect x="272" y="66" width="12" height="12" rx="2" fill="#86b6ef"/><text x="290" y="76" font-size="12" fill="#c3c2b7">8 connections</text>
+<line x1="130.08" y1="94" x2="130.08" y2="312" stroke="#2e2e2c" stroke-width="1"/>
+<text x="120.08000000000001" y="118" font-size="12" text-anchor="end" fill="#f0efec">Plain Chromium</text>
+<path d="M130.08,94h6.447595067557765a4,4 0 0 1 4,4v4a4,4 0 0 1 -4,4h-6.447595067557765z" fill="#184f95"/>
+<path d="M140.416449475283,100H140.70500693687512M140.416449475283,97v6M140.70500693687512,97v6" stroke="#f0efec" stroke-width="1" fill="none" opacity="0.75"/>
+<text x="146.70500693687512" y="104" font-size="12" fill="#f0efec" style="font-variant-numeric: tabular-nums">7.3</text>
+<path d="M130.08,108h33.17139247404716a4,4 0 0 1 4,4v4a4,4 0 0 1 -4,4h-33.17139247404716z" fill="#3987e5"/>
+<path d="M166.25347634666446,114H167.7660644267197M166.25347634666446,111v6M167.7660644267197,111v6" stroke="#f0efec" stroke-width="1" fill="none" opacity="0.75"/>
+<text x="173.7660644267197" y="118" font-size="12" fill="#f0efec" style="font-variant-numeric: tabular-nums">26</text>
+<path d="M130.08,122h53.27221397272507a4,4 0 0 1 4,4v4a4,4 0 0 1 -4,4h-53.27221397272507z" fill="#86b6ef"/>
+<path d="M186.08907475674147,128H188.82580348572645M186.08907475674147,125v6M188.82580348572645,125v6" stroke="#f0efec" stroke-width="1" fill="none" opacity="0.75"/>
+<text x="194.82580348572645" y="132" font-size="12" fill="#f0efec" style="font-variant-numeric: tabular-nums">40</text>
+<text x="120.08000000000001" y="174" font-size="12" text-anchor="end" fill="#f0efec">Browserless</text>
+<path d="M130.08,150h51.92780154342002a4,4 0 0 1 4,4v4a4,4 0 0 1 -4,4h-51.92780154342002z" fill="#184f95"/>
+<path d="M183.31802115656117,156H187.02110492732044M183.31802115656117,153v6M187.02110492732044,153v6" stroke="#f0efec" stroke-width="1" fill="none" opacity="0.75"/>
+<text x="193.02110492732044" y="160" font-size="12" fill="#f0efec" style="font-variant-numeric: tabular-nums">39</text>
+<path d="M130.08,164h57.29236343767596a4,4 0 0 1 4,4v4a4,4 0 0 1 -4,4h-57.29236343767596z" fill="#3987e5"/>
+<path d="M190.14691591084102,170H193.3161011219405M190.14691591084102,167v6M193.3161011219405,167v6" stroke="#f0efec" stroke-width="1" fill="none" opacity="0.75"/>
+<text x="199.3161011219405" y="174" font-size="12" fill="#f0efec" style="font-variant-numeric: tabular-nums">43</text>
+<path d="M130.08,178h53.51391004384759a4,4 0 0 1 4,4v4a4,4 0 0 1 -4,4h-53.51391004384759z" fill="#86b6ef"/>
+<path d="M186.4607084890822,184H189.38406009054114M186.4607084890822,181v6M189.38406009054114,181v6" stroke="#f0efec" stroke-width="1" fill="none" opacity="0.75"/>
+<text x="195.38406009054114" y="188" font-size="12" fill="#f0efec" style="font-variant-numeric: tabular-nums">40</text>
+<text x="120.08000000000001" y="230" font-size="12" text-anchor="end" fill="#f0efec">Steel Browser</text>
+<path d="M130.08,206h15.541463739007256a4,4 0 0 1 4,4v4a4,4 0 0 1 -4,4h-15.541463739007256z" fill="#184f95"/>
+<path d="M149.1930141831074,212H149.8585822160899M149.1930141831074,209v6M149.8585822160899,209v6" stroke="#f0efec" stroke-width="1" fill="none" opacity="0.75"/>
+<text x="155.8585822160899" y="216" font-size="12" fill="#f0efec" style="font-variant-numeric: tabular-nums">14</text>
+<path d="M130.08,220h22.559285988091137a4,4 0 0 1 4,4v4a4,4 0 0 1 -4,4h-22.559285988091137z" fill="#3987e5"/>
+<path d="M155.75979769678318,226H157.86868917729208M155.75979769678318,223v6M157.86868917729208,223v6" stroke="#f0efec" stroke-width="1" fill="none" opacity="0.75"/>
+<text x="163.86868917729208" y="230" font-size="12" fill="#f0efec" style="font-variant-numeric: tabular-nums">19</text>
+<path d="M130.08,234h17.5749452551544a4,4 0 0 1 4,4v4a4,4 0 0 1 -4,4h-17.5749452551544z" fill="#86b6ef"/>
+<path d="M150.63584786744343,240H151.81930137199495M150.63584786744343,237v6M151.81930137199495,237v6" stroke="#f0efec" stroke-width="1" fill="none" opacity="0.75"/>
+<text x="157.81930137199495" y="244" font-size="12" fill="#f0efec" style="font-variant-numeric: tabular-nums">15</text>
+<text x="120.08000000000001" y="286" font-size="12" text-anchor="end" fill="#f0efec">Obscura</text>
+<path d="M130.08,262h120.57679355666744a4,4 0 0 1 4,4v4a4,4 0 0 1 -4,4h-120.57679355666744z" fill="#184f95"/>
+<path d="M249.40824345576948,268H261.4534602624749M249.40824345576948,265v6M261.4534602624749,265v6" stroke="#f0efec" stroke-width="1" fill="none" opacity="0.75"/>
+<text x="267.4534602624749" y="272" font-size="12" fill="#f0efec" style="font-variant-numeric: tabular-nums">87</text>
+<path d="M130.08,276h475.13023544794197a4,4 0 0 1 4,4v4a4,4 0 0 1 -4,4h-475.13023544794197z" fill="#3987e5"/>
+<path d="M579.6915561951724,282H620.7330755401686M579.6915561951724,279v6M620.7330755401686,279v6" stroke="#f0efec" stroke-width="1" fill="none" opacity="0.75"/>
+<text x="626.7330755401686" y="286" font-size="12" fill="#f0efec" style="font-variant-numeric: tabular-nums">336</text>
+<path d="M130.08,290h656.9199594245139a4,4 0 0 1 4,4v4a4,4 0 0 1 -4,4h-656.9199594245139z" fill="#86b6ef"/>
+<path d="M762.401466219683,296H805.84M762.401466219683,293v6M805.84,293v6" stroke="#f0efec" stroke-width="1" fill="none" opacity="0.75"/>
+<text x="811.84" y="300" font-size="12" fill="#f0efec" style="font-variant-numeric: tabular-nums">463</text>
+</svg>

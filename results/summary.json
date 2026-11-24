@@ -1,0 +1,3994 @@
+{
+  "meta": {
+    "generatedAt": "2026-11-24T21:57:19.328Z",
+    "seed": 20261124,
+    "rounds": 5,
+    "trials": {
+      "sessions": 15,
+      "pageLoads": 15,
+      "commands": 200,
+      "throughputPages": 400,
+      "concurrency": [
+        1,
+        4,
+        8
+      ],
+      "realWorld": 2
+    },
+    "limits": {
+      "cpus": 4,
+      "memoryGb": 4
+    },
+    "only": [
+      "session",
+      "pageload",
+      "latency",
+      "memory",
+      "compat",
+      "fingerprint",
+      "realworld",
+      "throughput"
+    ],
+    "host": {
+      "cpu": "Apple M4 Max",
+      "cores": 16,
+      "memGb": 64,
+      "platform": "darwin 25.5.0",
+      "arch": "arm64"
+    },
+    "docker": "29.7.2 (linux/arm64)",
+    "node": "v22.18.0",
+    "playwright": "1.65.1",
+    "providers": [
+      {
+        "id": "chromium",
+        "label": "Headless Chromium (baseline)",
+        "engine": "Chromium headless-shell, no wrapper",
+        "license": "BSD-3-Clause",
+        "sessionSemantics": "Connects to an already-running browser process and uses its default context.",
+        "image": "chromedp/headless-shell:latest",
+        "digest": "chromedp/headless-shell@sha256:381353d3530ab9d579d2fe8b9c0f4519c995617f5a71daf6bb649e2d12005bd9",
+        "created": "2026-11-19T00:40:48.537135712Z",
+        "arch": "arm64",
+        "sizeMb": 147
+      },
+      {
+        "id": "browserless",
+        "label": "Browserless",
+        "engine": "Chromium behind the Browserless router",
+        "license": "SSPL-1.0 or commercial",
+        "sessionSemantics": "Each WebSocket connection launches a new Chromium process, which is killed on disconnect.",
+        "image": "ghcr.io/browserless/chromium:latest",
+        "digest": "ghcr.io/browserless/chromium@sha256:62a1025c4f92a6fbe11e00a58d67f9f7b8b99e0e500b3f99e192bd5f25d14c7a",
+        "created": "2026-11-24T19:18:40.686353941Z",
+        "arch": "arm64",
+        "sizeMb": 1012
+      },
+      {
+        "id": "steel",
+        "label": "Steel Browser",
+        "engine": "Chromium behind the Steel session API",
+        "license": "Apache-2.0",
+        "sessionSemantics": "POST /v1/sessions relaunches Chromium with a clean profile; the client then connects over CDP. One session at a time.",
+        "image": "ghcr.io/steel-dev/steel-browser:latest",
+        "digest": "ghcr.io/steel-dev/steel-browser@sha256:c68ff8d92912b8ddb5674c557075f6238fd80e33e366aac0e4a16c63e3d804b2",
+        "created": "2026-11-24T16:40:33.422573786Z",
+        "arch": "arm64",
+        "sizeMb": 967
+      },
+      {
+        "id": "obscura",
+        "label": "Obscura",
+        "engine": "Own Rust engine with V8 (not Chromium)",
+        "license": "Apache-2.0",
+        "sessionSemantics": "Each CDP connection gets its own thread and V8 isolates inside one long-lived server process.",
+        "image": "h4ckf0r0day/obscura:latest",
+        "digest": "h4ckf0r0day/obscura@sha256:e70c2abc925f2194c9338762075432c69328032cae220d77393f1495e90c601a",
+        "created": "2026-11-14T20:25:10.72084458Z",
+        "arch": "arm64",
+        "sizeMb": 97
+      }
+    ],
+    "pageKinds": [
+      {
+        "id": "static",
+        "describe": "Server-rendered HTML, 40 paragraphs"
+      },
+      {
+        "id": "spa",
+        "describe": "Client-rendered: fetch JSON, build 200 rows"
+      },
+      {
+        "id": "dom",
+        "describe": "5,000-row table (15,000 cells)"
+      },
+      {
+        "id": "assets",
+        "describe": "30 images, 5 scripts, 3 stylesheets"
+      },
+      {
+        "id": "compute",
+        "describe": "Inline script: 300k-iteration loop and sort"
+      }
+    ],
+    "fingerprintSignals": [
+      {
+        "id": "webdriver-flag",
+        "describe": "navigator.webdriver is true"
+      },
+      {
+        "id": "headless-ua",
+        "describe": "User-Agent contains \"Headless\""
+      },
+      {
+        "id": "ua-header-mismatch",
+        "describe": "HTTP User-Agent differs from navigator.userAgent"
+      },
+      {
+        "id": "no-accept-language",
+        "describe": "No Accept-Language request header"
+      },
+      {
+        "id": "no-languages",
+        "describe": "navigator.languages is empty"
+      },
+      {
+        "id": "no-plugins",
+        "describe": "navigator.plugins is empty"
+      },
+      {
+        "id": "no-chrome-object",
+        "describe": "UA claims Chrome but window.chrome is missing"
+      },
+      {
+        "id": "zero-outer-size",
+        "describe": "window.outerWidth/outerHeight is 0"
+      },
+      {
+        "id": "software-webgl",
+        "describe": "WebGL missing or reports a software renderer"
+      },
+      {
+        "id": "permissions-inconsistent",
+        "describe": "Notification.permission contradicts permissions.query"
+      },
+      {
+        "id": "platform-mismatch",
+        "describe": "UA operating system contradicts navigator.platform"
+      },
+      {
+        "id": "ua-data-mismatch",
+        "describe": "UA claims Chrome but navigator.userAgentData is missing or inconsistent"
+      },
+      {
+        "id": "cdp-runtime-leak",
+        "describe": "Page can observe the CDP Runtime domain serialising console arguments"
+      },
+      {
+        "id": "no-media-codecs",
+        "describe": "No H.264 or AAC playback support (Chrome builds have it)"
+      }
+    ],
+    "sites": [
+      {
+        "id": "example.com",
+        "url": "https://example.com/"
+      },
+      {
+        "id": "books.toscrape.com (static catalogue)",
+        "url": "https://books.toscrape.com/"
+      },
+      {
+        "id": "quotes.toscrape.com/js (client-rendered)",
+        "url": "https://quotes.toscrape.com/js/"
+      },
+      {
+        "id": "quotes.toscrape.com/scroll (infinite scroll, XHR)",
+        "url": "https://quotes.toscrape.com/scroll"
+      },
+      {
+        "id": "scrapethissite.com (AJAX table)",
+        "url": "https://www.scrapethissite.com/pages/ajax-javascript/#2015"
+      },
+      {
+        "id": "en.wikipedia.org (large article)",
+        "url": "https://en.wikipedia.org/wiki/Web_scraping"
+      },
+      {
+        "id": "news.ycombinator.com",
+        "url": "https://news.ycombinator.com/"
+      }
+    ]
+  },
+  "summary": {
+    "chromium": {
+      "rounds": 5,
+      "browserVersion": "159.0.8154.13",
+      "startupMs": 296.7406669999473,
+      "session": {
+        "connect": {
+          "n": 75,
+          "median": 21.771790999919176,
+          "ci95": [
+            18.64416699996218,
+            24.98549999995157
+          ],
+          "p95": 69.91004639994341,
+          "min": 8.058583999983966,
+          "max": 106.88016699999571,
+          "mean": 28.29677174666819,
+          "ok": 75,
+          "total": 75
+        },
+        "firstPage": {
+          "n": 75,
+          "median": 166.0814169999794,
+          "ci95": [
+            160.8516659999732,
+            176.96924999984913
+          ],
+          "p95": 247.1110289000673,
+          "min": 114.26629100000719,
+          "max": 333.7019999999902,
+          "mean": 181.3020250799926,
+          "ok": 75,
+          "total": 75
+        }
+      },
+      "pageload": {
+        "static": {
+          "n": 75,
+          "median": 71.31312499986961,
+          "ci95": [
+            68.8654580002185,
+            72.95970800006762
+          ],
+          "p95": 98.8518249999964,
+          "min": 59.63983400003053,
+          "max": 126.79275000002235,
+          "mean": 73.41020778667337,
+          "ok": 75,
+          "total": 75
+        },
+        "spa": {
+          "n": 75,
+          "median": 139.69066700001713,
+          "ci95": [
+            137.9963749999879,
+            140.9904169999645
+          ],
+          "p95": 178.80283749985975,
+          "min": 127.61787499999627,
+          "max": 189.93849999993108,
+          "mean": 143.52554067998815,
+          "ok": 75,
+          "total": 75
+        },
+        "dom": {
+          "n": 75,
+          "median": 131.39429199998267,
+          "ci95": [
+            130.8020419999957,
+            132.1332500000135
+          ],
+          "p95": 135.6366248998558,
+          "min": 103.72695799998473,
+          "max": 138.86600000003818,
+          "mean": 131.3731466133458,
+          "ok": 75,
+          "total": 75
+        },
+        "assets": {
+          "n": 75,
+          "median": 62.97854200005531,
+          "ci95": [
+            62.48895899998024,
+            63.38741700025275
+          ],
+          "p95": 67.50232860003598,
+          "min": 33.74195900000632,
+          "max": 76.61399999994319,
+          "mean": 63.02648116001627,
+          "ok": 75,
+          "total": 75
+        },
+        "compute": {
+          "n": 75,
+          "median": 110.70216699998127,
+          "ci95": [
+            108.52262499998324,
+            112.55279100011103
+          ],
+          "p95": 154.87064189994706,
+          "min": 98.88912499975413,
+          "max": 161.0846250001341,
+          "mean": 122.22671274666209,
+          "ok": 75,
+          "total": 75
+        }
+      },
+      "latency": {
+        "evaluate": {
+          "n": 1000,
+          "median": 0.9761045000341255,
+          "ci95": [
+            0.9529169998131692,
+            1.002208000048995
+          ],
+          "p95": 1.4813860500056761,
+          "min": 0.6135419998317957,
+          "max": 46.36854199995287,
+          "mean": 1.0697278730029356,
+          "ok": 1000,
+          "total": 1000
+        },
+        "query": {
+          "n": 1000,
+          "median": 1.1901040000084322,
+          "ci95": [
+            1.1632074625435052,
+            1.2274374999979045
+          ],
+          "p95": 1.8402687499299641,
+          "min": 0.701791999861598,
+          "max": 45.95391699997708,
+          "mean": 1.3771189649970037,
+          "ok": 1000,
+          "total": 1000
+        }
+      },
+      "memory": {
+        "idle": {
+          "memMb": 60.86328125,
+          "range": [
+            40.90234375,
+            72.66796875
+          ],
+          "pids": 62
+        },
+        "onePage": {
+          "memMb": 130.1484375,
+          "range": [
+            88.359375,
+            165.69140625
+          ],
+          "pids": 73
+        },
+        "tenPages": {
+          "memMb": 532.87890625,
+          "range": [
+            488.13671875,
+            567.2421875
+          ],
+          "pids": 277
+        },
+        "tabsOpened": 10
+      },
+      "throughput": [
+        {
+          "concurrency": 1,
+          "runs": 5,
+          "pagesPerSec": 7.3252649888857055,
+          "range": [
+            7.247335962110199,
+            7.449656195332698
+          ],
+          "ok": 2000,
+          "total": 2000,
+          "peakMemMb": 120.77734375,
+          "cpuMsPerPage": 72.04543000000001
+        },
+        {
+          "concurrency": 4,
+          "runs": 5,
+          "pagesPerSec": 26.062485970938187,
+          "range": [
+            25.362803410263496,
+            26.423344944825935
+          ],
+          "ok": 2000,
+          "total": 2000,
+          "peakMemMb": 170.26953125,
+          "cpuMsPerPage": 79.5958325
+        },
+        {
+          "concurrency": 8,
+          "runs": 5,
+          "pagesPerSec": 40.15604941974882,
+          "range": [
+            39.27040737341172,
+            41.18924735647757
+          ],
+          "ok": 2000,
+          "total": 2000,
+          "peakMemMb": 243.59375,
+          "cpuMsPerPage": 97.88838249999999
+        }
+      ],
+      "compat": [
+        {
+          "id": "goto-title",
+          "group": "navigation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "redirect-followed",
+          "group": "navigation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "http-404-status",
+          "group": "navigation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "page-content",
+          "group": "navigation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "go-back",
+          "group": "navigation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "link-click-navigates",
+          "group": "navigation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "wait-for-selector-spa",
+          "group": "navigation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "wait-for-function",
+          "group": "navigation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "iframe-access",
+          "group": "navigation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "multiple-pages",
+          "group": "navigation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "eval-roundtrip",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "modern-js-syntax",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "promise-timer-ordering",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "fetch-json",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "fetch-post-body",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "xhr",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "abort-controller",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "local-storage",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "session-storage",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "document-cookie",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "indexeddb",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "mutation-observer",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "intersection-observer",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "resize-observer",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "request-animation-frame",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "shadow-dom",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "custom-elements",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "layout-bounding-rect",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "layout-flexbox",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "computed-style",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "element-from-point",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "canvas-2d-pixels",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "canvas-to-data-url",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "web-worker",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "webassembly",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "websocket-echo",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "crypto-get-random-values",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "history-push-state",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "intl-formatting",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "url-and-encoding-apis",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "dom-parser-and-serializer",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "css-selectors-advanced",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "match-media",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "performance-timing",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "dynamic-script-and-module",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "inner-text-vs-text-content",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "click",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "fill-fires-input",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "keyboard-type-per-key",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "press-enter-submits-form",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "select-option",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "check-checkbox",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "hover",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "get-by-role",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "get-by-label-and-text",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "form-login-post-redirect",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "file-upload",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "dialog-alert",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "scroll-into-view",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "screenshot-pixels",
+          "group": "capture",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "screenshot-full-page",
+          "group": "capture",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "screenshot-element",
+          "group": "capture",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "screenshot-text-rendered",
+          "group": "capture",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "pdf",
+          "group": "capture",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "viewport-resize",
+          "group": "capture",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "viewport-survives-first-navigation",
+          "group": "capture",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "emulate-dark-mode",
+          "group": "capture",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "response-events",
+          "group": "network",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "response-body",
+          "group": "network",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "route-fulfill-mock",
+          "group": "network",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "route-abort-images",
+          "group": "network",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "images-load",
+          "group": "network",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "extra-http-headers",
+          "group": "network",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "context-add-cookies",
+          "group": "network",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "context-read-server-cookie",
+          "group": "network",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "download-event",
+          "group": "network",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "add-init-script",
+          "group": "automation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "expose-function",
+          "group": "automation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "console-event",
+          "group": "automation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "page-error-event",
+          "group": "automation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "element-handles",
+          "group": "automation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "raw-cdp-session",
+          "group": "automation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "accessibility-snapshot",
+          "group": "automation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "set-content",
+          "group": "automation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        }
+      ],
+      "compatTotals": {
+        "pass": 84,
+        "flaky": 0,
+        "fail": 0,
+        "total": 84
+      },
+      "fingerprint": {
+        "webdriver-flag": 5,
+        "headless-ua": 0,
+        "ua-header-mismatch": 0,
+        "no-accept-language": 5,
+        "no-languages": 0,
+        "no-plugins": 5,
+        "no-chrome-object": 5,
+        "zero-outer-size": 0,
+        "software-webgl": 5,
+        "permissions-inconsistent": 5,
+        "platform-mismatch": 0,
+        "ua-data-mismatch": 5,
+        "cdp-runtime-leak": 0,
+        "no-media-codecs": 5
+      },
+      "fingerprintRuns": 5,
+      "fingerprintExposed": 8,
+      "fingerprintRaw": {
+        "ua": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/159.0.8154.13 Safari/537.36",
+        "webdriver": true,
+        "languages": 1,
+        "plugins": 0,
+        "hasChrome": false,
+        "outer": [
+          800,
+          600
+        ],
+        "webgl": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+        "notification": "denied",
+        "permState": "prompt",
+        "platform": "Linux x86_64",
+        "brands": "",
+        "uaDataPlatform": "",
+        "cdpLeak": false,
+        "h264": "",
+        "aac": "",
+        "hardwareConcurrency": 16,
+        "deviceMemory": null,
+        "headerUa": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/159.0.8154.13 Safari/537.36",
+        "acceptLanguage": ""
+      },
+      "realworld": {
+        "example.com": {
+          "n": 10,
+          "median": 153.2555000000866,
+          "ci95": [
+            113.88999999989755,
+            218.81520800001454
+          ],
+          "p95": 458.76164825001,
+          "min": 72.02720799995586,
+          "max": 610.2275420000078,
+          "mean": 198.0836665999901,
+          "ok": 10,
+          "total": 10
+        },
+        "books.toscrape.com (static catalogue)": {
+          "n": 10,
+          "median": 252.0952709999401,
+          "ci95": [
+            101.61202050000429,
+            607.7249790001661
+          ],
+          "p95": 721.3311625001136,
+          "min": 93.95529199996963,
+          "max": 761.4625000001397,
+          "mean": 344.608395900036,
+          "ok": 10,
+          "total": 10
+        },
+        "quotes.toscrape.com/js (client-rendered)": {
+          "n": 10,
+          "median": 432.15139650009223,
+          "ci95": [
+            234.65254200005438,
+            857.8422290000017
+          ],
+          "p95": 1396.9428524499342,
+          "min": 232.2369999999646,
+          "max": 1771.4542089998722,
+          "mean": 612.6308419000183,
+          "ok": 10,
+          "total": 10
+        },
+        "quotes.toscrape.com/scroll (infinite scroll, XHR)": {
+          "n": 10,
+          "median": 419.47881250001956,
+          "ci95": [
+            386.9476670003496,
+            467.0468539999565
+          ],
+          "p95": 492.501362499973,
+          "min": 351.6993749999674,
+          "max": 500.52812500006985,
+          "mean": 424.61458330001335,
+          "ok": 10,
+          "total": 10
+        },
+        "scrapethissite.com (AJAX table)": {
+          "n": 10,
+          "median": 2274.9141459999373,
+          "ci95": [
+            2136.878792000003,
+            2328.0937500001164
+          ],
+          "p95": 2976.5025187499227,
+          "min": 2117.164166000206,
+          "max": 3466.581374999834,
+          "mean": 2365.422837499989,
+          "ok": 10,
+          "total": 10
+        },
+        "en.wikipedia.org (large article)": {
+          "n": 10,
+          "median": 284.4296040002082,
+          "ci95": [
+            168.75183300022036,
+            468.093792000087
+          ],
+          "p95": 966.2325960500767,
+          "min": 133.15354199986905,
+          "max": 1371.4937090000021,
+          "mean": 393.91469180008863,
+          "ok": 10,
+          "total": 10
+        },
+        "news.ycombinator.com": {
+          "n": 10,
+          "median": 454.2518329999875,
+          "ci95": [
+            165.24225000012666,
+            700.1670000000158
+          ],
+          "p95": 776.0581295000446,
+          "min": 129.4716250000056,
+          "max": 801.2982920000795,
+          "mean": 448.07447500003036,
+          "ok": 10,
+          "total": 10
+        }
+      }
+    },
+    "browserless": {
+      "rounds": 5,
+      "browserVersion": "159.0.8154.6",
+      "startupMs": 1158.1669170001987,
+      "session": {
+        "connect": {
+          "n": 75,
+          "median": 87.9732079999958,
+          "ci95": [
+            87.27499999990687,
+            89.1840830000001
+          ],
+          "p95": 162.4728462999686,
+          "min": 83.48941600020044,
+          "max": 220.4262920001056,
+          "mean": 95.46008606666544,
+          "ok": 75,
+          "total": 75
+        },
+        "firstPage": {
+          "n": 75,
+          "median": 113.12337499996647,
+          "ci95": [
+            111.66691699999501,
+            114.67795899999328
+          ],
+          "p95": 187.5460088000865,
+          "min": 106.76816700026393,
+          "max": 251.29079199999978,
+          "mean": 120.8477137866624,
+          "ok": 75,
+          "total": 75
+        }
+      },
+      "pageload": {
+        "static": {
+          "n": 75,
+          "median": 27.43649999999616,
+          "ci95": [
+            26.363542000064626,
+            29.173209000000497
+          ],
+          "p95": 34.5015541999368,
+          "min": 22.32695800019428,
+          "max": 36.05108299991116,
+          "mean": 28.348916173310524,
+          "ok": 75,
+          "total": 75
+        },
+        "spa": {
+          "n": 75,
+          "median": 46.329583999700844,
+          "ci95": [
+            45.547500000102445,
+            47.68045900017023
+          ],
+          "p95": 56.51019179997966,
+          "min": 37.051416999995126,
+          "max": 67.83312500012107,
+          "mean": 47.67636725335304,
+          "ok": 75,
+          "total": 75
+        },
+        "dom": {
+          "n": 75,
+          "median": 95.96666700020432,
+          "ci95": [
+            95.45941599993967,
+            97.46800000000803
+          ],
+          "p95": 104.40162520008161,
+          "min": 91.34595799999079,
+          "max": 105.43487500003539,
+          "mean": 97.01888505333025,
+          "ok": 75,
+          "total": 75
+        },
+        "assets": {
+          "n": 75,
+          "median": 28.934084000007715,
+          "ci95": [
+            27.336374999955297,
+            31.503498575038936
+          ],
+          "p95": 38.24619200005254,
+          "min": 24.27970900014043,
+          "max": 50.5851660000626,
+          "mean": 30.831783946666985,
+          "ok": 75,
+          "total": 75
+        },
+        "compute": {
+          "n": 75,
+          "median": 119.83883400005288,
+          "ci95": [
+            119.12233299994841,
+            120.53362499992363
+          ],
+          "p95": 129.8262500000652,
+          "min": 95.52416699999594,
+          "max": 138.77450000005774,
+          "mean": 118.96793549333718,
+          "ok": 75,
+          "total": 75
+        }
+      },
+      "latency": {
+        "evaluate": {
+          "n": 1000,
+          "median": 0.921541999996407,
+          "ci95": [
+            0.9097919999621809,
+            0.9312935873749666
+          ],
+          "p95": 1.3654059000051346,
+          "min": 0.6262499999720603,
+          "max": 79.54424999999173,
+          "mean": 1.064840531001566,
+          "ok": 1000,
+          "total": 1000
+        },
+        "query": {
+          "n": 1000,
+          "median": 1.1090415001381189,
+          "ci95": [
+            1.0891249999403954,
+            1.1245210000197403
+          ],
+          "p95": 1.7855625000665893,
+          "min": 0.7297910000197589,
+          "max": 23.835874999989755,
+          "mean": 1.2729547939940966,
+          "ok": 1000,
+          "total": 1000
+        }
+      },
+      "memory": {
+        "idle": {
+          "memMb": 333.03125,
+          "range": [
+            315.46484375,
+            339.85546875
+          ],
+          "pids": 14
+        },
+        "onePage": {
+          "memMb": 505.359375,
+          "range": [
+            485.8828125,
+            508.5078125
+          ],
+          "pids": 151
+        },
+        "tenPages": {
+          "memMb": 1011.37109375,
+          "range": [
+            991.07421875,
+            1015.91015625
+          ],
+          "pids": 277
+        },
+        "tabsOpened": 10
+      },
+      "throughput": [
+        {
+          "concurrency": 1,
+          "runs": 5,
+          "pagesPerSec": 39.21342317559125,
+          "range": [
+            37.32750072470759,
+            39.92389441353715
+          ],
+          "ok": 2000,
+          "total": 2000,
+          "peakMemMb": 631.9140625,
+          "cpuMsPerPage": 79.42278250000001
+        },
+        {
+          "concurrency": 4,
+          "runs": 5,
+          "pagesPerSec": 42.9747517081958,
+          "range": [
+            42.1155369505416,
+            44.33759105199217
+          ],
+          "ok": 2000,
+          "total": 2000,
+          "peakMemMb": 1515.53125,
+          "cpuMsPerPage": 92.6910325
+        },
+        {
+          "concurrency": 8,
+          "runs": 5,
+          "pagesPerSec": 40.325513086391375,
+          "range": [
+            39.53097600672886,
+            41.58066543265871
+          ],
+          "ok": 2000,
+          "total": 2000,
+          "peakMemMb": 2686.59765625,
+          "cpuMsPerPage": 98.90280999999999
+        }
+      ],
+      "compat": [
+        {
+          "id": "goto-title",
+          "group": "navigation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "redirect-followed",
+          "group": "navigation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "http-404-status",
+          "group": "navigation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "page-content",
+          "group": "navigation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "go-back",
+          "group": "navigation",
+          "passes": 0,
+          "runs": 5,
+          "status": "fail",
+          "error": "page.goBack: Timeout 8000ms exceeded."
+        },
+        {
+          "id": "link-click-navigates",
+          "group": "navigation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "wait-for-selector-spa",
+          "group": "navigation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "wait-for-function",
+          "group": "navigation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "iframe-access",
+          "group": "navigation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "multiple-pages",
+          "group": "navigation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "eval-roundtrip",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "modern-js-syntax",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "promise-timer-ordering",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "fetch-json",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "fetch-post-body",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "xhr",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "abort-controller",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "local-storage",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "session-storage",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "document-cookie",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "indexeddb",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "mutation-observer",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "intersection-observer",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "resize-observer",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "request-animation-frame",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "shadow-dom",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "custom-elements",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "layout-bounding-rect",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "layout-flexbox",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "computed-style",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "element-from-point",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "canvas-2d-pixels",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "canvas-to-data-url",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "web-worker",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "webassembly",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "websocket-echo",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "crypto-get-random-values",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "history-push-state",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "intl-formatting",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "url-and-encoding-apis",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "dom-parser-and-serializer",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "css-selectors-advanced",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "match-media",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "performance-timing",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "dynamic-script-and-module",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "inner-text-vs-text-content",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "click",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "fill-fires-input",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "keyboard-type-per-key",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "press-enter-submits-form",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "select-option",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "check-checkbox",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "hover",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "get-by-role",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "get-by-label-and-text",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "form-login-post-redirect",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "file-upload",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "dialog-alert",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "scroll-into-view",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "screenshot-pixels",
+          "group": "capture",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "screenshot-full-page",
+          "group": "capture",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "screenshot-element",
+          "group": "capture",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "screenshot-text-rendered",
+          "group": "capture",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "pdf",
+          "group": "capture",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "viewport-resize",
+          "group": "capture",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "viewport-survives-first-navigation",
+          "group": "capture",
+          "passes": 0,
+          "runs": 5,
+          "status": "fail",
+          "error": "viewport: expected [1024,700], got [800,600]"
+        },
+        {
+          "id": "emulate-dark-mode",
+          "group": "capture",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "response-events",
+          "group": "network",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "response-body",
+          "group": "network",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "route-fulfill-mock",
+          "group": "network",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "route-abort-images",
+          "group": "network",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "images-load",
+          "group": "network",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "extra-http-headers",
+          "group": "network",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "context-add-cookies",
+          "group": "network",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "context-read-server-cookie",
+          "group": "network",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "download-event",
+          "group": "network",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "add-init-script",
+          "group": "automation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "expose-function",
+          "group": "automation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "console-event",
+          "group": "automation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "page-error-event",
+          "group": "automation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "element-handles",
+          "group": "automation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "raw-cdp-session",
+          "group": "automation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "accessibility-snapshot",
+          "group": "automation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "set-content",
+          "group": "automation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        }
+      ],
+      "compatTotals": {
+        "pass": 82,
+        "flaky": 0,
+        "fail": 2,
+        "total": 84
+      },
+      "fingerprint": {
+        "webdriver-flag": 5,
+        "headless-ua": 5,
+        "ua-header-mismatch": 0,
+        "no-accept-language": 0,
+        "no-languages": 0,
+        "no-plugins": 0,
+        "no-chrome-object": 0,
+        "zero-outer-size": 0,
+        "software-webgl": 5,
+        "permissions-inconsistent": 0,
+        "platform-mismatch": 0,
+        "ua-data-mismatch": 5,
+        "cdp-runtime-leak": 0,
+        "no-media-codecs": 0
+      },
+      "fingerprintRuns": 5,
+      "fingerprintExposed": 4,
+      "fingerprintRaw": {
+        "ua": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/159.0.0.0 Safari/537.36",
+        "webdriver": true,
+        "languages": 2,
+        "plugins": 5,
+        "hasChrome": true,
+        "outer": [
+          945,
+          1060
+        ],
+        "webgl": "",
+        "notification": "denied",
+        "permState": "denied",
+        "platform": "Linux x86_64",
+        "brands": "",
+        "uaDataPlatform": "",
+        "cdpLeak": false,
+        "h264": "probably",
+        "aac": "probably",
+        "hardwareConcurrency": 16,
+        "deviceMemory": null,
+        "headerUa": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/159.0.0.0 Safari/537.36",
+        "acceptLanguage": "en-US,en;q=0.9"
+      },
+      "realworld": {
+        "example.com": {
+          "n": 10,
+          "median": 91.13741699990351,
+          "ci95": [
+            79.14214649994392,
+            148.46316699986346
+          ],
+          "p95": 177.3095289500328,
+          "min": 53.55616699997336,
+          "max": 185.48704100004397,
+          "mean": 109.52252089995599,
+          "ok": 10,
+          "total": 10
+        },
+        "books.toscrape.com (static catalogue)": {
+          "n": 10,
+          "median": 187.91018750000512,
+          "ci95": [
+            74.82099999999627,
+            454.92725000018254
+          ],
+          "p95": 1110.7943168499582,
+          "min": 64.61408299999312,
+          "max": 1539.5204169999342,
+          "mean": 354.8235291000281,
+          "ok": 10,
+          "total": 10
+        },
+        "quotes.toscrape.com/js (client-rendered)": {
+          "n": 10,
+          "median": 314.9042704999156,
+          "ci95": [
+            234.12404099991545,
+            572.5644999999786
+          ],
+          "p95": 656.6675187499727,
+          "min": 161.8607910000719,
+          "max": 675.5052499999292,
+          "mean": 387.7946247999731,
+          "ok": 10,
+          "total": 10
+        },
+        "quotes.toscrape.com/scroll (infinite scroll, XHR)": {
+          "n": 10,
+          "median": 299.3769999999786,
+          "ci95": [
+            224.4724170002155,
+            366.01149999999325
+          ],
+          "p95": 387.9605352999177,
+          "min": 214.19270799984224,
+          "max": 388.47066699992865,
+          "mean": 297.8154125000059,
+          "ok": 10,
+          "total": 10
+        },
+        "scrapethissite.com (AJAX table)": {
+          "n": 10,
+          "median": 2121.9724579999456,
+          "ci95": [
+            1985.7072500000359,
+            2252.1107499999925
+          ],
+          "p95": 2312.2204019001247,
+          "min": 1868.124083999981,
+          "max": 2349.487583000213,
+          "mean": 2118.672783300016,
+          "ok": 10,
+          "total": 10
+        },
+        "en.wikipedia.org (large article)": {
+          "n": 10,
+          "median": 293.6526044998318,
+          "ci95": [
+            160.45416700001806,
+            436.70954199996777
+          ],
+          "p95": 459.67802530000915,
+          "min": 141.52666600001976,
+          "max": 462.8053749999963,
+          "mean": 299.7941917999415,
+          "ok": 10,
+          "total": 10
+        },
+        "news.ycombinator.com": {
+          "n": 10,
+          "median": 433.3146664999658,
+          "ci95": [
+            145.00127099989913,
+            779.7325420000125
+          ],
+          "p95": 951.9722892498828,
+          "min": 138.29408299992792,
+          "max": 1075.8518329998478,
+          "mean": 483.76392909992427,
+          "ok": 10,
+          "total": 10
+        }
+      }
+    },
+    "steel": {
+      "rounds": 5,
+      "browserVersion": "156.0.8078.108",
+      "startupMs": 1009.1554999999935,
+      "session": {
+        "connect": {
+          "n": 75,
+          "median": 283.1754999998957,
+          "ci95": [
+            279.2665829999605,
+            289.02966699999524
+          ],
+          "p95": 367.82763299998186,
+          "min": 260.81741699995473,
+          "max": 542.0382919999829,
+          "mean": 295.90105556001186,
+          "ok": 75,
+          "total": 75
+        },
+        "firstPage": {
+          "n": 75,
+          "median": 383.8043750000652,
+          "ci95": [
+            376.50729199987836,
+            392.08124999993015
+          ],
+          "p95": 472.2565751000191,
+          "min": 345.84195900009945,
+          "max": 642.8279999999795,
+          "mean": 391.46163392000716,
+          "ok": 75,
+          "total": 75
+        }
+      },
+      "pageload": {
+        "static": {
+          "n": 75,
+          "median": 68.20062499993946,
+          "ci95": [
+            66.84262500004843,
+            68.77904200000921
+          ],
+          "p95": 86.68443749998113,
+          "min": 59.34358400013298,
+          "max": 100.85495900013484,
+          "mean": 69.60788222667838,
+          "ok": 75,
+          "total": 75
+        },
+        "spa": {
+          "n": 75,
+          "median": 93.16916700001457,
+          "ci95": [
+            92.21054199998616,
+            95.08270899998024
+          ],
+          "p95": 101.94723729998805,
+          "min": 86.04100000020117,
+          "max": 112.21299999998882,
+          "mean": 94.43656837335556,
+          "ok": 75,
+          "total": 75
+        },
+        "dom": {
+          "n": 75,
+          "median": 1361.640791999991,
+          "ci95": [
+            1350.468292000005,
+            1369.4233330000425
+          ],
+          "p95": 1445.3292919999453,
+          "min": 1324.3890830003656,
+          "max": 1472.3104170002043,
+          "mean": 1372.53653000001,
+          "ok": 75,
+          "total": 75
+        },
+        "assets": {
+          "n": 75,
+          "median": 81.84987499995623,
+          "ci95": [
+            72.50479200016707,
+            84.37087500002235
+          ],
+          "p95": 89.55870450004004,
+          "min": 61.509457999956794,
+          "max": 103.61083300015889,
+          "mean": 78.76841721334804,
+          "ok": 75,
+          "total": 75
+        },
+        "compute": {
+          "n": 75,
+          "median": 155.07762499991804,
+          "ci95": [
+            153.15891599981114,
+            157.22533400007524
+          ],
+          "p95": 164.7862538000132,
+          "min": 133.24649999989197,
+          "max": 180.81483300006948,
+          "mean": 152.96831614666695,
+          "ok": 75,
+          "total": 75
+        }
+      },
+      "latency": {
+        "evaluate": {
+          "n": 1000,
+          "median": 0.9949369999812916,
+          "ci95": [
+            0.9768749999773718,
+            1.0149274124662042
+          ],
+          "p95": 1.5092785500586614,
+          "min": 0.6743749999441206,
+          "max": 2.9304169999959413,
+          "mean": 1.0705879199983028,
+          "ok": 1000,
+          "total": 1000
+        },
+        "query": {
+          "n": 1000,
+          "median": 1.1907504999544472,
+          "ci95": [
+            1.1667295000515878,
+            1.2211249999832945
+          ],
+          "p95": 1.793379500071751,
+          "min": 0.7469159997999668,
+          "max": 22.02316700000665,
+          "mean": 1.362633196999377,
+          "ok": 1000,
+          "total": 1000
+        }
+      },
+      "memory": {
+        "idle": {
+          "memMb": 582.45703125,
+          "range": [
+            533.05859375,
+            724
+          ],
+          "pids": 155
+        },
+        "onePage": {
+          "memMb": 637.4296875,
+          "range": [
+            583.390625,
+            776.9296875
+          ],
+          "pids": 170
+        },
+        "tenPages": {
+          "memMb": 1390.44140625,
+          "range": [
+            1325.2109375,
+            1521.40625
+          ],
+          "pids": 316
+        },
+        "tabsOpened": 10
+      },
+      "throughput": [
+        {
+          "concurrency": 1,
+          "runs": 5,
+          "pagesPerSec": 13.701373304889328,
+          "range": [
+            13.400968617395003,
+            13.86762742051686
+          ],
+          "ok": 2000,
+          "total": 2000,
+          "peakMemMb": 643.19140625,
+          "cpuMsPerPage": 189.91591
+        },
+        {
+          "concurrency": 4,
+          "runs": 5,
+          "pagesPerSec": 18.621874844910664,
+          "range": [
+            18.005227210044094,
+            19.483863090133042
+          ],
+          "ok": 2000,
+          "total": 2000,
+          "peakMemMb": 744.4453125,
+          "cpuMsPerPage": 214.1755375
+        },
+        {
+          "concurrency": 8,
+          "runs": 5,
+          "pagesPerSec": 15.127135966962044,
+          "range": [
+            14.412602300008848,
+            15.242373215402097
+          ],
+          "ok": 2000,
+          "total": 2000,
+          "peakMemMb": 1027.0078125,
+          "cpuMsPerPage": 258.52206
+        }
+      ],
+      "compat": [
+        {
+          "id": "goto-title",
+          "group": "navigation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "redirect-followed",
+          "group": "navigation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "http-404-status",
+          "group": "navigation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "page-content",
+          "group": "navigation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "go-back",
+          "group": "navigation",
+          "passes": 0,
+          "runs": 5,
+          "status": "fail",
+          "error": "page.goBack: Timeout 8000ms exceeded."
+        },
+        {
+          "id": "link-click-navigates",
+          "group": "navigation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "wait-for-selector-spa",
+          "group": "navigation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "wait-for-function",
+          "group": "navigation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "iframe-access",
+          "group": "navigation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "multiple-pages",
+          "group": "navigation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "eval-roundtrip",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "modern-js-syntax",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "promise-timer-ordering",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "fetch-json",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "fetch-post-body",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "xhr",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "abort-controller",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "local-storage",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "session-storage",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "document-cookie",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "indexeddb",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "mutation-observer",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "intersection-observer",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "resize-observer",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "request-animation-frame",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "shadow-dom",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "custom-elements",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "layout-bounding-rect",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "layout-flexbox",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "computed-style",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "element-from-point",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "canvas-2d-pixels",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "canvas-to-data-url",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "web-worker",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "webassembly",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "websocket-echo",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "crypto-get-random-values",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "history-push-state",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "intl-formatting",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "url-and-encoding-apis",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "dom-parser-and-serializer",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "css-selectors-advanced",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "match-media",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "performance-timing",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "dynamic-script-and-module",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "inner-text-vs-text-content",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "click",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "fill-fires-input",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "keyboard-type-per-key",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "press-enter-submits-form",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "select-option",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "check-checkbox",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "hover",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "get-by-role",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "get-by-label-and-text",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "form-login-post-redirect",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "file-upload",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "dialog-alert",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "scroll-into-view",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "screenshot-pixels",
+          "group": "capture",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "screenshot-full-page",
+          "group": "capture",
+          "passes": 1,
+          "runs": 5,
+          "status": "flaky",
+          "error": "full page size 1920x3010"
+        },
+        {
+          "id": "screenshot-element",
+          "group": "capture",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "screenshot-text-rendered",
+          "group": "capture",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "pdf",
+          "group": "capture",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "viewport-resize",
+          "group": "capture",
+          "passes": 4,
+          "runs": 5,
+          "status": "flaky",
+          "error": "viewport: expected [1024,700], got [1920,1080]"
+        },
+        {
+          "id": "viewport-survives-first-navigation",
+          "group": "capture",
+          "passes": 3,
+          "runs": 5,
+          "status": "flaky",
+          "error": "viewport: expected [1024,700], got [1920,1080]"
+        },
+        {
+          "id": "emulate-dark-mode",
+          "group": "capture",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "response-events",
+          "group": "network",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "response-body",
+          "group": "network",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "route-fulfill-mock",
+          "group": "network",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "route-abort-images",
+          "group": "network",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "images-load",
+          "group": "network",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "extra-http-headers",
+          "group": "network",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "context-add-cookies",
+          "group": "network",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "context-read-server-cookie",
+          "group": "network",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "download-event",
+          "group": "network",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "add-init-script",
+          "group": "automation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "expose-function",
+          "group": "automation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "console-event",
+          "group": "automation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "page-error-event",
+          "group": "automation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "element-handles",
+          "group": "automation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "raw-cdp-session",
+          "group": "automation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "accessibility-snapshot",
+          "group": "automation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "set-content",
+          "group": "automation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        }
+      ],
+      "compatTotals": {
+        "pass": 80,
+        "flaky": 3,
+        "fail": 1,
+        "total": 84
+      },
+      "fingerprint": {
+        "webdriver-flag": 0,
+        "headless-ua": 5,
+        "ua-header-mismatch": 5,
+        "no-accept-language": 0,
+        "no-languages": 0,
+        "no-plugins": 5,
+        "no-chrome-object": 0,
+        "zero-outer-size": 0,
+        "software-webgl": 5,
+        "permissions-inconsistent": 0,
+        "platform-mismatch": 0,
+        "ua-data-mismatch": 5,
+        "cdp-runtime-leak": 0,
+        "no-media-codecs": 0
+      },
+      "fingerprintRuns": 5,
+      "fingerprintExposed": 5,
+      "fingerprintRaw": {
+        "ua": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+        "webdriver": false,
+        "languages": 2,
+        "plugins": 0,
+        "hasChrome": true,
+        "outer": [
+          1920,
+          1080
+        ],
+        "webgl": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 16.0.0) (0x0000C0DE)), SwiftShader driver)",
+        "notification": "denied",
+        "permState": "denied",
+        "platform": "Linux x86_64",
+        "brands": "",
+        "uaDataPlatform": "",
+        "cdpLeak": false,
+        "h264": "probably",
+        "aac": "probably",
+        "hardwareConcurrency": 16,
+        "deviceMemory": null,
+        "headerUa": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.0.0 Safari/537.36",
+        "acceptLanguage": "en-US,en;q=0.9"
+      },
+      "realworld": {
+        "example.com": {
+          "n": 10,
+          "median": 124.86685349995969,
+          "ci95": [
+            107.70887500001118,
+            159.37937499996042
+          ],
+          "p95": 200.18001424995597,
+          "min": 102.8490420000162,
+          "max": 209.63220800005365,
+          "mean": 137.02251230000402,
+          "ok": 10,
+          "total": 10
+        },
+        "books.toscrape.com (static catalogue)": {
+          "n": 10,
+          "median": 392.3411044999957,
+          "ci95": [
+            242.73970900004497,
+            823.8339579999447
+          ],
+          "p95": 932.3339373500784,
+          "min": 240.92908299993724,
+          "max": 991.9535000000615,
+          "mean": 498.5036249999772,
+          "ok": 10,
+          "total": 10
+        },
+        "quotes.toscrape.com/js (client-rendered)": {
+          "n": 10,
+          "median": 373.41620849992614,
+          "ci95": [
+            232.12152100005187,
+            523.8164169999654
+          ],
+          "p95": 598.1903608999768,
+          "min": 202.9128330000094,
+          "max": 622.0745420000167,
+          "mean": 382.1313626000192,
+          "ok": 10,
+          "total": 10
+        },
+        "quotes.toscrape.com/scroll (infinite scroll, XHR)": {
+          "n": 10,
+          "median": 334.5445835001301,
+          "ci95": [
+            277.4602500000037,
+            370.5536869999487
+          ],
+          "p95": 405.8766772999253,
+          "min": 260.5404160001781,
+          "max": 423.31333399994764,
+          "mean": 332.2195207000594,
+          "ok": 10,
+          "total": 10
+        },
+        "scrapethissite.com (AJAX table)": {
+          "n": 10,
+          "median": 2222.692041500006,
+          "ci95": [
+            2115.169832999818,
+            2293.7967079998925
+          ],
+          "p95": 2424.392237199819,
+          "min": 2049.4996249999967,
+          "max": 2525.0102499998175,
+          "mean": 2230.438466599927,
+          "ok": 10,
+          "total": 10
+        },
+        "en.wikipedia.org (large article)": {
+          "n": 10,
+          "median": 639.6685625000391,
+          "ci95": [
+            425.2451670000446,
+            718.2707915000501
+          ],
+          "p95": 804.7873937500582,
+          "min": 422.20233400026336,
+          "max": 845.1891250000335,
+          "mean": 599.3804126000439,
+          "ok": 10,
+          "total": 10
+        },
+        "news.ycombinator.com": {
+          "n": 10,
+          "median": 587.8204380001407,
+          "ci95": [
+            275.97929200006183,
+            830.7595420000143
+          ],
+          "p95": 1025.0178918499848,
+          "min": 224.35945899994113,
+          "max": 1061.2265419999603,
+          "mean": 592.0150919000386,
+          "ok": 10,
+          "total": 10
+        }
+      }
+    },
+    "obscura": {
+      "rounds": 5,
+      "browserVersion": "145.0.0.0",
+      "startupMs": 181.6300409999676,
+      "session": {
+        "connect": {
+          "n": 75,
+          "median": 4.008875000290573,
+          "ci95": [
+            3.732791999937035,
+            4.1812920002266765
+          ],
+          "p95": 5.6529830999632384,
+          "min": 3.218542000046,
+          "max": 7.168832999999722,
+          "mean": 4.153398373331996,
+          "ok": 75,
+          "total": 75
+        },
+        "firstPage": {
+          "n": 75,
+          "median": 15.838250000029802,
+          "ci95": [
+            15.268833000212908,
+            16.41037500021048
+          ],
+          "p95": 21.33724109999948,
+          "min": 12.82024999987334,
+          "max": 27.449124999999185,
+          "mean": 16.453347226662373,
+          "ok": 75,
+          "total": 75
+        }
+      },
+      "pageload": {
+        "static": {
+          "n": 75,
+          "median": 16.073749999981374,
+          "ci95": [
+            15.85004199994728,
+            16.40120800002478
+          ],
+          "p95": 20.963424999966808,
+          "min": 12.317833000095561,
+          "max": 27.09508399999868,
+          "mean": 16.35449602666983,
+          "ok": 75,
+          "total": 75
+        },
+        "spa": {
+          "n": 75,
+          "median": 29.349458000000595,
+          "ci95": [
+            28.856207999866456,
+            30.283818050000615
+          ],
+          "p95": 34.472979300032236,
+          "min": 24.77266599982977,
+          "max": 38.347124999998414,
+          "mean": 29.679226679989856,
+          "ok": 75,
+          "total": 75
+        },
+        "dom": {
+          "n": 75,
+          "median": 35.79524999996647,
+          "ci95": [
+            35.3315419999999,
+            36.605624999967404
+          ],
+          "p95": 38.81837050000213,
+          "min": 31.891875000001164,
+          "max": 40.028542000000016,
+          "mean": 35.8835266666604,
+          "ok": 75,
+          "total": 75
+        },
+        "assets": {
+          "n": 75,
+          "median": 16.19637499982491,
+          "ci95": [
+            15.802875000052154,
+            16.998791999649256
+          ],
+          "p95": 20.574178799999753,
+          "min": 12.417832999955863,
+          "max": 26.035916999999245,
+          "mean": 16.59728054667384,
+          "ok": 75,
+          "total": 75
+        },
+        "compute": {
+          "n": 75,
+          "median": 96.94804199994542,
+          "ci95": [
+            96.38147219998646,
+            98.4829590000445
+          ],
+          "p95": 102.26968750002561,
+          "min": 91.28991700000006,
+          "max": 104.86633300001267,
+          "mean": 97.49540832003048,
+          "ok": 75,
+          "total": 75
+        }
+      },
+      "latency": {
+        "evaluate": {
+          "n": 1000,
+          "median": 0.47152099994946184,
+          "ci95": [
+            0.4657919999990554,
+            0.4771255124767094
+          ],
+          "p95": 0.7043243999185506,
+          "min": 0.3956659999676049,
+          "max": 2.2835419999901205,
+          "mean": 0.5097765740031064,
+          "ok": 1000,
+          "total": 1000
+        },
+        "query": {
+          "n": 1000,
+          "median": 0.5851039999979548,
+          "ci95": [
+            0.5787064125179313,
+            0.5899159999098629
+          ],
+          "p95": 0.9221371500038003,
+          "min": 0.4720839997753501,
+          "max": 12.730750000104308,
+          "mean": 0.6763999819976397,
+          "ok": 1000,
+          "total": 1000
+        }
+      },
+      "memory": {
+        "idle": {
+          "memMb": 15.5703125,
+          "range": [
+            7.09765625,
+            16.109375
+          ],
+          "pids": 8
+        },
+        "onePage": {
+          "memMb": 21.08984375,
+          "range": [
+            10.8125,
+            21.90625
+          ],
+          "pids": 12
+        },
+        "tenPages": {
+          "memMb": 88.9375,
+          "range": [
+            59.96484375,
+            89.01953125
+          ],
+          "pids": 12
+        },
+        "tabsOpened": 10
+      },
+      "throughput": [
+        {
+          "concurrency": 1,
+          "runs": 5,
+          "pagesPerSec": 87.3462283298101,
+          "range": [
+            83.66624072999322,
+            92.1116680639531
+          ],
+          "ok": 2000,
+          "total": 2000,
+          "peakMemMb": 14.00390625,
+          "cpuMsPerPage": 8.36215
+        },
+        {
+          "concurrency": 4,
+          "runs": 5,
+          "pagesPerSec": 335.9391243772445,
+          "range": [
+            315.24228972293145,
+            344.0182905924649
+          ],
+          "ok": 2000,
+          "total": 2000,
+          "peakMemMb": 27.53515625,
+          "cpuMsPerPage": 7.66902
+        },
+        {
+          "concurrency": 8,
+          "runs": 5,
+          "pagesPerSec": 463.39983583991295,
+          "range": [
+            443.34818379429015,
+            473.80483612546317
+          ],
+          "ok": 2000,
+          "total": 2000,
+          "peakMemMb": 42.7265625,
+          "cpuMsPerPage": 8.186585000000001
+        }
+      ],
+      "compat": [
+        {
+          "id": "goto-title",
+          "group": "navigation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "redirect-followed",
+          "group": "navigation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "http-404-status",
+          "group": "navigation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "page-content",
+          "group": "navigation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "go-back",
+          "group": "navigation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "link-click-navigates",
+          "group": "navigation",
+          "passes": 0,
+          "runs": 5,
+          "status": "fail",
+          "error": "page.waitForURL: Timeout 8000ms exceeded."
+        },
+        {
+          "id": "wait-for-selector-spa",
+          "group": "navigation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "wait-for-function",
+          "group": "navigation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "iframe-access",
+          "group": "navigation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "multiple-pages",
+          "group": "navigation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "eval-roundtrip",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "modern-js-syntax",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "promise-timer-ordering",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "fetch-json",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "fetch-post-body",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "xhr",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "abort-controller",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "local-storage",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "session-storage",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "document-cookie",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "indexeddb",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "mutation-observer",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "intersection-observer",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "resize-observer",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "request-animation-frame",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "shadow-dom",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "custom-elements",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "layout-bounding-rect",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "layout-flexbox",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "computed-style",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "element-from-point",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "canvas-2d-pixels",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "canvas-to-data-url",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "web-worker",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "webassembly",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "websocket-echo",
+          "group": "web-platform",
+          "passes": 0,
+          "runs": 5,
+          "status": "fail",
+          "error": "websocket-echo timed out after 20000ms"
+        },
+        {
+          "id": "crypto-get-random-values",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "history-push-state",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "intl-formatting",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "url-and-encoding-apis",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "dom-parser-and-serializer",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "css-selectors-advanced",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "match-media",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "performance-timing",
+          "group": "web-platform",
+          "passes": 0,
+          "runs": 5,
+          "status": "fail",
+          "error": "performance-timing: expected [\"number\",true], got [\"number\",false]"
+        },
+        {
+          "id": "dynamic-script-and-module",
+          "group": "web-platform",
+          "passes": 0,
+          "runs": 5,
+          "status": "fail",
+          "error": "page.evaluate: TypeError: Failed to fetch module data:text/javascript,export default 7: Network error: Forbidden URL scheme 'data' - only http, https, and file are allowed"
+        },
+        {
+          "id": "inner-text-vs-text-content",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "click",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "fill-fires-input",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "keyboard-type-per-key",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "press-enter-submits-form",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "select-option",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "check-checkbox",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "hover",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "get-by-role",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "get-by-label-and-text",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "form-login-post-redirect",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "file-upload",
+          "group": "interaction",
+          "passes": 0,
+          "runs": 5,
+          "status": "fail",
+          "error": "page.setInputFiles: ReferenceError: DataTransfer is not defined"
+        },
+        {
+          "id": "dialog-alert",
+          "group": "interaction",
+          "passes": 0,
+          "runs": 5,
+          "status": "fail",
+          "error": "dialog: expected [\"hello dialog\",\"alerted\"], got [\"\",\"alerted\"]"
+        },
+        {
+          "id": "scroll-into-view",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "screenshot-pixels",
+          "group": "capture",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "screenshot-full-page",
+          "group": "capture",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "screenshot-element",
+          "group": "capture",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "screenshot-text-rendered",
+          "group": "capture",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "pdf",
+          "group": "capture",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "viewport-resize",
+          "group": "capture",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "viewport-survives-first-navigation",
+          "group": "capture",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "emulate-dark-mode",
+          "group": "capture",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "response-events",
+          "group": "network",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "response-body",
+          "group": "network",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "route-fulfill-mock",
+          "group": "network",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "route-abort-images",
+          "group": "network",
+          "passes": 0,
+          "runs": 5,
+          "status": "fail",
+          "error": "loaded images: expected 0, got 30"
+        },
+        {
+          "id": "images-load",
+          "group": "network",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "extra-http-headers",
+          "group": "network",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "context-add-cookies",
+          "group": "network",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "context-read-server-cookie",
+          "group": "network",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "download-event",
+          "group": "network",
+          "passes": 0,
+          "runs": 5,
+          "status": "fail",
+          "error": "page.waitForEvent: Timeout 8000ms exceeded while waiting for event \"download\""
+        },
+        {
+          "id": "add-init-script",
+          "group": "automation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "expose-function",
+          "group": "automation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "console-event",
+          "group": "automation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "page-error-event",
+          "group": "automation",
+          "passes": 0,
+          "runs": 5,
+          "status": "fail",
+          "error": "page.waitForEvent: Timeout 8000ms exceeded while waiting for event \"pageerror\""
+        },
+        {
+          "id": "element-handles",
+          "group": "automation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "raw-cdp-session",
+          "group": "automation",
+          "passes": 0,
+          "runs": 5,
+          "status": "fail",
+          "error": "DOM.getDocument"
+        },
+        {
+          "id": "accessibility-snapshot",
+          "group": "automation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "set-content",
+          "group": "automation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        }
+      ],
+      "compatTotals": {
+        "pass": 74,
+        "flaky": 0,
+        "fail": 10,
+        "total": 84
+      },
+      "fingerprint": {
+        "webdriver-flag": 0,
+        "headless-ua": 0,
+        "ua-header-mismatch": 0,
+        "no-accept-language": 0,
+        "no-languages": 0,
+        "no-plugins": 0,
+        "no-chrome-object": 0,
+        "zero-outer-size": 0,
+        "software-webgl": 5,
+        "permissions-inconsistent": 0,
+        "platform-mismatch": 0,
+        "ua-data-mismatch": 0,
+        "cdp-runtime-leak": 5,
+        "no-media-codecs": 5
+      },
+      "fingerprintRuns": 5,
+      "fingerprintExposed": 3,
+      "fingerprintRaw": {
+        "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36",
+        "webdriver": false,
+        "languages": 2,
+        "plugins": 5,
+        "hasChrome": true,
+        "outer": [
+          1920,
+          1040
+        ],
+        "webgl": "",
+        "notification": "default",
+        "permState": "prompt",
+        "platform": "Win32",
+        "brands": "Google Chrome,Chromium,Not A(Brand",
+        "uaDataPlatform": "Windows",
+        "cdpLeak": true,
+        "h264": "",
+        "aac": "",
+        "hardwareConcurrency": 4,
+        "deviceMemory": 2,
+        "headerUa": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36",
+        "acceptLanguage": "en-US,en;q=0.9"
+      },
+      "realworld": {
+        "example.com": {
+          "n": 10,
+          "median": 83.31964600004721,
+          "ci95": [
+            68.42366650002077,
+            167.63808399997652
+          ],
+          "p95": 685.1857919999701,
+          "min": 61.63420799999585,
+          "max": 1108.0687919999473,
+          "mean": 198.12222089999196,
+          "ok": 10,
+          "total": 10
+        },
+        "books.toscrape.com (static catalogue)": {
+          "n": 10,
+          "median": 531.4693954999093,
+          "ci95": [
+            248.37027049998142,
+            1012.6587505000025
+          ],
+          "p95": 1245.0994209500145,
+          "min": 199.80354200000875,
+          "max": 1255.999208000023,
+          "mean": 620.3285750999734,
+          "ok": 10,
+          "total": 10
+        },
+        "quotes.toscrape.com/js (client-rendered)": {
+          "n": 10,
+          "median": 532.3446669999466,
+          "ci95": [
+            386.1613749996759,
+            999.9201254999498
+          ],
+          "p95": 1306.0753251499962,
+          "min": 321.0620830000844,
+          "max": 1313.5182499999646,
+          "mean": 664.411212599984,
+          "ok": 10,
+          "total": 10
+        },
+        "quotes.toscrape.com/scroll (infinite scroll, XHR)": {
+          "n": 9,
+          "median": 524.8846660000272,
+          "ci95": [
+            482.0690000001341,
+            600.0734999999404
+          ],
+          "p95": 640.671674999976,
+          "min": 460.73570799990557,
+          "max": 667.7371249999997,
+          "mean": 541.3193378889329,
+          "ok": 9,
+          "total": 10,
+          "firstError": "page.waitForFunction: Timeout 15000ms exceeded."
+        },
+        "scrapethissite.com (AJAX table)": {
+          "n": 10,
+          "median": 2390.898812499945,
+          "ci95": [
+            2304.7111659999937,
+            2691.1289789998336
+          ],
+          "p95": 3167.6261706498776,
+          "min": 2203.6687920000404,
+          "max": 3357.9593329997733,
+          "mean": 2520.744645699917,
+          "ok": 10,
+          "total": 10
+        },
+        "en.wikipedia.org (large article)": {
+          "n": 10,
+          "median": 1197.1526039999444,
+          "ci95": [
+            967.5095000001602,
+            1328.2507705000462
+          ],
+          "p95": 1624.120572950046,
+          "min": 833.4293329999782,
+          "max": 1772.4429170000076,
+          "mean": 1189.2183374000365,
+          "ok": 10,
+          "total": 10
+        },
+        "news.ycombinator.com": {
+          "n": 10,
+          "median": 703.6748330000555,
+          "ci95": [
+            133.4657910000533,
+            905.4288330003619
+          ],
+          "p95": 1465.251645649957,
+          "min": 132.4544159998186,
+          "max": 1907.9479580000043,
+          "mean": 663.6165664000349,
+          "ok": 10,
+          "total": 10
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,201 @@
+{
+  "generatedAt": "2026-11-24T21:57:19.328Z",
+  "seed": 20261124,
+  "rounds": 5,
+  "trials": {
+    "sessions": 15,
+    "pageLoads": 15,
+    "commands": 200,
+    "throughputPages": 400,
+    "concurrency": [
+      1,
+      4,
+      8
+    ],
+    "realWorld": 2
+  },
+  "limits": {
+    "cpus": 4,
+    "memoryGb": 4
+  },
+  "only": [
+    "session",
+    "pageload",
+    "latency",
+    "memory",
+    "compat",
+    "fingerprint",
+    "realworld",
+    "throughput"
+  ],
+  "host": {
+    "cpu": "Apple M4 Max",
+    "cores": 16,
+    "memGb": 64,
+    "platform": "darwin 25.5.0",
+    "arch": "arm64"
+  },
+  "docker": "29.7.2 (linux/arm64)",
+  "node": "v22.18.0",
+  "playwright": "1.65.1",
+  "providers": [
+    {
+      "id": "chromium",
+      "label": "Headless Chromium (baseline)",
+      "engine": "Chromium headless-shell, no wrapper",
+      "license": "BSD-3-Clause",
+      "sessionSemantics": "Connects to an already-running browser process and uses its default context.",
+      "image": "chromedp/headless-shell:latest",
+      "digest": "chromedp/headless-shell@sha256:381353d3530ab9d579d2fe8b9c0f4519c995617f5a71daf6bb649e2d12005bd9",
+      "created": "2026-11-19T00:40:48.537135712Z",
+      "arch": "arm64",
+      "sizeMb": 147
+    },
+    {
+      "id": "browserless",
+      "label": "Browserless",
+      "engine": "Chromium behind the Browserless router",
+      "license": "SSPL-1.0 or commercial",
+      "sessionSemantics": "Each WebSocket connection launches a new Chromium process, which is killed on disconnect.",
+      "image": "ghcr.io/browserless/chromium:latest",
+      "digest": "ghcr.io/browserless/chromium@sha256:62a1025c4f92a6fbe11e00a58d67f9f7b8b99e0e500b3f99e192bd5f25d14c7a",
+      "created": "2026-11-24T19:18:40.686353941Z",
+      "arch": "arm64",
+      "sizeMb": 1012
+    },
+    {
+      "id": "steel",
+      "label": "Steel Browser",
+      "engine": "Chromium behind the Steel session API",
+      "license": "Apache-2.0",
+      "sessionSemantics": "POST /v1/sessions relaunches Chromium with a clean profile; the client then connects over CDP. One session at a time.",
+      "image": "ghcr.io/steel-dev/steel-browser:latest",
+      "digest": "ghcr.io/steel-dev/steel-browser@sha256:c68ff8d92912b8ddb5674c557075f6238fd80e33e366aac0e4a16c63e3d804b2",
+      "created": "2026-11-24T16:40:33.422573786Z",
+      "arch": "arm64",
+      "sizeMb": 967
+    },
+    {
+      "id": "obscura",
+      "label": "Obscura",
+      "engine": "Own Rust engine with V8 (not Chromium)",
+      "license": "Apache-2.0",
+      "sessionSemantics": "Each CDP connection gets its own thread and V8 isolates inside one long-lived server process.",
+      "image": "h4ckf0r0day/obscura:latest",
+      "digest": "h4ckf0r0day/obscura@sha256:e70c2abc925f2194c9338762075432c69328032cae220d77393f1495e90c601a",
+      "created": "2026-11-14T20:25:10.72084458Z",
+      "arch": "arm64",
+      "sizeMb": 97
+    }
+  ],
+  "pageKinds": [
+    {
+      "id": "static",
+      "describe": "Server-rendered HTML, 40 paragraphs"
+    },
+    {
+      "id": "spa",
+      "describe": "Client-rendered: fetch JSON, build 200 rows"
+    },
+    {
+      "id": "dom",
+      "describe": "5,000-row table (15,000 cells)"
+    },
+    {
+      "id": "assets",
+      "describe": "30 images, 5 scripts, 3 stylesheets"
+    },
+    {
+      "id": "compute",
+      "describe": "Inline script: 300k-iteration loop and sort"
+    }
+  ],
+  "fingerprintSignals": [
+    {
+      "id": "webdriver-flag",
+      "describe": "navigator.webdriver is true"
+    },
+    {
+      "id": "headless-ua",
+      "describe": "User-Agent contains \"Headless\""
+    },
+    {
+      "id": "ua-header-mismatch",
+      "describe": "HTTP User-Agent differs from navigator.userAgent"
+    },
+    {
+      "id": "no-accept-language",
+      "describe": "No Accept-Language request header"
+    },
+    {
+      "id": "no-languages",
+      "describe": "navigator.languages is empty"
+    },
+    {
+      "id": "no-plugins",
+      "describe": "navigator.plugins is empty"
+    },
+    {
+      "id": "no-chrome-object",
+      "describe": "UA claims Chrome but window.chrome is missing"
+    },
+    {
+      "id": "zero-outer-size",
+      "describe": "window.outerWidth/outerHeight is 0"
+    },
+    {
+      "id": "software-webgl",
+      "describe": "WebGL missing or reports a software renderer"
+    },
+    {
+      "id": "permissions-inconsistent",
+      "describe": "Notification.permission contradicts permissions.query"
+    },
+    {
+      "id": "platform-mismatch",
+      "describe": "UA operating system contradicts navigator.platform"
+    },
+    {
+      "id": "ua-data-mismatch",
+      "describe": "UA claims Chrome but navigator.userAgentData is missing or inconsistent"
+    },
+    {
+      "id": "cdp-runtime-leak",
+      "describe": "Page can observe the CDP Runtime domain serialising console arguments"
+    },
+    {
+      "id": "no-media-codecs",
+      "describe": "No H.264 or AAC playback support (Chrome builds have it)"
+    }
+  ],
+  "sites": [
+    {
+      "id": "example.com",
+      "url": "https://example.com/"
+    },
+    {
+      "id": "books.toscrape.com (static catalogue)",
+      "url": "https://books.toscrape.com/"
+    },
+    {
+      "id": "quotes.toscrape.com/js (client-rendered)",
+      "url": "https://quotes.toscrape.com/js/"
+    },
+    {
+      "id": "quotes.toscrape.com/scroll (infinite scroll, XHR)",
+      "url": "https://quotes.toscrape.com/scroll"
+    },
+    {
+      "id": "scrapethissite.com (AJAX table)",
+      "url": "https://www.scrapethissite.com/pages/ajax-javascript/#2015"
+    },
+    {
+      "id": "en.wikipedia.org (large article)",
+      "url": "https://en.wikipedia.org/wiki/Web_scraping"
+    },
+    {
+      "id": "news.ycombinator.com",
+      "url": "https://news.ycombinator.com/"
+    }
+  ]
+}
