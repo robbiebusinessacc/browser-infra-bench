@@ -1,60 +1,108 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 232" width="860" height="232" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-label="Container memory">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 352" width="860" height="352" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-label="Container memory">
 <title>Container memory</title><desc>Working set in MB, lower is better. Median of rounds; whiskers show min and max.</desc>
-<rect width="860" height="232" rx="8" fill="#1a1a19"/>
+<rect width="860" height="352" rx="8" fill="#1a1a19"/>
 <text x="24" y="32" font-size="16" font-weight="600" fill="#f0efec">Container memory</text>
 <text x="24" y="52" font-size="12" fill="#c3c2b7">Working set in MB, lower is better. Median of rounds; whiskers show min and max.</text>
 <text x="24" y="76" font-size="12" font-weight="600" fill="#f0efec">Idle, no session</text>
-<line x1="130.08" y1="86" x2="130.08" y2="200" stroke="#2e2e2c" stroke-width="1"/>
-<text x="120.08000000000001" y="98" font-size="12" text-anchor="end" fill="#f0efec">Plain Chromium</text>
-<path d="M130.08,86h5.731399775552486a4,4 0 0 1 4,4v8a4,4 0 0 1 -4,4h-5.731399775552486z" fill="#6f6e68"/>
-<path d="M136.61985540400553,94H141.69884539019338M136.61985540400553,91v6M141.69884539019338,91v6" stroke="#f0efec" stroke-width="1" fill="none" opacity="0.75"/>
-<text x="147.69884539019338" y="98" font-size="12" fill="#f0efec" style="font-variant-numeric: tabular-nums">61</text>
-<text x="120.08000000000001" y="128" font-size="12" text-anchor="end" fill="#f0efec">Browserless</text>
-<path d="M130.08,116h49.248200966850824a4,4 0 0 1 4,4v8a4,4 0 0 1 -4,4h-49.248200966850824z" fill="#3987e5"/>
-<path d="M180.5195170062155,124H184.4193219095304M180.5195170062155,121v6M184.4193219095304,121v6" stroke="#f0efec" stroke-width="1" fill="none" opacity="0.75"/>
-<text x="190.4193219095304" y="128" font-size="12" fill="#f0efec" style="font-variant-numeric: tabular-nums">333</text>
-<text x="120.08000000000001" y="158" font-size="12" text-anchor="end" fill="#f0efec">Steel Browser</text>
-<path d="M130.08,146h89.1287651070442a4,4 0 0 1 4,4v8a4,4 0 0 1 -4,4h-89.1287651070442z" fill="#3987e5"/>
-<path d="M215.31047349792817,154H245.84M215.31047349792817,151v6M245.84,151v6" stroke="#f0efec" stroke-width="1" fill="none" opacity="0.75"/>
-<text x="251.84" y="158" font-size="12" fill="#f0efec" style="font-variant-numeric: tabular-nums">582</text>
-<text x="120.08000000000001" y="188" font-size="12" text-anchor="end" fill="#f0efec">Obscura</text>
-<path d="M130.08,176h0a2.489529523480663,2.489529523480663 0 0 1 2.489529523480663,2.489529523480663v11.020940953038675a2.489529523480663,2.489529523480663 0 0 1 -2.489529523480663,2.489529523480663h0z" fill="#3987e5"/>
-<path d="M131.21484072859118,184H132.65571995856354M131.21484072859118,181v6M132.65571995856354,181v6" stroke="#f0efec" stroke-width="1" fill="none" opacity="0.75"/>
-<text x="138.65571995856354" y="188" font-size="12" fill="#f0efec" style="font-variant-numeric: tabular-nums">16</text>
+<line x1="190.56" y1="86" x2="190.56" y2="320" stroke="#2e2e2c" stroke-width="1"/>
+<text x="180.56" y="98" font-size="12" text-anchor="end" fill="#f0efec">chromedp headless-shell</text>
+<path d="M190.56,86h5.5697094874591055a4,4 0 0 1 4,4v8a4,4 0 0 1 -4,4h-5.5697094874591055z" fill="#6f6e68"/>
+<path d="M193.7324209378408,94H209.0215306434024M193.7324209378408,91v6M209.0215306434024,91v6" stroke="#f0efec" stroke-width="1" fill="none" opacity="0.75"/>
+<text x="215.0215306434024" y="98" font-size="12" fill="#f0efec" style="font-variant-numeric: tabular-nums">124</text>
+<text x="180.56" y="128" font-size="12" text-anchor="end" fill="#f0efec">Playwright Chromium</text>
+<path d="M190.56,116h16.965407197382767a4,4 0 0 1 4,4v8a4,4 0 0 1 -4,4h-16.965407197382767z" fill="#6f6e68"/>
+<path d="M208.6676663031625,124H216.20401221374044M208.6676663031625,121v6M216.20401221374044,121v6" stroke="#f0efec" stroke-width="1" fill="none" opacity="0.75"/>
+<text x="222.20401221374044" y="128" font-size="12" fill="#f0efec" style="font-variant-numeric: tabular-nums">272</text>
+<text x="180.56" y="158" font-size="12" text-anchor="end" fill="#f0efec">Browserless</text>
+<path d="M190.56,146h23.832003053435113a4,4 0 0 1 4,4v8a4,4 0 0 1 -4,4h-23.832003053435113z" fill="#3987e5"/>
+<path d="M214.93745517993457,154H218.77902333696838M214.93745517993457,151v6M218.77902333696838,151v6" stroke="#f0efec" stroke-width="1" fill="none" opacity="0.75"/>
+<text x="224.77902333696838" y="158" font-size="12" fill="#f0efec" style="font-variant-numeric: tabular-nums">361</text>
+<text x="180.56" y="188" font-size="12" text-anchor="end" fill="#f0efec">Steel Browser</text>
+<path d="M190.56,176h41.352507742639034a4,4 0 0 1 4,4v8a4,4 0 0 1 -4,4h-41.352507742639034z" fill="#3987e5"/>
+<path d="M231.43796248636858,184H245.84M231.43796248636858,181v6M245.84,181v6" stroke="#f0efec" stroke-width="1" fill="none" opacity="0.75"/>
+<text x="251.84" y="188" font-size="12" fill="#f0efec" style="font-variant-numeric: tabular-nums">588</text>
+<text x="180.56" y="218" font-size="12" text-anchor="end" fill="#f0efec">Obscura</text>
+<path d="M190.56,206h0a1.5,1.5 0 0 1 1.5,1.5v13a1.5,1.5 0 0 1 -1.5,1.5h0z" fill="#3987e5"/>
+<path d="M191.04256968375137,214H191.77501461286806M191.04256968375137,211v6M191.77501461286806,211v6" stroke="#f0efec" stroke-width="1" fill="none" opacity="0.75"/>
+<text x="198.06" y="218" font-size="12" fill="#f0efec" style="font-variant-numeric: tabular-nums">15</text>
+<text x="180.56" y="248" font-size="12" text-anchor="end" fill="#f0efec">Obscura (stealth)</text>
+<path d="M190.56,236h0a1.5,1.5 0 0 1 1.5,1.5v13a1.5,1.5 0 0 1 -1.5,1.5h0z" fill="#3987e5"/>
+<path d="M191.08868658669576,244H196.09945387131953M191.08868658669576,241v6M196.09945387131953,241v6" stroke="#f0efec" stroke-width="1" fill="none" opacity="0.75"/>
+<text x="202.09945387131953" y="248" font-size="12" fill="#f0efec" style="font-variant-numeric: tabular-nums">13</text>
+<text x="180.56" y="278" font-size="12" text-anchor="end" fill="#f0efec">Lightpanda</text>
+<path d="M190.56,266h0a1.5,1.5 0 0 1 1.5,1.5v13a1.5,1.5 0 0 1 -1.5,1.5h0z" fill="#3987e5"/>
+<path d="M191.0748213740458,274H191.36478516902946M191.0748213740458,271v6M191.36478516902946,271v6" stroke="#f0efec" stroke-width="1" fill="none" opacity="0.75"/>
+<text x="198.06" y="278" font-size="12" fill="#f0efec" style="font-variant-numeric: tabular-nums">10</text>
+<text x="180.56" y="308" font-size="12" text-anchor="end" fill="#f0efec">Camoufox</text>
+<path d="M190.56,296h20.136019629225732a4,4 0 0 1 4,4v8a4,4 0 0 1 -4,4h-20.136019629225732z" fill="#3987e5"/>
+<path d="M211.7376052344602,304H215.13699367502727M211.7376052344602,301v6M215.13699367502727,301v6" stroke="#f0efec" stroke-width="1" fill="none" opacity="0.75"/>
+<text x="221.13699367502727" y="308" font-size="12" fill="#f0efec" style="font-variant-numeric: tabular-nums">313</text>
 <text x="304" y="76" font-size="12" font-weight="600" fill="#f0efec">One tab open</text>
-<line x1="410.08000000000004" y1="86" x2="410.08000000000004" y2="200" stroke="#2e2e2c" stroke-width="1"/>
-<text x="400.08000000000004" y="98" font-size="12" text-anchor="end" fill="#f0efec">Plain Chromium</text>
-<path d="M410.08000000000004,86h15.391694470421431a4,4 0 0 1 4,4v8a4,4 0 0 1 -4,4h-15.391694470421431z" fill="#6f6e68"/>
-<path d="M423.24525988717613,94H434.7674813719871M423.24525988717613,91v6M434.7674813719871,91v6" stroke="#f0efec" stroke-width="1" fill="none" opacity="0.75"/>
-<text x="440.7674813719871" y="98" font-size="12" fill="#f0efec" style="font-variant-numeric: tabular-nums">130</text>
-<text x="400.08000000000004" y="128" font-size="12" text-anchor="end" fill="#f0efec">Browserless</text>
-<path d="M410.08000000000004,116h71.29690548734501a4,4 0 0 1 4,4v8a4,4 0 0 1 -4,4h-71.29690548734501z" fill="#3987e5"/>
-<path d="M482.4749609339649,124H485.84601244884215M482.4749609339649,121v6M485.84601244884215,121v6" stroke="#f0efec" stroke-width="1" fill="none" opacity="0.75"/>
-<text x="491.84601244884215" y="128" font-size="12" fill="#f0efec" style="font-variant-numeric: tabular-nums">505</text>
-<text x="400.08000000000004" y="158" font-size="12" text-anchor="end" fill="#f0efec">Steel Browser</text>
-<path d="M410.08000000000004,146h90.97495309059096a4,4 0 0 1 4,4v8a4,4 0 0 1 -4,4h-90.97495309059096z" fill="#3987e5"/>
-<path d="M497.00330829487064,154H525.84M497.00330829487064,151v6M525.84,151v6" stroke="#f0efec" stroke-width="1" fill="none" opacity="0.75"/>
-<text x="531.84" y="158" font-size="12" fill="#f0efec" style="font-variant-numeric: tabular-nums">637</text>
-<text x="400.08000000000004" y="188" font-size="12" text-anchor="end" fill="#f0efec">Obscura</text>
-<path d="M410.08000000000004,176h0a3.1423182197552464,3.1423182197552464 0 0 1 3.1423182197552464,3.1423182197552464v9.715363560489507a3.1423182197552464,3.1423182197552464 0 0 1 -3.1423182197552464,3.1423182197552464h0z" fill="#3987e5"/>
-<path d="M411.6910273814193,184H413.34396009934943M411.6910273814193,181v6M413.34396009934943,181v6" stroke="#f0efec" stroke-width="1" fill="none" opacity="0.75"/>
-<text x="419.34396009934943" y="188" font-size="12" fill="#f0efec" style="font-variant-numeric: tabular-nums">21</text>
+<line x1="470.56" y1="86" x2="470.56" y2="320" stroke="#2e2e2c" stroke-width="1"/>
+<text x="460.56" y="98" font-size="12" text-anchor="end" fill="#f0efec">chromedp headless-shell</text>
+<path d="M470.56,86h1.762970124292278a4,4 0 0 1 4,4v8a4,4 0 0 1 -4,4h-1.762970124292278z" fill="#6f6e68"/>
+<path d="M473.8422660421494,94H480.6334579034221M473.8422660421494,91v6M480.6334579034221,91v6" stroke="#f0efec" stroke-width="1" fill="none" opacity="0.75"/>
+<text x="486.6334579034221" y="98" font-size="12" fill="#f0efec" style="font-variant-numeric: tabular-nums">194</text>
+<text x="460.56" y="128" font-size="12" text-anchor="end" fill="#f0efec">Playwright Chromium</text>
+<path d="M470.56,116h5.869580339928547a4,4 0 0 1 4,4v8a4,4 0 0 1 -4,4h-5.869580339928547z" fill="#6f6e68"/>
+<path d="M479.35532923285496,124H482.2240283588641M479.35532923285496,121v6M482.2240283588641,121v6" stroke="#f0efec" stroke-width="1" fill="none" opacity="0.75"/>
+<text x="488.2240283588641" y="128" font-size="12" fill="#f0efec" style="font-variant-numeric: tabular-nums">332</text>
+<text x="460.56" y="158" font-size="12" text-anchor="end" fill="#f0efec">Browserless</text>
+<path d="M470.56,146h11.846308069274748a4,4 0 0 1 4,4v8a4,4 0 0 1 -4,4h-11.846308069274748z" fill="#3987e5"/>
+<path d="M485.09586585101596,154H486.6610969057501M485.09586585101596,151v6M486.6610969057501,151v6" stroke="#f0efec" stroke-width="1" fill="none" opacity="0.75"/>
+<text x="492.6610969057501" y="158" font-size="12" fill="#f0efec" style="font-variant-numeric: tabular-nums">533</text>
+<text x="460.56" y="188" font-size="12" text-anchor="end" fill="#f0efec">Steel Browser</text>
+<path d="M470.56,176h15.42241817100884a4,4 0 0 1 4,4v8a4,4 0 0 1 -4,4h-15.42241817100884z" fill="#3987e5"/>
+<path d="M488.13113085415523,184H493.57945071369437M488.13113085415523,181v6M493.57945071369437,181v6" stroke="#f0efec" stroke-width="1" fill="none" opacity="0.75"/>
+<text x="499.57945071369437" y="188" font-size="12" fill="#f0efec" style="font-variant-numeric: tabular-nums">653</text>
+<text x="460.56" y="218" font-size="12" text-anchor="end" fill="#f0efec">Obscura</text>
+<path d="M470.56,206h0a1.5,1.5 0 0 1 1.5,1.5v13a1.5,1.5 0 0 1 -1.5,1.5h0z" fill="#3987e5"/>
+<path d="M470.92753754604706,214H471.2029001161247M470.92753754604706,211v6M471.2029001161247,211v6" stroke="#f0efec" stroke-width="1" fill="none" opacity="0.75"/>
+<text x="478.06" y="218" font-size="12" fill="#f0efec" style="font-variant-numeric: tabular-nums">20</text>
+<text x="460.56" y="248" font-size="12" text-anchor="end" fill="#f0efec">Obscura (stealth)</text>
+<path d="M470.56,236h0a1.5,1.5 0 0 1 1.5,1.5v13a1.5,1.5 0 0 1 -1.5,1.5h0z" fill="#3987e5"/>
+<path d="M470.96322193144755,244H472.86902383055804M470.96322193144755,241v6M472.86902383055804,241v6" stroke="#f0efec" stroke-width="1" fill="none" opacity="0.75"/>
+<text x="478.86902383055804" y="248" font-size="12" fill="#f0efec" style="font-variant-numeric: tabular-nums">20</text>
+<text x="460.56" y="278" font-size="12" text-anchor="end" fill="#f0efec">Lightpanda</text>
+<path d="M470.56,266h0a1.5,1.5 0 0 1 1.5,1.5v13a1.5,1.5 0 0 1 -1.5,1.5h0z" fill="#3987e5"/>
+<path d="M470.8022353719045,274H471.27949949716356M470.8022353719045,271v6M471.27949949716356,271v6" stroke="#f0efec" stroke-width="1" fill="none" opacity="0.75"/>
+<text x="478.06" y="278" font-size="12" fill="#f0efec" style="font-variant-numeric: tabular-nums">12</text>
+<text x="460.56" y="308" font-size="12" text-anchor="end" fill="#f0efec">Camoufox</text>
+<path d="M470.56,296h33.51463404063807a4,4 0 0 1 4,4v8a4,4 0 0 1 -4,4h-33.51463404063807z" fill="#3987e5"/>
+<path d="M505.00089499330477,304H512.4M505.00089499330477,301v6M512.4,301v6" stroke="#f0efec" stroke-width="1" fill="none" opacity="0.75"/>
+<text x="518.4" y="308" font-size="12" fill="#f0efec" style="font-variant-numeric: tabular-nums">1,261</text>
 <text x="584" y="76" font-size="12" font-weight="600" fill="#f0efec">Ten tabs open</text>
-<line x1="690.08" y1="86" x2="690.08" y2="200" stroke="#2e2e2c" stroke-width="1"/>
-<text x="680.08" y="98" font-size="12" text-anchor="end" fill="#f0efec">Plain Chromium</text>
-<path d="M690.08,86h31.838008216082983a4,4 0 0 1 4,4v8a4,4 0 0 1 -4,4h-31.838008216082983z" fill="#6f6e68"/>
-<path d="M722.9089364280579,94H728.2290615179213M722.9089364280579,91v6M728.2290615179213,91v6" stroke="#f0efec" stroke-width="1" fill="none" opacity="0.75"/>
-<text x="734.2290615179213" y="98" font-size="12" fill="#f0efec" style="font-variant-numeric: tabular-nums">533</text>
-<text x="680.08" y="128" font-size="12" text-anchor="end" fill="#f0efec">Browserless</text>
-<path d="M690.08,116h64.01831549758651a4,4 0 0 1 4,4v8a4,4 0 0 1 -4,4h-64.01831549758651z" fill="#3987e5"/>
-<path d="M756.7332782171101,124H758.4035836499949M756.7332782171101,121v6M758.4035836499949,121v6" stroke="#f0efec" stroke-width="1" fill="none" opacity="0.75"/>
-<text x="764.4035836499949" y="128" font-size="12" fill="#f0efec" style="font-variant-numeric: tabular-nums">1,011</text>
-<text x="680.08" y="158" font-size="12" text-anchor="end" fill="#f0efec">Steel Browser</text>
-<path d="M690.08,146h89.5121468624833a4,4 0 0 1 4,4v8a4,4 0 0 1 -4,4h-89.5121468624833z" fill="#3987e5"/>
-<path d="M779.205165040567,154H792.4000000000001M779.205165040567,151v6M792.4000000000001,151v6" stroke="#f0efec" stroke-width="1" fill="none" opacity="0.75"/>
-<text x="798.4000000000001" y="158" font-size="12" fill="#f0efec" style="font-variant-numeric: tabular-nums">1,390</text>
-<text x="680.08" y="188" font-size="12" text-anchor="end" fill="#f0efec">Obscura</text>
-<path d="M690.08,176h1.9813642805792337a4,4 0 0 1 4,4v8a4,4 0 0 1 -4,4h-1.9813642805792337z" fill="#3987e5"/>
-<path d="M694.1128497483825,184H696.0668811748999M694.1128497483825,181v6M696.0668811748999,181v6" stroke="#f0efec" stroke-width="1" fill="none" opacity="0.75"/>
-<text x="702.0668811748999" y="188" font-size="12" fill="#f0efec" style="font-variant-numeric: tabular-nums">89</text>
+<line x1="750.56" y1="86" x2="750.56" y2="320" stroke="#2e2e2c" stroke-width="1"/>
+<text x="740.56" y="98" font-size="12" text-anchor="end" fill="#f0efec">chromedp headless-shell</text>
+<path d="M750.56,86h11.514859595174533a4,4 0 0 1 4,4v8a4,4 0 0 1 -4,4h-11.514859595174533z" fill="#6f6e68"/>
+<path d="M763.8346176460649,94H769.85215615662M763.8346176460649,91v6M769.85215615662,91v6" stroke="#f0efec" stroke-width="1" fill="none" opacity="0.75"/>
+<text x="775.85215615662" y="98" font-size="12" fill="#f0efec" style="font-variant-numeric: tabular-nums">600</text>
+<text x="740.56" y="128" font-size="12" text-anchor="end" fill="#f0efec">Playwright Chromium</text>
+<path d="M750.56,116h14.839724838402901a4,4 0 0 1 4,4v8a4,4 0 0 1 -4,4h-14.839724838402901z" fill="#6f6e68"/>
+<path d="M768.4626466683723,124H770.9838403869641M768.4626466683723,121v6M770.9838403869641,121v6" stroke="#f0efec" stroke-width="1" fill="none" opacity="0.75"/>
+<text x="776.9838403869641" y="128" font-size="12" fill="#f0efec" style="font-variant-numeric: tabular-nums">729</text>
+<text x="740.56" y="158" font-size="12" text-anchor="end" fill="#f0efec">Browserless</text>
+<path d="M750.56,146h22.855939290662366a4,4 0 0 1 4,4v8a4,4 0 0 1 -4,4h-22.855939290662366z" fill="#3987e5"/>
+<path d="M776.2302258738794,154H777.6301372428808M776.2302258738794,151v6M777.6301372428808,151v6" stroke="#f0efec" stroke-width="1" fill="none" opacity="0.75"/>
+<text x="783.6301372428808" y="158" font-size="12" fill="#f0efec" style="font-variant-numeric: tabular-nums">1,039</text>
+<text x="740.56" y="188" font-size="12" text-anchor="end" fill="#f0efec">Steel Browser</text>
+<path d="M750.56,176h32.75105657225888a4,4 0 0 1 4,4v8a4,4 0 0 1 -4,4h-32.75105657225888z" fill="#3987e5"/>
+<path d="M785.9187193882723,184H792.4M785.9187193882723,181v6M792.4,181v6" stroke="#f0efec" stroke-width="1" fill="none" opacity="0.75"/>
+<text x="798.4" y="188" font-size="12" fill="#f0efec" style="font-variant-numeric: tabular-nums">1,422</text>
+<text x="740.56" y="218" font-size="12" text-anchor="end" fill="#f0efec">Obscura</text>
+<path d="M750.56,206h0a2.0721960309146468,2.0721960309146468 0 0 1 2.0721960309146468,2.0721960309146468v11.855607938170706a2.0721960309146468,2.0721960309146468 0 0 1 -2.0721960309146468,2.0721960309146468h0z" fill="#3987e5"/>
+<path d="M752.5846301490217,214H752.827912971697M752.5846301490217,211v6M752.827912971697,211v6" stroke="#f0efec" stroke-width="1" fill="none" opacity="0.75"/>
+<text x="758.827912971697" y="218" font-size="12" fill="#f0efec" style="font-variant-numeric: tabular-nums">80</text>
+<text x="740.56" y="248" font-size="12" text-anchor="end" fill="#f0efec">Obscura (stealth)</text>
+<path d="M750.56,236h0a2.713477028834039,2.713477028834039 0 0 1 2.713477028834039,2.713477028834039v10.573045942331923a2.713477028834039,2.713477028834039 0 0 1 -2.713477028834039,2.713477028834039h0z" fill="#3987e5"/>
+<path d="M752.9063815284502,244H754.5063523709757M752.9063815284502,241v6M754.5063523709757,241v6" stroke="#f0efec" stroke-width="1" fill="none" opacity="0.75"/>
+<text x="760.5063523709757" y="248" font-size="12" fill="#f0efec" style="font-variant-numeric: tabular-nums">105</text>
+<text x="740.56" y="278" font-size="12" text-anchor="end" fill="#f0efec">Lightpanda</text>
+<path d="M750.56,266h0a1.5,1.5 0 0 1 1.5,1.5v13a1.5,1.5 0 0 1 -1.5,1.5h0z" fill="#3987e5"/>
+<path d="M751.2752050436637,274H751.8558925614648M751.2752050436637,271v6M751.8558925614648,271v6" stroke="#f0efec" stroke-width="1" fill="none" opacity="0.75"/>
+<text x="758.06" y="278" font-size="12" fill="#f0efec" style="font-variant-numeric: tabular-nums">38</text>
+<text x="740.56" y="308" font-size="12" text-anchor="end" fill="#f0efec">Camoufox</text>
+<path d="M750.56,296h36.81011281625481a4,4 0 0 1 4,4v8a4,4 0 0 1 -4,4h-36.81011281625481z" fill="#3987e5"/>
+<path d="M789.3244769274587,304H791.8027502642999M789.3244769274587,301v6M791.8027502642999,301v6" stroke="#f0efec" stroke-width="1" fill="none" opacity="0.75"/>
+<text x="797.8027502642999" y="308" font-size="12" fill="#f0efec" style="font-variant-numeric: tabular-nums">1,579</text>
 </svg>

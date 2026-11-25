@@ -164,7 +164,7 @@ const server = http.createServer(async (req, res) => {
       const i = Number(m[1]);
       return send(res, 200, MIME['.png'], png((i * 37) % 256, (i * 91) % 256, (i * 53) % 256));
     }
-    if ((m = p.match(/^\/gen\/s(\d+)\.js$/))) return send(res, 200, MIME['.js'], `window.__s = (window.__s||0) + 1; // script ${m[1]}\n` + '/* pad */\n'.repeat(500));
+    if ((m = p.match(/^\/gen\/s(\d+)\.js$/))) return send(res, 200, MIME['.js'], `window.__s = (window.__s||0) + 1; document.documentElement.dataset.scripts = String(window.__s); // script ${m[1]}\n` + '/* pad */\n'.repeat(500));
     if ((m = p.match(/^\/gen\/c(\d+)\.css$/))) return send(res, 200, MIME['.css'], `.c${m[1]}{color:rgb(${m[1]},0,0)}\n` + '/* pad */\n'.repeat(500));
 
     // static files under site/

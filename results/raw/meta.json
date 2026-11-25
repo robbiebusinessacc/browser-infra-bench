@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-24T21:57:19.328Z",
+  "generatedAt": "2026-11-25T00:32:03.479Z",
   "seed": 20261124,
   "rounds": 5,
   "trials": {
@@ -41,7 +41,7 @@
   "providers": [
     {
       "id": "chromium",
-      "label": "Headless Chromium (baseline)",
+      "label": "chromedp headless-shell",
       "engine": "Chromium headless-shell, no wrapper",
       "license": "BSD-3-Clause",
       "sessionSemantics": "Connects to an already-running browser process and uses its default context.",
@@ -50,6 +50,18 @@
       "created": "2026-11-19T00:40:48.537135712Z",
       "arch": "arm64",
       "sizeMb": 147
+    },
+    {
+      "id": "playwright-chromium",
+      "label": "Playwright Chromium (baseline)",
+      "engine": "Playwright's own Chromium build and launch flags, via `playwright run-server`",
+      "license": "Apache-2.0",
+      "sessionSemantics": "Each connection launches a new Chromium process with Playwright's default flags (Playwright protocol, not CDP).",
+      "image": "mcr.microsoft.com/playwright:v1.65.1-noble",
+      "digest": "mcr.microsoft.com/playwright@sha256:1507cbfc550a63a6b7396791ca4f00df17beb56342d2447b3f106c306f525579",
+      "created": "2026-11-13T22:16:45.171792918Z",
+      "arch": "arm64",
+      "sizeMb": 943
     },
     {
       "id": "browserless",
@@ -86,6 +98,42 @@
       "created": "2026-11-14T20:25:10.72084458Z",
       "arch": "arm64",
       "sizeMb": 97
+    },
+    {
+      "id": "obscura-stealth",
+      "label": "Obscura (stealth)",
+      "engine": "Obscura stealth build, run with --stealth",
+      "license": "Apache-2.0",
+      "sessionSemantics": "Same as Obscura.",
+      "image": "bench/obscura-stealth",
+      "digest": "bench/obscura-stealth@sha256:275a4820dd10847b36b58ba24c5220eaea7b70fe019bd630b99756d45dc57cdb",
+      "created": "2026-11-24T23:06:14.712090043Z",
+      "arch": "arm64",
+      "sizeMb": 81
+    },
+    {
+      "id": "lightpanda",
+      "label": "Lightpanda",
+      "engine": "Own Zig engine with V8 (not Chromium, no rendering)",
+      "license": "AGPL-3.0",
+      "sessionSemantics": "Each CDP connection gets its own browser instance inside one server process.",
+      "image": "lightpanda/browser:latest",
+      "digest": "lightpanda/browser@sha256:c474699588315f2d5ba1574a0608feeaf29a31663b845b640d2dd87dd2781ce0",
+      "created": "2026-11-20T14:13:40.829557797Z",
+      "arch": "arm64",
+      "sizeMb": 57
+    },
+    {
+      "id": "camoufox",
+      "label": "Camoufox",
+      "engine": "Patched Firefox (Playwright protocol, no CDP; driven by a Playwright 1.50 client)",
+      "license": "MPL-2.0",
+      "sessionSemantics": "Connects to one long-lived Firefox through a Playwright server and creates a new context.",
+      "image": "bench/camoufox",
+      "digest": "bench/camoufox@sha256:0199c2d5833e12599aaa9c920a97e141f4d4e0afce80a5e6c97d3d05be2c1f96",
+      "created": "2026-11-25T00:27:29.46923455Z",
+      "arch": "arm64",
+      "sizeMb": 1579
     }
   ],
   "pageKinds": [
@@ -149,7 +197,7 @@
     },
     {
       "id": "permissions-inconsistent",
-      "describe": "Notification.permission contradicts permissions.query"
+      "describe": "Chrome only: Notification.permission contradicts permissions.query"
     },
     {
       "id": "platform-mismatch",

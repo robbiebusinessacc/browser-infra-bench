@@ -18,7 +18,8 @@ type Round = Record<string, any>;
 const meta = JSON.parse(await readFile(join(rawDir, 'meta.json'), 'utf8'));
 const order: string[] = meta.providers.map((p: any) => p.id);
 const label = (id: string) => meta.providers.find((p: any) => p.id === id).label as string;
-const short = (id: string) => label(id).replace(' (baseline)', '').replace('Headless Chromium', 'Plain Chromium');
+const short = (id: string) => label(id).replace(' (baseline)', '');
+const isReference = (id: string) => id === 'chromium' || id === 'playwright-chromium';
 
 const rounds: Record<string, Round[]> = Object.fromEntries(order.map((id) => [id, []]));
 for (const f of (await readdir(rawDir)).filter((f) => /\.round\d+\.json$/.test(f)).sort()) {
@@ -74,6 +75,8 @@ for (const id of order) {
   s.compatTotals = { pass: 0, flaky: 0, fail: 0, total: s.compat.length };
   for (const c of s.compat) s.compatTotals[c.status]++;
   const fps = rs.map((r) => r.fingerprint).filter(good);
+  // Applied at report time too, so runs recorded before the probe was narrowed to Chrome are scored the same way.
+  for (const f of fps) if (!/Chrome\//.test(f.raw.ua)) f.exposed['permissions-inconsistent'] = false;
   s.fingerprint = Object.fromEntries(meta.fingerprintSignals.map((sig: any) => [sig.id, fps.filter((f) => f.exposed[sig.id]).length]));
   s.fingerprintRuns = fps.length;
   s.fingerprintExposed = Object.values(s.fingerprint).filter((n) => (n as number) > 0).length;
@@ -88,7 +91,7 @@ await writeFile(join(outDir, 'summary.json'), JSON.stringify({ meta, summary }, 
 const fmtMs = (v: number) => (!Number.isFinite(v) ? 'n/a' : v < 10 ? v.toFixed(1) : v < 100 ? v.toFixed(0) : Math.round(v).toLocaleString('en-US'));
 const fmtN = (v: number) => (!Number.isFinite(v) ? 'n/a' : v < 10 ? v.toFixed(1) : Math.round(v).toLocaleString('en-US'));
 const rowsOf = (get: (id: string) => { value: number; lo?: number; hi?: number; note?: string }) =>
-  order.map((id) => ({ label: short(id), muted: id === 'chromium', ...get(id) }));
+  order.map((id) => ({ label: short(id), muted: isReference(id), ...get(id) }));
 const t2row = (t: Timing) => ({ value: t.median, lo: t.ci95[0], hi: t.ci95[1], note: t.ok < t.total ? `${t.ok}/${t.total} ok` : undefined });
 
 async function chart(name: string, title: string, subtitle: string, panels: Panel[], opts: { cols?: number; legend?: string[] } = {}) {

@@ -76,8 +76,9 @@ export const pageKinds: PageKind[] = [
     } },
   { id: 'assets', describe: '30 images, 5 scripts, 3 stylesheets', url: '/assets',
     async ready(page) {
-      const r = await page.evaluate(() => [Array.from(document.images).filter((i) => i.complete && i.naturalWidth === 16).length, (window as any).__s]);
-      if (r[0] !== 30 || r[1] !== 5) throw new Error(`assets not loaded ${r}`);
+      // Read through the DOM, not page globals: some browsers run evaluate() in an isolated world.
+      const r = await page.evaluate(() => [Array.from(document.images).filter((i) => i.complete && i.naturalWidth === 16).length, document.documentElement.dataset.scripts]);
+      if (r[0] !== 30 || r[1] !== '5') throw new Error(`assets not loaded ${r}`);
     } },
   { id: 'compute', describe: 'Inline script: 300k-iteration loop and sort', url: '/compute',
     async ready(page) { if (!/^\d+$/.test((await page.textContent('#result')) ?? '')) throw new Error('no compute result'); } },
@@ -239,7 +240,7 @@ export const fingerprintSignals: { id: string; describe: string }[] = [
   { id: 'no-chrome-object', describe: 'UA claims Chrome but window.chrome is missing' },
   { id: 'zero-outer-size', describe: 'window.outerWidth/outerHeight is 0' },
   { id: 'software-webgl', describe: 'WebGL missing or reports a software renderer' },
-  { id: 'permissions-inconsistent', describe: 'Notification.permission contradicts permissions.query' },
+  { id: 'permissions-inconsistent', describe: 'Chrome only: Notification.permission contradicts permissions.query' },
   { id: 'platform-mismatch', describe: 'UA operating system contradicts navigator.platform' },
   { id: 'ua-data-mismatch', describe: 'UA claims Chrome but navigator.userAgentData is missing or inconsistent' },
   { id: 'cdp-runtime-leak', describe: 'Page can observe the CDP Runtime domain serialising console arguments' },
@@ -293,7 +294,8 @@ export async function fingerprint(p: Provider) {
       'no-chrome-object': claimsChrome && !js.hasChrome,
       'zero-outer-size': js.outer[0] === 0 || js.outer[1] === 0,
       'software-webgl': !js.webgl || /swiftshader|llvmpipe|software/i.test(js.webgl),
-      'permissions-inconsistent': js.notification === 'denied' && js.permState === 'prompt',
+      // Chrome-specific tell; Firefox reports this combination on any plain-http origin.
+      'permissions-inconsistent': claimsChrome && js.notification === 'denied' && js.permState === 'prompt',
       'platform-mismatch': uaOs !== '?' && !String(js.platform).startsWith(uaOs),
       'ua-data-mismatch': claimsChrome && (!/Chrom/.test(js.brands) || /Headless/i.test(js.brands)),
       'cdp-runtime-leak': js.cdpLeak,

@@ -205,8 +205,8 @@ export const checks: Check[] = [
     await new Promise((res, rej) => { const s = document.createElement('script'); s.src = '/gen/s1.js'; s.onload = res; s.onerror = rej; document.head.appendChild(s); });
     const spec = 'data:text/javascript,export default 7';
     const m = await import(spec);
-    return [(window as any).__s, m.default];
-  }, [1, 7]),
+    return [document.documentElement.dataset.scripts, m.default];
+  }, ['1', 7]),
   inPage('inner-text-vs-text-content', 'web-platform', () => {
     const d = document.createElement('div'); d.innerHTML = '<span>a</span><span style="display:none">hidden</span><p>b</p>'; document.body.appendChild(d);
     return [d.textContent, d.innerText.replace(/\s+/g, ' ').trim()];
@@ -339,7 +339,7 @@ export const checks: Check[] = [
   } },
   { id: 'images-load', group: 'network', async run({ page, base }) {
     await page.goto(`${base}/assets`);
-    eq(await page.evaluate(() => [Array.from(document.images).filter((i) => i.complete && i.naturalWidth === 16).length, (window as any).__s]), [30, 5], 'assets');
+    eq(await page.evaluate(() => [Array.from(document.images).filter((i) => i.complete && i.naturalWidth === 16).length, document.documentElement.dataset.scripts]), [30, '5'], 'assets');
   } },
   { id: 'extra-http-headers', group: 'network', async run({ page, base }) {
     await page.setExtraHTTPHeaders({ 'x-bench': 'hdr-1' }); await page.goto(`${base}/api/echo`);
@@ -364,7 +364,12 @@ export const checks: Check[] = [
   { id: 'add-init-script', group: 'automation', async run({ page, base }) {
     await page.addInitScript(() => { (window as any).__init = 'early'; });
     await page.goto(`${base}/compat.html`);
-    eq(await page.evaluate(() => [(window as any).__init, (window as any).__inlineRan]), ['early', true], 'init script');
+    eq(await page.evaluate(() => (window as any).__init), 'early', 'init script');
+  } },
+  { id: 'evaluate-sees-page-globals', group: 'automation', async run({ page, base }) {
+    // Can evaluate() read variables the page's own scripts defined (e.g. window.__NEXT_DATA__)?
+    await page.goto(`${base}/compat.html`);
+    eq(await page.evaluate(() => (window as any).__inlineRan), true, 'page global');
   } },
   { id: 'expose-function', group: 'automation', async run({ page, base }) {
     await page.exposeFunction('benchAdd', (a: number, b: number) => a + b);
@@ -378,7 +383,7 @@ export const checks: Check[] = [
   } },
   { id: 'page-error-event', group: 'automation', async run({ page, base }) {
     await page.goto(`${base}/compat.html`);
-    const [err] = await Promise.all([page.waitForEvent('pageerror'), page.evaluate(() => { setTimeout(() => { throw new Error('bench-boom'); }, 0); })]);
+    const [err] = await Promise.all([page.waitForEvent('pageerror'), page.click('#boom')]);
     ok(err.message.includes('bench-boom'), 'pageerror message');
   } },
   { id: 'element-handles', group: 'automation', async run({ page, base }) {

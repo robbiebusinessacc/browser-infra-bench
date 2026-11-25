@@ -20,6 +20,7 @@
 <button id="btn" onclick="document.getElementById('out').textContent='clicked'">Click me</button>
 <button id="save" onclick="document.getElementById('out').textContent='saved'">Save changes</button>
 <button id="alert" onclick="alert('hello dialog'); document.getElementById('out').textContent='alerted'">Alert</button>
+<button id="boom" onclick="setTimeout(() => { throw new Error('bench-boom'); }, 0)">Boom</button>
 <button id="log" onclick="console.log('bench-console-message')">Log</button>
 <label for="name">Full name</label>
 <input id="name" type="text">

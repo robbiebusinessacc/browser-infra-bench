@@ -1,6 +1,6 @@
 {
   "meta": {
-    "generatedAt": "2026-11-24T21:57:19.328Z",
+    "generatedAt": "2026-11-25T00:32:03.479Z",
     "seed": 20261124,
     "rounds": 5,
     "trials": {
@@ -42,7 +42,7 @@
     "providers": [
       {
         "id": "chromium",
-        "label": "Headless Chromium (baseline)",
+        "label": "chromedp headless-shell",
         "engine": "Chromium headless-shell, no wrapper",
         "license": "BSD-3-Clause",
         "sessionSemantics": "Connects to an already-running browser process and uses its default context.",
@@ -51,6 +51,18 @@
         "created": "2026-11-19T00:40:48.537135712Z",
         "arch": "arm64",
         "sizeMb": 147
+      },
+      {
+        "id": "playwright-chromium",
+        "label": "Playwright Chromium (baseline)",
+        "engine": "Playwright's own Chromium build and launch flags, via `playwright run-server`",
+        "license": "Apache-2.0",
+        "sessionSemantics": "Each connection launches a new Chromium process with Playwright's default flags (Playwright protocol, not CDP).",
+        "image": "mcr.microsoft.com/playwright:v1.65.1-noble",
+        "digest": "mcr.microsoft.com/playwright@sha256:1507cbfc550a63a6b7396791ca4f00df17beb56342d2447b3f106c306f525579",
+        "created": "2026-11-13T22:16:45.171792918Z",
+        "arch": "arm64",
+        "sizeMb": 943
       },
       {
         "id": "browserless",
@@ -87,6 +99,42 @@
         "created": "2026-11-14T20:25:10.72084458Z",
         "arch": "arm64",
         "sizeMb": 97
+      },
+      {
+        "id": "obscura-stealth",
+        "label": "Obscura (stealth)",
+        "engine": "Obscura stealth build, run with --stealth",
+        "license": "Apache-2.0",
+        "sessionSemantics": "Same as Obscura.",
+        "image": "bench/obscura-stealth",
+        "digest": "bench/obscura-stealth@sha256:275a4820dd10847b36b58ba24c5220eaea7b70fe019bd630b99756d45dc57cdb",
+        "created": "2026-11-24T23:06:14.712090043Z",
+        "arch": "arm64",
+        "sizeMb": 81
+      },
+      {
+        "id": "lightpanda",
+        "label": "Lightpanda",
+        "engine": "Own Zig engine with V8 (not Chromium, no rendering)",
+        "license": "AGPL-3.0",
+        "sessionSemantics": "Each CDP connection gets its own browser instance inside one server process.",
+        "image": "lightpanda/browser:latest",
+        "digest": "lightpanda/browser@sha256:c474699588315f2d5ba1574a0608feeaf29a31663b845b640d2dd87dd2781ce0",
+        "created": "2026-11-20T14:13:40.829557797Z",
+        "arch": "arm64",
+        "sizeMb": 57
+      },
+      {
+        "id": "camoufox",
+        "label": "Camoufox",
+        "engine": "Patched Firefox (Playwright protocol, no CDP; driven by a Playwright 1.50 client)",
+        "license": "MPL-2.0",
+        "sessionSemantics": "Connects to one long-lived Firefox through a Playwright server and creates a new context.",
+        "image": "bench/camoufox",
+        "digest": "bench/camoufox@sha256:0199c2d5833e12599aaa9c920a97e141f4d4e0afce80a5e6c97d3d05be2c1f96",
+        "created": "2026-11-25T00:27:29.46923455Z",
+        "arch": "arm64",
+        "sizeMb": 1579
       }
     ],
     "pageKinds": [
@@ -150,7 +198,7 @@
       },
       {
         "id": "permissions-inconsistent",
-        "describe": "Notification.permission contradicts permissions.query"
+        "describe": "Chrome only: Notification.permission contradicts permissions.query"
       },
       {
         "id": "platform-mismatch",
@@ -204,33 +252,33 @@
     "chromium": {
       "rounds": 5,
       "browserVersion": "159.0.8154.13",
-      "startupMs": 296.7406669999473,
+      "startupMs": 295.03329100459814,
       "session": {
         "connect": {
           "n": 75,
-          "median": 21.771790999919176,
+          "median": 27.104000002145767,
           "ci95": [
-            18.64416699996218,
-            24.98549999995157
+            21.46608300000662,
+            32.611708000302315
           ],
-          "p95": 69.91004639994341,
-          "min": 8.058583999983966,
-          "max": 106.88016699999571,
-          "mean": 28.29677174666819,
+          "p95": 71.15191250000206,
+          "min": 8.722625002264977,
+          "max": 143.34662500023842,
+          "mean": 32.95030450670941,
           "ok": 75,
           "total": 75
         },
         "firstPage": {
           "n": 75,
-          "median": 166.0814169999794,
+          "median": 171.67916600001627,
           "ci95": [
-            160.8516659999732,
-            176.96924999984913
+            163.79275000095367,
+            191.20500000566244
           ],
-          "p95": 247.1110289000673,
-          "min": 114.26629100000719,
-          "max": 333.7019999999902,
-          "mean": 181.3020250799926,
+          "p95": 268.9439661994576,
+          "min": 114.65279199928045,
+          "max": 329.7801669999899,
+          "mean": 187.25606950687865,
           "ok": 75,
           "total": 75
         }
@@ -238,71 +286,71 @@
       "pageload": {
         "static": {
           "n": 75,
-          "median": 71.31312499986961,
+          "median": 73.65620800000033,
           "ci95": [
-            68.8654580002185,
-            72.95970800006762
+            73.14179199934006,
+            74.09066600352526
           ],
-          "p95": 98.8518249999964,
-          "min": 59.63983400003053,
-          "max": 126.79275000002235,
-          "mean": 73.41020778667337,
+          "p95": 122.6720083042979,
+          "min": 63.642292000353336,
+          "max": 240.70199999958277,
+          "mean": 78.94691772015183,
           "ok": 75,
           "total": 75
         },
         "spa": {
           "n": 75,
-          "median": 139.69066700001713,
+          "median": 143.24658399820328,
           "ci95": [
-            137.9963749999879,
-            140.9904169999645
+            142.33875000476837,
+            144.803041999985
           ],
-          "p95": 178.80283749985975,
-          "min": 127.61787499999627,
-          "max": 189.93849999993108,
-          "mean": 143.52554067998815,
+          "p95": 166.5310838988807,
+          "min": 131.41408299654722,
+          "max": 202.2048749999958,
+          "mean": 145.1302195065488,
           "ok": 75,
           "total": 75
         },
         "dom": {
           "n": 75,
-          "median": 131.39429199998267,
+          "median": 132.62866599857807,
           "ci95": [
-            130.8020419999957,
-            132.1332500000135
+            131.778792001307,
+            133.00258299708366
           ],
-          "p95": 135.6366248998558,
-          "min": 103.72695799998473,
-          "max": 138.86600000003818,
-          "mean": 131.3731466133458,
+          "p95": 136.69364989995955,
+          "min": 105.85979200154543,
+          "max": 138.90812499821186,
+          "mean": 131.0515872265899,
           "ok": 75,
           "total": 75
         },
         "assets": {
           "n": 75,
-          "median": 62.97854200005531,
+          "median": 63.411375001072884,
           "ci95": [
-            62.48895899998024,
-            63.38741700025275
+            63.107459001243114,
+            63.81375000625849
           ],
-          "p95": 67.50232860003598,
-          "min": 33.74195900000632,
-          "max": 76.61399999994319,
-          "mean": 63.02648116001627,
+          "p95": 67.46852490052697,
+          "min": 60.10858400166035,
+          "max": 78.24137499928474,
+          "mean": 63.96392332036514,
           "ok": 75,
           "total": 75
         },
         "compute": {
           "n": 75,
-          "median": 110.70216699998127,
+          "median": 111.68516699969769,
           "ci95": [
-            108.52262499998324,
-            112.55279100011103
+            111.24562499672174,
+            113.03450000000885
           ],
-          "p95": 154.87064189994706,
-          "min": 98.88912499975413,
-          "max": 161.0846250001341,
-          "mean": 122.22671274666209,
+          "p95": 154.33907940015197,
+          "min": 105.50145800411701,
+          "max": 158.8018750026822,
+          "mean": 120.57752559976225,
           "ok": 75,
           "total": 75
         }
@@ -310,57 +358,57 @@
       "latency": {
         "evaluate": {
           "n": 1000,
-          "median": 0.9761045000341255,
+          "median": 1.245229497551918,
           "ci95": [
-            0.9529169998131692,
-            1.002208000048995
+            1.2209375016391277,
+            1.2648130080662667
           ],
-          "p95": 1.4813860500056761,
-          "min": 0.6135419998317957,
-          "max": 46.36854199995287,
-          "mean": 1.0697278730029356,
+          "p95": 1.7247747004032128,
+          "min": 0.6724169999361038,
+          "max": 50.77766700001666,
+          "mean": 1.447267714944319,
           "ok": 1000,
           "total": 1000
         },
         "query": {
           "n": 1000,
-          "median": 1.1901040000084322,
+          "median": 1.4715415015816689,
           "ci95": [
-            1.1632074625435052,
-            1.2274374999979045
+            1.447792001068592,
+            1.5013597264885903
           ],
-          "p95": 1.8402687499299641,
-          "min": 0.701791999861598,
-          "max": 45.95391699997708,
-          "mean": 1.3771189649970037,
+          "p95": 2.150045501440763,
+          "min": 0.8024579957127571,
+          "max": 63.04625000059605,
+          "mean": 1.7278821119370404,
           "ok": 1000,
           "total": 1000
         }
       },
       "memory": {
         "idle": {
-          "memMb": 60.86328125,
+          "memMb": 124.01953125,
           "range": [
-            40.90234375,
-            72.66796875
+            41.11328125,
+            239.25390625
           ],
           "pids": 62
         },
         "onePage": {
-          "memMb": 130.1484375,
+          "memMb": 193.671875,
           "range": [
-            88.359375,
-            165.69140625
+            110.3046875,
+            338.53125
           ],
           "pids": 73
         },
         "tenPages": {
-          "memMb": 532.87890625,
+          "memMb": 600.11328125,
           "range": [
-            488.13671875,
-            567.2421875
+            513.4609375,
+            746.21875
           ],
-          "pids": 277
+          "pids": 279
         },
         "tabsOpened": 10
       },
@@ -368,41 +416,41 @@
         {
           "concurrency": 1,
           "runs": 5,
-          "pagesPerSec": 7.3252649888857055,
+          "pagesPerSec": 7.194767303255413,
           "range": [
-            7.247335962110199,
-            7.449656195332698
+            7.16389810324761,
+            7.441655363818302
           ],
           "ok": 2000,
           "total": 2000,
-          "peakMemMb": 120.77734375,
-          "cpuMsPerPage": 72.04543000000001
+          "peakMemMb": 120.5078125,
+          "cpuMsPerPage": 73.8755525
         },
         {
           "concurrency": 4,
           "runs": 5,
-          "pagesPerSec": 26.062485970938187,
+          "pagesPerSec": 25.34257472090014,
           "range": [
-            25.362803410263496,
-            26.423344944825935
+            23.993712327716008,
+            26.077316419267184
           ],
           "ok": 2000,
           "total": 2000,
-          "peakMemMb": 170.26953125,
-          "cpuMsPerPage": 79.5958325
+          "peakMemMb": 171.28515625,
+          "cpuMsPerPage": 80.60389500000001
         },
         {
           "concurrency": 8,
           "runs": 5,
-          "pagesPerSec": 40.15604941974882,
+          "pagesPerSec": 39.33626155743011,
           "range": [
-            39.27040737341172,
-            41.18924735647757
+            24.38326592615838,
+            40.47195220493693
           ],
           "ok": 2000,
           "total": 2000,
-          "peakMemMb": 243.59375,
-          "cpuMsPerPage": 97.88838249999999
+          "peakMemMb": 244.765625,
+          "cpuMsPerPage": 99.78470250000001
         }
       ],
       "compat": [
@@ -946,6 +994,13 @@
           "status": "pass"
         },
         {
+          "id": "evaluate-sees-page-globals",
+          "group": "automation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
           "id": "expose-function",
           "group": "automation",
           "passes": 5,
@@ -996,10 +1051,10 @@
         }
       ],
       "compatTotals": {
-        "pass": 84,
+        "pass": 85,
         "flaky": 0,
         "fail": 0,
-        "total": 84
+        "total": 85
       },
       "fingerprint": {
         "webdriver-flag": 5,
@@ -1046,99 +1101,1049 @@
       "realworld": {
         "example.com": {
           "n": 10,
-          "median": 153.2555000000866,
+          "median": 149.74662500203704,
           "ci95": [
-            113.88999999989755,
-            218.81520800001454
+            78.30939600244164,
+            190.74058300000615
           ],
-          "p95": 458.76164825001,
-          "min": 72.02720799995586,
-          "max": 610.2275420000078,
-          "mean": 198.0836665999901,
+          "p95": 215.6999373514205,
+          "min": 71.04679200053215,
+          "max": 233.37274999916553,
+          "mean": 138.92635840143194,
           "ok": 10,
           "total": 10
         },
         "books.toscrape.com (static catalogue)": {
           "n": 10,
-          "median": 252.0952709999401,
+          "median": 246.38047899783123,
           "ci95": [
-            101.61202050000429,
-            607.7249790001661
+            104.84016700088978,
+            415.36939599737525
           ],
-          "p95": 721.3311625001136,
-          "min": 93.95529199996963,
-          "max": 761.4625000001397,
-          "mean": 344.608395900036,
+          "p95": 485.18079999536263,
+          "min": 97.23191600292921,
+          "max": 529.4454999938607,
+          "mean": 265.79362909822373,
           "ok": 10,
           "total": 10
         },
         "quotes.toscrape.com/js (client-rendered)": {
           "n": 10,
-          "median": 432.15139650009223,
+          "median": 416.5424790009856,
           "ci95": [
-            234.65254200005438,
-            857.8422290000017
+            263.4227294996381,
+            654.7039375007153
           ],
-          "p95": 1396.9428524499342,
-          "min": 232.2369999999646,
-          "max": 1771.4542089998722,
-          "mean": 612.6308419000183,
+          "p95": 762.5020643990487,
+          "min": 245.48929200321436,
+          "max": 778.5250829979777,
+          "mean": 455.94073340038886,
           "ok": 10,
           "total": 10
         },
         "quotes.toscrape.com/scroll (infinite scroll, XHR)": {
           "n": 10,
-          "median": 419.47881250001956,
+          "median": 456.198875002563,
           "ci95": [
-            386.9476670003496,
-            467.0468539999565
+            386.6289170011878,
+            482.6779589999933
           ],
-          "p95": 492.501362499973,
-          "min": 351.6993749999674,
-          "max": 500.52812500006985,
-          "mean": 424.61458330001335,
+          "p95": 511.68033370040354,
+          "min": 343.7308750003576,
+          "max": 519.9629589989781,
+          "mean": 439.8241751008842,
           "ok": 10,
           "total": 10
         },
         "scrapethissite.com (AJAX table)": {
           "n": 10,
-          "median": 2274.9141459999373,
+          "median": 2221.7861665003,
           "ci95": [
-            2136.878792000003,
-            2328.0937500001164
+            2057.984958998859,
+            2310.939332999289
           ],
-          "p95": 2976.5025187499227,
-          "min": 2117.164166000206,
-          "max": 3466.581374999834,
-          "mean": 2365.422837499989,
+          "p95": 2585.733420649252,
+          "min": 1832.1672919999692,
+          "max": 2777.881208000006,
+          "mean": 2222.712879200134,
           "ok": 10,
           "total": 10
         },
         "en.wikipedia.org (large article)": {
           "n": 10,
-          "median": 284.4296040002082,
+          "median": 342.20210399851203,
           "ci95": [
-            168.75183300022036,
-            468.093792000087
+            184.12308299995493,
+            392.7621665005863
           ],
-          "p95": 966.2325960500767,
-          "min": 133.15354199986905,
-          "max": 1371.4937090000021,
-          "mean": 393.91469180008863,
+          "p95": 428.4038437497598,
+          "min": 151.9087499976158,
+          "max": 446.10824999958277,
+          "mean": 298.82872079889637,
           "ok": 10,
           "total": 10
         },
         "news.ycombinator.com": {
           "n": 10,
-          "median": 454.2518329999875,
+          "median": 422.18558349990053,
           "ci95": [
-            165.24225000012666,
-            700.1670000000158
+            160.87520799785852,
+            700.8848539999162
           ],
-          "p95": 776.0581295000446,
-          "min": 129.4716250000056,
-          "max": 801.2982920000795,
-          "mean": 448.07447500003036,
+          "p95": 750.3031000035437,
+          "min": 122.68120799958706,
+          "max": 751.4526250064373,
+          "mean": 428.0410541999212,
+          "ok": 10,
+          "total": 10
+        }
+      }
+    },
+    "playwright-chromium": {
+      "rounds": 5,
+      "browserVersion": "159.0.8154.6",
+      "startupMs": 2041.27349999547,
+      "session": {
+        "connect": {
+          "n": 75,
+          "median": 23.058707997202873,
+          "ci95": [
+            22.303208000957966,
+            23.516874998807907
+          ],
+          "p95": 26.72644200026989,
+          "min": 20.432457998394966,
+          "max": 34.64649999886751,
+          "mean": 23.233369906743366,
+          "ok": 75,
+          "total": 75
+        },
+        "firstPage": {
+          "n": 75,
+          "median": 45.59554199874401,
+          "ci95": [
+            44.187625005841255,
+            46.00425000488758
+          ],
+          "p95": 50.66776690036058,
+          "min": 40.68241699784994,
+          "max": 57.275250002741814,
+          "mean": 45.31710934629043,
+          "ok": 75,
+          "total": 75
+        }
+      },
+      "pageload": {
+        "static": {
+          "n": 75,
+          "median": 16.98920799791813,
+          "ci95": [
+            16.85470800101757,
+            17.304667003452778
+          ],
+          "p95": 20.12392140328884,
+          "min": 15.61124999821186,
+          "max": 21.571040995419025,
+          "mean": 17.412203880349796,
+          "ok": 75,
+          "total": 75
+        },
+        "spa": {
+          "n": 75,
+          "median": 27.94241700321436,
+          "ci95": [
+            27.56641599535942,
+            28.589958995580673
+          ],
+          "p95": 32.307870698720215,
+          "min": 25.82533299922943,
+          "max": 34.242917001247406,
+          "mean": 28.430468772848446,
+          "ok": 75,
+          "total": 75
+        },
+        "dom": {
+          "n": 75,
+          "median": 81.82674999535084,
+          "ci95": [
+            80.82008299976587,
+            82.60479199886322
+          ],
+          "p95": 94.03274989947677,
+          "min": 76.44754200428724,
+          "max": 95.54050000011921,
+          "mean": 82.68066050708293,
+          "ok": 75,
+          "total": 75
+        },
+        "assets": {
+          "n": 75,
+          "median": 16.495124995708466,
+          "ci95": [
+            16.12270800024271,
+            16.68512500077486
+          ],
+          "p95": 19.75017059892416,
+          "min": 14.48445799946785,
+          "max": 21.441874995827675,
+          "mean": 16.73535499930382,
+          "ok": 75,
+          "total": 75
+        },
+        "compute": {
+          "n": 75,
+          "median": 93.53754100203514,
+          "ci95": [
+            90.81845900416374,
+            105.45166599750519
+          ],
+          "p95": 118.28464569821953,
+          "min": 85.76758400350809,
+          "max": 168.49462500214577,
+          "mean": 99.3026089467605,
+          "ok": 75,
+          "total": 75
+        }
+      },
+      "latency": {
+        "evaluate": {
+          "n": 1000,
+          "median": 1.4607290029525757,
+          "ci95": [
+            1.4351460002362728,
+            1.5020246115513145
+          ],
+          "p95": 2.1017202034592626,
+          "min": 0.7289999946951866,
+          "max": 3.130500003695488,
+          "mean": 1.4791422318443657,
+          "ok": 1000,
+          "total": 1000
+        },
+        "query": {
+          "n": 1000,
+          "median": 1.5658335015177727,
+          "ci95": [
+            1.5348749980330467,
+            1.5984169989824295
+          ],
+          "p95": 2.291464902460575,
+          "min": 0.8015419989824295,
+          "max": 12.28337500244379,
+          "mean": 1.6272892460674047,
+          "ok": 1000,
+          "total": 1000
+        }
+      },
+      "memory": {
+        "idle": {
+          "memMb": 271.703125,
+          "range": [
+            234.66796875,
+            332.3359375
+          ],
+          "pids": 27
+        },
+        "onePage": {
+          "memMb": 331.6796875,
+          "range": [
+            295.578125,
+            391.984375
+          ],
+          "pids": 111
+        },
+        "tenPages": {
+          "memMb": 728.71875,
+          "range": [
+            692.47265625,
+            789.9921875
+          ],
+          "pids": 317
+        },
+        "tabsOpened": 10
+      },
+      "throughput": [
+        {
+          "concurrency": 1,
+          "runs": 5,
+          "pagesPerSec": 44.43616779837822,
+          "range": [
+            40.65376126566124,
+            47.75508827239866
+          ],
+          "ok": 2000,
+          "total": 2000,
+          "peakMemMb": 336.51171875,
+          "cpuMsPerPage": 44.5589425
+        },
+        {
+          "concurrency": 4,
+          "runs": 5,
+          "pagesPerSec": 77.25885579625671,
+          "range": [
+            69.12219621369002,
+            80.07852966679236
+          ],
+          "ok": 2000,
+          "total": 2000,
+          "peakMemMb": 518.8984375,
+          "cpuMsPerPage": 50.9925825
+        },
+        {
+          "concurrency": 8,
+          "runs": 5,
+          "pagesPerSec": 81.52479077167324,
+          "range": [
+            74.01153490269792,
+            84.57931066421546
+          ],
+          "ok": 2000,
+          "total": 2000,
+          "peakMemMb": 748.65234375,
+          "cpuMsPerPage": 48.50324750000001
+        }
+      ],
+      "compat": [
+        {
+          "id": "goto-title",
+          "group": "navigation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "redirect-followed",
+          "group": "navigation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "http-404-status",
+          "group": "navigation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "page-content",
+          "group": "navigation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "go-back",
+          "group": "navigation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "link-click-navigates",
+          "group": "navigation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "wait-for-selector-spa",
+          "group": "navigation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "wait-for-function",
+          "group": "navigation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "iframe-access",
+          "group": "navigation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "multiple-pages",
+          "group": "navigation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "eval-roundtrip",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "modern-js-syntax",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "promise-timer-ordering",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "fetch-json",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "fetch-post-body",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "xhr",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "abort-controller",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "local-storage",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "session-storage",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "document-cookie",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "indexeddb",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "mutation-observer",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "intersection-observer",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "resize-observer",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "request-animation-frame",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "shadow-dom",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "custom-elements",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "layout-bounding-rect",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "layout-flexbox",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "computed-style",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "element-from-point",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "canvas-2d-pixels",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "canvas-to-data-url",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "web-worker",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "webassembly",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "websocket-echo",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "crypto-get-random-values",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "history-push-state",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "intl-formatting",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "url-and-encoding-apis",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "dom-parser-and-serializer",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "css-selectors-advanced",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "match-media",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "performance-timing",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "dynamic-script-and-module",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "inner-text-vs-text-content",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "click",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "fill-fires-input",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "keyboard-type-per-key",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "press-enter-submits-form",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "select-option",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "check-checkbox",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "hover",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "get-by-role",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "get-by-label-and-text",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "form-login-post-redirect",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "file-upload",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "dialog-alert",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "scroll-into-view",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "screenshot-pixels",
+          "group": "capture",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "screenshot-full-page",
+          "group": "capture",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "screenshot-element",
+          "group": "capture",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "screenshot-text-rendered",
+          "group": "capture",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "pdf",
+          "group": "capture",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "viewport-resize",
+          "group": "capture",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "viewport-survives-first-navigation",
+          "group": "capture",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "emulate-dark-mode",
+          "group": "capture",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "response-events",
+          "group": "network",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "response-body",
+          "group": "network",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "route-fulfill-mock",
+          "group": "network",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "route-abort-images",
+          "group": "network",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "images-load",
+          "group": "network",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "extra-http-headers",
+          "group": "network",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "context-add-cookies",
+          "group": "network",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "context-read-server-cookie",
+          "group": "network",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "download-event",
+          "group": "network",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "add-init-script",
+          "group": "automation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "evaluate-sees-page-globals",
+          "group": "automation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "expose-function",
+          "group": "automation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "console-event",
+          "group": "automation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "page-error-event",
+          "group": "automation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "element-handles",
+          "group": "automation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "raw-cdp-session",
+          "group": "automation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "accessibility-snapshot",
+          "group": "automation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "set-content",
+          "group": "automation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        }
+      ],
+      "compatTotals": {
+        "pass": 85,
+        "flaky": 0,
+        "fail": 0,
+        "total": 85
+      },
+      "fingerprint": {
+        "webdriver-flag": 5,
+        "headless-ua": 5,
+        "ua-header-mismatch": 0,
+        "no-accept-language": 5,
+        "no-languages": 0,
+        "no-plugins": 5,
+        "no-chrome-object": 5,
+        "zero-outer-size": 0,
+        "software-webgl": 5,
+        "permissions-inconsistent": 5,
+        "platform-mismatch": 0,
+        "ua-data-mismatch": 5,
+        "cdp-runtime-leak": 0,
+        "no-media-codecs": 0
+      },
+      "fingerprintRuns": 5,
+      "fingerprintExposed": 8,
+      "fingerprintRaw": {
+        "ua": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/159.0.8154.6 Safari/537.36",
+        "webdriver": true,
+        "languages": 1,
+        "plugins": 0,
+        "hasChrome": false,
+        "outer": [
+          1280,
+          720
+        ],
+        "webgl": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)",
+        "notification": "denied",
+        "permState": "prompt",
+        "platform": "Linux x86_64",
+        "brands": "",
+        "uaDataPlatform": "",
+        "cdpLeak": false,
+        "h264": "probably",
+        "aac": "probably",
+        "hardwareConcurrency": 16,
+        "deviceMemory": null,
+        "headerUa": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/159.0.8154.6 Safari/537.36",
+        "acceptLanguage": ""
+      },
+      "realworld": {
+        "example.com": {
+          "n": 10,
+          "median": 57.2734375,
+          "ci95": [
+            25.690354503691196,
+            105.68147949874401
+          ],
+          "p95": 115.56263534724712,
+          "min": 21.616541996598244,
+          "max": 117.2417909950018,
+          "mean": 64.6062833994627,
+          "ok": 10,
+          "total": 10
+        },
+        "books.toscrape.com (static catalogue)": {
+          "n": 10,
+          "median": 190.64954150095582,
+          "ci95": [
+            52.70874999463558,
+            415.7139164991677
+          ],
+          "p95": 504.2615107499062,
+          "min": 51.161292001605034,
+          "max": 544.8574170023203,
+          "mean": 236.36841249987484,
+          "ok": 10,
+          "total": 10
+        },
+        "quotes.toscrape.com/js (client-rendered)": {
+          "n": 10,
+          "median": 366.74366649985313,
+          "ci95": [
+            133.29291599988937,
+            655.6327079981565
+          ],
+          "p95": 747.1654483996332,
+          "min": 129.66383299976587,
+          "max": 751.5845419988036,
+          "mean": 399.4560123994946,
+          "ok": 10,
+          "total": 10
+        },
+        "quotes.toscrape.com/scroll (infinite scroll, XHR)": {
+          "n": 10,
+          "median": 302.21068699657917,
+          "ci95": [
+            250.20452150329947,
+            399.27920799702406
+          ],
+          "p95": 415.08505640365183,
+          "min": 202.30104200541973,
+          "max": 427.37937500327826,
+          "mean": 312.26760840043426,
+          "ok": 10,
+          "total": 10
+        },
+        "scrapethissite.com (AJAX table)": {
+          "n": 10,
+          "median": 2144.3621455021203,
+          "ci95": [
+            2086.148750498891,
+            2294.1206203370325
+          ],
+          "p95": 2459.132010296732,
+          "min": 1962.4079590067267,
+          "max": 2478.3776669949293,
+          "mean": 2188.251550000906,
+          "ok": 10,
+          "total": 10
+        },
+        "en.wikipedia.org (large article)": {
+          "n": 10,
+          "median": 252.63270800188184,
+          "ci95": [
+            135.48733299970627,
+            391.9959169998765
+          ],
+          "p95": 683.4085375025863,
+          "min": 127.1644169986248,
+          "max": 910.0817500054836,
+          "mean": 313.3560666002333,
+          "ok": 10,
+          "total": 10
+        },
+        "news.ycombinator.com": {
+          "n": 10,
+          "median": 601.0206664986908,
+          "ci95": [
+            126.40212500095367,
+            674.0030409991741
+          ],
+          "p95": 1292.332458149268,
+          "min": 121.34487500041723,
+          "max": 1792.1804580017924,
+          "mean": 548.7618498995901,
           "ok": 10,
           "total": 10
         }
@@ -1147,33 +2152,33 @@
     "browserless": {
       "rounds": 5,
       "browserVersion": "159.0.8154.6",
-      "startupMs": 1158.1669170001987,
+      "startupMs": 1165.3018339946866,
       "session": {
         "connect": {
           "n": 75,
-          "median": 87.9732079999958,
+          "median": 89.00162500003353,
           "ci95": [
-            87.27499999990687,
-            89.1840830000001
+            88.32291699945927,
+            89.49762500077486
           ],
-          "p95": 162.4728462999686,
-          "min": 83.48941600020044,
-          "max": 220.4262920001056,
-          "mean": 95.46008606666544,
+          "p95": 167.8047002005507,
+          "min": 85.11229199916124,
+          "max": 212.58949999511242,
+          "mean": 95.7315822669724,
           "ok": 75,
           "total": 75
         },
         "firstPage": {
           "n": 75,
-          "median": 113.12337499996647,
+          "median": 114.23370800167322,
           "ci95": [
-            111.66691699999501,
-            114.67795899999328
+            113.35329200327396,
+            115.39079199999105
           ],
-          "p95": 187.5460088000865,
-          "min": 106.76816700026393,
-          "max": 251.29079199999978,
-          "mean": 120.8477137866624,
+          "p95": 208.1266712993092,
+          "min": 109.35183300077915,
+          "max": 236.41299999505281,
+          "mean": 121.53310894696664,
           "ok": 75,
           "total": 75
         }
@@ -1181,71 +2186,71 @@
       "pageload": {
         "static": {
           "n": 75,
-          "median": 27.43649999999616,
+          "median": 30.823832996189594,
           "ci95": [
-            26.363542000064626,
-            29.173209000000497
+            29.953166998922825,
+            32.317542001605034
           ],
-          "p95": 34.5015541999368,
-          "min": 22.32695800019428,
-          "max": 36.05108299991116,
-          "mean": 28.348916173310524,
+          "p95": 35.33284140005708,
+          "min": 23.55849999934435,
+          "max": 39.02295799553394,
+          "mean": 30.496051787017688,
           "ok": 75,
           "total": 75
         },
         "spa": {
           "n": 75,
-          "median": 46.329583999700844,
+          "median": 52.25637499988079,
           "ci95": [
-            45.547500000102445,
-            47.68045900017023
+            50.63949999958277,
+            53.8015000000014
           ],
-          "p95": 56.51019179997966,
-          "min": 37.051416999995126,
-          "max": 67.83312500012107,
-          "mean": 47.67636725335304,
+          "p95": 58.83917489997111,
+          "min": 39.52304200083017,
+          "max": 62.595750004053116,
+          "mean": 51.639125586669735,
           "ok": 75,
           "total": 75
         },
         "dom": {
           "n": 75,
-          "median": 95.96666700020432,
+          "median": 96.16858299821615,
           "ci95": [
-            95.45941599993967,
-            97.46800000000803
+            95.39912499999627,
+            96.84316699951887
           ],
-          "p95": 104.40162520008161,
-          "min": 91.34595799999079,
-          "max": 105.43487500003539,
-          "mean": 97.01888505333025,
+          "p95": 99.47944570000399,
+          "min": 92.08970899879932,
+          "max": 104.43829199997708,
+          "mean": 96.38576062665088,
           "ok": 75,
           "total": 75
         },
         "assets": {
           "n": 75,
-          "median": 28.934084000007715,
+          "median": 34.64275000244379,
           "ci95": [
-            27.336374999955297,
-            31.503498575038936
+            34.04595900326967,
+            35.383166000247
           ],
-          "p95": 38.24619200005254,
-          "min": 24.27970900014043,
-          "max": 50.5851660000626,
-          "mean": 30.831783946666985,
+          "p95": 38.193966900015944,
+          "min": 25.15991699695587,
+          "max": 43.74924999475479,
+          "mean": 33.49066001374352,
           "ok": 75,
           "total": 75
         },
         "compute": {
           "n": 75,
-          "median": 119.83883400005288,
+          "median": 123.33041699975729,
           "ci95": [
-            119.12233299994841,
-            120.53362499992363
+            121.33833299577236,
+            124.52774999290705
           ],
-          "p95": 129.8262500000652,
-          "min": 95.52416699999594,
-          "max": 138.77450000005774,
-          "mean": 118.96793549333718,
+          "p95": 128.49095459997187,
+          "min": 97.62449999898672,
+          "max": 128.92300000000978,
+          "mean": 120.44872224011303,
           "ok": 75,
           "total": 75
         }
@@ -1253,57 +2258,57 @@
       "latency": {
         "evaluate": {
           "n": 1000,
-          "median": 0.921541999996407,
+          "median": 1.1909165009856224,
           "ci95": [
-            0.9097919999621809,
-            0.9312935873749666
+            1.1627919971942902,
+            1.2237080037593842
           ],
-          "p95": 1.3654059000051346,
-          "min": 0.6262499999720603,
-          "max": 79.54424999999173,
-          "mean": 1.064840531001566,
+          "p95": 1.7037184461951254,
+          "min": 0.6393329948186874,
+          "max": 14.288667000830173,
+          "mean": 1.2064611871807138,
           "ok": 1000,
           "total": 1000
         },
         "query": {
           "n": 1000,
-          "median": 1.1090415001381189,
+          "median": 1.4406040006142575,
           "ci95": [
-            1.0891249999403954,
-            1.1245210000197403
+            1.4114789962768555,
+            1.4746244995039888
           ],
-          "p95": 1.7855625000665893,
-          "min": 0.7297910000197589,
-          "max": 23.835874999989755,
-          "mean": 1.2729547939940966,
+          "p95": 1.9965330515056847,
+          "min": 0.7342500016093254,
+          "max": 26.80970900505781,
+          "mean": 1.535472747926542,
           "ok": 1000,
           "total": 1000
         }
       },
       "memory": {
         "idle": {
-          "memMb": 333.03125,
+          "memMb": 360.69140625,
           "range": [
-            315.46484375,
-            339.85546875
+            315.921875,
+            365.70703125
           ],
           "pids": 14
         },
         "onePage": {
-          "memMb": 505.359375,
+          "memMb": 532.53515625,
           "range": [
-            485.8828125,
-            508.5078125
+            488.49609375,
+            541.09765625
           ],
-          "pids": 151
+          "pids": 153
         },
         "tenPages": {
-          "memMb": 1011.37109375,
+          "memMb": 1038.78515625,
           "range": [
-            991.07421875,
-            1015.91015625
+            992.921875,
+            1047.0703125
           ],
-          "pids": 277
+          "pids": 279
         },
         "tabsOpened": 10
       },
@@ -1311,41 +2316,41 @@
         {
           "concurrency": 1,
           "runs": 5,
-          "pagesPerSec": 39.21342317559125,
+          "pagesPerSec": 37.05996202756494,
           "range": [
-            37.32750072470759,
-            39.92389441353715
+            36.23403121314236,
+            39.855232507793176
           ],
           "ok": 2000,
           "total": 2000,
-          "peakMemMb": 631.9140625,
-          "cpuMsPerPage": 79.42278250000001
+          "peakMemMb": 635.35546875,
+          "cpuMsPerPage": 83.18651
         },
         {
           "concurrency": 4,
           "runs": 5,
-          "pagesPerSec": 42.9747517081958,
+          "pagesPerSec": 42.53543464228711,
           "range": [
-            42.1155369505416,
-            44.33759105199217
+            40.87496995010161,
+            43.45882348090649
           ],
           "ok": 2000,
           "total": 2000,
-          "peakMemMb": 1515.53125,
-          "cpuMsPerPage": 92.6910325
+          "peakMemMb": 1533.76171875,
+          "cpuMsPerPage": 93.596775
         },
         {
           "concurrency": 8,
           "runs": 5,
-          "pagesPerSec": 40.325513086391375,
+          "pagesPerSec": 38.898883629621885,
           "range": [
-            39.53097600672886,
-            41.58066543265871
+            38.084257134445046,
+            41.24411569196499
           ],
           "ok": 2000,
           "total": 2000,
-          "peakMemMb": 2686.59765625,
-          "cpuMsPerPage": 98.90280999999999
+          "peakMemMb": 2723.9921875,
+          "cpuMsPerPage": 102.45798749999999
         }
       ],
       "compat": [
@@ -1891,6 +2896,13 @@
           "status": "pass"
         },
         {
+          "id": "evaluate-sees-page-globals",
+          "group": "automation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
           "id": "expose-function",
           "group": "automation",
           "passes": 5,
@@ -1941,10 +2953,10 @@
         }
       ],
       "compatTotals": {
-        "pass": 82,
+        "pass": 83,
         "flaky": 0,
         "fail": 2,
-        "total": 84
+        "total": 85
       },
       "fingerprint": {
         "webdriver-flag": 5,
@@ -1991,99 +3003,99 @@
       "realworld": {
         "example.com": {
           "n": 10,
-          "median": 91.13741699990351,
+          "median": 91.7146664992033,
           "ci95": [
-            79.14214649994392,
-            148.46316699986346
+            49.2034579962492,
+            124.05739549922873
           ],
-          "p95": 177.3095289500328,
-          "min": 53.55616699997336,
-          "max": 185.48704100004397,
-          "mean": 109.52252089995599,
+          "p95": 184.2504604518675,
+          "min": 39.16141600161791,
+          "max": 207.48754200339317,
+          "mean": 94.48460390017135,
           "ok": 10,
           "total": 10
         },
         "books.toscrape.com (static catalogue)": {
           "n": 10,
-          "median": 187.91018750000512,
+          "median": 193.30100000277162,
           "ci95": [
-            74.82099999999627,
-            454.92725000018254
+            76.77820849791169,
+            436.2126459996798
           ],
-          "p95": 1110.7943168499582,
-          "min": 64.61408299999312,
-          "max": 1539.5204169999342,
-          "mean": 354.8235291000281,
+          "p95": 540.9429688971547,
+          "min": 70.22112500004005,
+          "max": 570.1913749948144,
+          "mean": 250.155350099504,
           "ok": 10,
           "total": 10
         },
         "quotes.toscrape.com/js (client-rendered)": {
           "n": 10,
-          "median": 314.9042704999156,
+          "median": 339.28845850005746,
           "ci95": [
-            234.12404099991545,
-            572.5644999999786
+            162.33566699922085,
+            468.39870800077915
           ],
-          "p95": 656.6675187499727,
-          "min": 161.8607910000719,
-          "max": 675.5052499999292,
-          "mean": 387.7946247999731,
+          "p95": 521.7400249995464,
+          "min": 156.09033299982548,
+          "max": 557.3487500000047,
+          "mean": 327.6935500003863,
           "ok": 10,
           "total": 10
         },
         "quotes.toscrape.com/scroll (infinite scroll, XHR)": {
           "n": 10,
-          "median": 299.3769999999786,
+          "median": 293.30179150000913,
           "ci95": [
-            224.4724170002155,
-            366.01149999999325
+            240.4078750014305,
+            348.7463335002831
           ],
-          "p95": 387.9605352999177,
-          "min": 214.19270799984224,
-          "max": 388.47066699992865,
-          "mean": 297.8154125000059,
+          "p95": 401.1265151005238,
+          "min": 225.7054169997573,
+          "max": 403.85983400046825,
+          "mean": 296.2711084998562,
           "ok": 10,
           "total": 10
         },
         "scrapethissite.com (AJAX table)": {
           "n": 10,
-          "median": 2121.9724579999456,
+          "median": 2234.538875002414,
           "ci95": [
-            1985.7072500000359,
-            2252.1107499999925
+            2098.7562080025673,
+            2349.13206249848
           ],
-          "p95": 2312.2204019001247,
-          "min": 1868.124083999981,
-          "max": 2349.487583000213,
-          "mean": 2118.672783300016,
+          "p95": 2496.3336813985106,
+          "min": 1881.9785000011325,
+          "max": 2525.792124999978,
+          "mean": 2219.9119457008082,
           "ok": 10,
           "total": 10
         },
         "en.wikipedia.org (large article)": {
           "n": 10,
-          "median": 293.6526044998318,
+          "median": 301.9683959982067,
           "ci95": [
-            160.45416700001806,
-            436.70954199996777
+            154.7419999986887,
+            524.2942920029163
           ],
-          "p95": 459.67802530000915,
-          "min": 141.52666600001976,
-          "max": 462.8053749999963,
-          "mean": 299.7941917999415,
+          "p95": 571.959062499975,
+          "min": 150.89262500405312,
+          "max": 599.0316250000033,
+          "mean": 332.7295918010292,
           "ok": 10,
           "total": 10
         },
         "news.ycombinator.com": {
           "n": 10,
-          "median": 433.3146664999658,
+          "median": 437.6200205013156,
           "ci95": [
-            145.00127099989913,
-            779.7325420000125
+            148.1123329999973,
+            907.9183955043554
           ],
-          "p95": 951.9722892498828,
-          "min": 138.29408299992792,
-          "max": 1075.8518329998478,
-          "mean": 483.76392909992427,
+          "p95": 957.6942898027598,
+          "min": 136.2721669971943,
+          "max": 981.3487090021372,
+          "mean": 504.55354990105263,
           "ok": 10,
           "total": 10
         }
@@ -2092,33 +3104,33 @@
     "steel": {
       "rounds": 5,
       "browserVersion": "156.0.8078.108",
-      "startupMs": 1009.1554999999935,
+      "startupMs": 1004.7410409972072,
       "session": {
         "connect": {
           "n": 75,
-          "median": 283.1754999998957,
+          "median": 273.35858400166035,
           "ci95": [
-            279.2665829999605,
-            289.02966699999524
+            272.3412500023842,
+            275.57554200291634
           ],
-          "p95": 367.82763299998186,
-          "min": 260.81741699995473,
-          "max": 542.0382919999829,
-          "mean": 295.90105556001186,
+          "p95": 351.7028623022524,
+          "min": 255.89374999701977,
+          "max": 454.7348339930177,
+          "mean": 281.3107727595448,
           "ok": 75,
           "total": 75
         },
         "firstPage": {
           "n": 75,
-          "median": 383.8043750000652,
+          "median": 367.3676669970155,
           "ci95": [
-            376.50729199987836,
-            392.08124999993015
+            364.7459169998765,
+            373.4181249961257
           ],
-          "p95": 472.2565751000191,
-          "min": 345.84195900009945,
-          "max": 642.8279999999795,
-          "mean": 391.46163392000716,
+          "p95": 446.4664661010905,
+          "min": 341.2339170053601,
+          "max": 566.1327089965343,
+          "mean": 376.15877336018974,
           "ok": 75,
           "total": 75
         }
@@ -2126,71 +3138,71 @@
       "pageload": {
         "static": {
           "n": 75,
-          "median": 68.20062499993946,
+          "median": 68.81362500041723,
           "ci95": [
-            66.84262500004843,
-            68.77904200000921
+            67.73833300173283,
+            70.49158400297165
           ],
-          "p95": 86.68443749998113,
-          "min": 59.34358400013298,
-          "max": 100.85495900013484,
-          "mean": 69.60788222667838,
+          "p95": 77.36683749854565,
+          "min": 62.83941699564457,
+          "max": 102.13445900000079,
+          "mean": 70.05193386683425,
           "ok": 75,
           "total": 75
         },
         "spa": {
           "n": 75,
-          "median": 93.16916700001457,
+          "median": 94.25504200160503,
           "ci95": [
-            92.21054199998616,
-            95.08270899998024
+            93.10925000160933,
+            95.8549159988761
           ],
-          "p95": 101.94723729998805,
-          "min": 86.04100000020117,
-          "max": 112.21299999998882,
-          "mean": 94.43656837335556,
+          "p95": 100.99600429832935,
+          "min": 87.79795800000284,
+          "max": 113.70745900273323,
+          "mean": 94.73415621332514,
           "ok": 75,
           "total": 75
         },
         "dom": {
           "n": 75,
-          "median": 1361.640791999991,
+          "median": 1357.7159999981523,
           "ci95": [
-            1350.468292000005,
-            1369.4233330000425
+            1349.7770840000012,
+            1370.0860000029206
           ],
-          "p95": 1445.3292919999453,
-          "min": 1324.3890830003656,
-          "max": 1472.3104170002043,
-          "mean": 1372.53653000001,
+          "p95": 1435.2162998996675,
+          "min": 1329.9931669980288,
+          "max": 1461.7635409981012,
+          "mean": 1369.736925012229,
           "ok": 75,
           "total": 75
         },
         "assets": {
           "n": 75,
-          "median": 81.84987499995623,
+          "median": 82.79641599953175,
           "ci95": [
-            72.50479200016707,
-            84.37087500002235
+            80.17383300513029,
+            84.22349999845028
           ],
-          "p95": 89.55870450004004,
-          "min": 61.509457999956794,
-          "max": 103.61083300015889,
-          "mean": 78.76841721334804,
+          "p95": 88.66680800169706,
+          "min": 63.15141700208187,
+          "max": 91.78258300572634,
+          "mean": 79.70638053359207,
           "ok": 75,
           "total": 75
         },
         "compute": {
           "n": 75,
-          "median": 155.07762499991804,
+          "median": 157.9741670000003,
           "ci95": [
-            153.15891599981114,
-            157.22533400007524
+            155.04332227499782,
+            160.4650420024991
           ],
-          "p95": 164.7862538000132,
-          "min": 133.24649999989197,
-          "max": 180.81483300006948,
-          "mean": 152.96831614666695,
+          "p95": 167.33754560276864,
+          "min": 129.0534580051899,
+          "max": 183.48395799845457,
+          "mean": 155.93030269313647,
           "ok": 75,
           "total": 75
         }
@@ -2198,57 +3210,57 @@
       "latency": {
         "evaluate": {
           "n": 1000,
-          "median": 0.9949369999812916,
+          "median": 1.0645829974964727,
           "ci95": [
-            0.9768749999773718,
-            1.0149274124662042
+            1.0468335039913654,
+            1.0841045044362545
           ],
-          "p95": 1.5092785500586614,
-          "min": 0.6743749999441206,
-          "max": 2.9304169999959413,
-          "mean": 1.0705879199983028,
+          "p95": 1.5919166516512633,
+          "min": 0.6650420000005397,
+          "max": 3.7072909995913506,
+          "mean": 1.114556305072365,
           "ok": 1000,
           "total": 1000
         },
         "query": {
           "n": 1000,
-          "median": 1.1907504999544472,
+          "median": 1.292249996215105,
           "ci95": [
-            1.1667295000515878,
-            1.2211249999832945
+            1.2660000026226044,
+            1.3152920007705688
           ],
-          "p95": 1.793379500071751,
-          "min": 0.7469159997999668,
-          "max": 22.02316700000665,
-          "mean": 1.362633196999377,
+          "p95": 1.9492889501154422,
+          "min": 0.7709999999933643,
+          "max": 26.956041000783443,
+          "mean": 1.4390380581387798,
           "ok": 1000,
           "total": 1000
         }
       },
       "memory": {
         "idle": {
-          "memMb": 582.45703125,
+          "memMb": 587.75,
           "range": [
-            533.05859375,
-            724
+            529.76171875,
+            716.40625
           ],
-          "pids": 155
+          "pids": 159
         },
         "onePage": {
-          "memMb": 637.4296875,
+          "memMb": 652.71484375,
           "range": [
-            583.390625,
-            776.9296875
+            590.5,
+            773.59765625
           ],
-          "pids": 170
+          "pids": 174
         },
         "tenPages": {
-          "memMb": 1390.44140625,
+          "memMb": 1421.52734375,
           "range": [
-            1325.2109375,
-            1521.40625
+            1367.671875,
+            1618.3671875
           ],
-          "pids": 316
+          "pids": 320
         },
         "tabsOpened": 10
       },
@@ -2256,41 +3268,41 @@
         {
           "concurrency": 1,
           "runs": 5,
-          "pagesPerSec": 13.701373304889328,
+          "pagesPerSec": 13.57226888573263,
           "range": [
-            13.400968617395003,
-            13.86762742051686
+            13.410161864024305,
+            13.735688625055975
           ],
           "ok": 2000,
           "total": 2000,
-          "peakMemMb": 643.19140625,
-          "cpuMsPerPage": 189.91591
+          "peakMemMb": 653.65625,
+          "cpuMsPerPage": 189.9917875
         },
         {
           "concurrency": 4,
           "runs": 5,
-          "pagesPerSec": 18.621874844910664,
+          "pagesPerSec": 19.08838965093123,
           "range": [
-            18.005227210044094,
-            19.483863090133042
+            18.790989791354143,
+            19.21499780537748
           ],
           "ok": 2000,
           "total": 2000,
-          "peakMemMb": 744.4453125,
-          "cpuMsPerPage": 214.1755375
+          "peakMemMb": 760.76171875,
+          "cpuMsPerPage": 209.03375
         },
         {
           "concurrency": 8,
           "runs": 5,
-          "pagesPerSec": 15.127135966962044,
+          "pagesPerSec": 15.021699854712033,
           "range": [
-            14.412602300008848,
-            15.242373215402097
+            14.600053324818603,
+            15.126508020491407
           ],
           "ok": 2000,
           "total": 2000,
-          "peakMemMb": 1027.0078125,
-          "cpuMsPerPage": 258.52206
+          "peakMemMb": 1036.515625,
+          "cpuMsPerPage": 260.9231375
         }
       ],
       "compat": [
@@ -2718,9 +3730,9 @@
         {
           "id": "screenshot-full-page",
           "group": "capture",
-          "passes": 1,
+          "passes": 0,
           "runs": 5,
-          "status": "flaky",
+          "status": "fail",
           "error": "full page size 1920x3010"
         },
         {
@@ -2747,7 +3759,7 @@
         {
           "id": "viewport-resize",
           "group": "capture",
-          "passes": 4,
+          "passes": 3,
           "runs": 5,
           "status": "flaky",
           "error": "viewport: expected [1024,700], got [1920,1080]"
@@ -2755,7 +3767,7 @@
         {
           "id": "viewport-survives-first-navigation",
           "group": "capture",
-          "passes": 3,
+          "passes": 1,
           "runs": 5,
           "status": "flaky",
           "error": "viewport: expected [1024,700], got [1920,1080]"
@@ -2838,6 +3850,13 @@
           "status": "pass"
         },
         {
+          "id": "evaluate-sees-page-globals",
+          "group": "automation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
           "id": "expose-function",
           "group": "automation",
           "passes": 5,
@@ -2888,10 +3907,10 @@
         }
       ],
       "compatTotals": {
-        "pass": 80,
-        "flaky": 3,
-        "fail": 1,
-        "total": 84
+        "pass": 81,
+        "flaky": 2,
+        "fail": 2,
+        "total": 85
       },
       "fingerprint": {
         "webdriver-flag": 0,
@@ -2924,7 +3943,7 @@
         "webgl": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 16.0.0) (0x0000C0DE)), SwiftShader driver)",
         "notification": "denied",
         "permState": "denied",
-        "platform": "Linux x86_64",
+        "platform": "Linux",
         "brands": "",
         "uaDataPlatform": "",
         "cdpLeak": false,
@@ -2938,99 +3957,99 @@
       "realworld": {
         "example.com": {
           "n": 10,
-          "median": 124.86685349995969,
+          "median": 119.99854199960828,
           "ci95": [
-            107.70887500001118,
-            159.37937499996042
+            79.9030000000057,
+            205.87079200148582
           ],
-          "p95": 200.18001424995597,
-          "min": 102.8490420000162,
-          "max": 209.63220800005365,
-          "mean": 137.02251230000402,
+          "p95": 226.92591439968382,
+          "min": 78.83908299356699,
+          "max": 233.80133300001035,
+          "mean": 138.96859999896407,
           "ok": 10,
           "total": 10
         },
         "books.toscrape.com (static catalogue)": {
           "n": 10,
-          "median": 392.3411044999957,
+          "median": 392.1931869983673,
           "ci95": [
-            242.73970900004497,
-            823.8339579999447
+            244.9044789969921,
+            561.2829580008984
           ],
-          "p95": 932.3339373500784,
-          "min": 240.92908299993724,
-          "max": 991.9535000000615,
-          "mean": 498.5036249999772,
+          "p95": 562.0364250004292,
+          "min": 233.4959169998765,
+          "max": 562.4216250032187,
+          "mean": 398.0204040000375,
           "ok": 10,
           "total": 10
         },
         "quotes.toscrape.com/js (client-rendered)": {
           "n": 10,
-          "median": 373.41620849992614,
+          "median": 340.2508955039084,
           "ci95": [
-            232.12152100005187,
-            523.8164169999654
+            272.4425830014661,
+            431.6903339996934
           ],
-          "p95": 598.1903608999768,
-          "min": 202.9128330000094,
-          "max": 622.0745420000167,
-          "mean": 382.1313626000192,
+          "p95": 461.635639551151,
+          "min": 207.909459002316,
+          "max": 464.82683299999917,
+          "mean": 348.88108340167383,
           "ok": 10,
           "total": 10
         },
         "quotes.toscrape.com/scroll (infinite scroll, XHR)": {
           "n": 10,
-          "median": 334.5445835001301,
+          "median": 303.1453539999711,
           "ci95": [
-            277.4602500000037,
-            370.5536869999487
+            266.14429200440645,
+            365.0075829997659
           ],
-          "p95": 405.8766772999253,
-          "min": 260.5404160001781,
-          "max": 423.31333399994764,
-          "mean": 332.2195207000594,
+          "p95": 400.8450331468135,
+          "min": 260.39141700416803,
+          "max": 423.8410829976201,
+          "mean": 317.8290625003516,
           "ok": 10,
           "total": 10
         },
         "scrapethissite.com (AJAX table)": {
           "n": 10,
-          "median": 2222.692041500006,
+          "median": 2265.721645500511,
           "ci95": [
-            2115.169832999818,
-            2293.7967079998925
+            2002.758166499436,
+            2285.309083502296
           ],
-          "p95": 2424.392237199819,
-          "min": 2049.4996249999967,
-          "max": 2525.0102499998175,
-          "mean": 2230.438466599927,
+          "p95": 2436.3616895481673,
+          "min": 1964.8265829980373,
+          "max": 2546.3608329966664,
+          "mean": 2201.0878498002176,
           "ok": 10,
           "total": 10
         },
         "en.wikipedia.org (large article)": {
           "n": 10,
-          "median": 639.6685625000391,
+          "median": 624.8029995004545,
           "ci95": [
-            425.2451670000446,
-            718.2707915000501
+            473.4037289998232,
+            748.1089370027184
           ],
-          "p95": 804.7873937500582,
-          "min": 422.20233400026336,
-          "max": 845.1891250000335,
-          "mean": 599.3804126000439,
+          "p95": 864.7757104516028,
+          "min": 418.52937500178814,
+          "max": 931.8079169988632,
+          "mean": 628.4695165002646,
           "ok": 10,
           "total": 10
         },
         "news.ycombinator.com": {
           "n": 10,
-          "median": 587.8204380001407,
+          "median": 643.9187290035188,
           "ci95": [
-            275.97929200006183,
-            830.7595420000143
+            243.93241599947214,
+            870.0278329998255
           ],
-          "p95": 1025.0178918499848,
-          "min": 224.35945899994113,
-          "max": 1061.2265419999603,
-          "mean": 592.0150919000386,
+          "p95": 983.7911605992483,
+          "min": 234.36691600084305,
+          "max": 1075.4776669999992,
+          "mean": 586.9636789012133,
           "ok": 10,
           "total": 10
         }
@@ -3039,33 +4058,33 @@
     "obscura": {
       "rounds": 5,
       "browserVersion": "145.0.0.0",
-      "startupMs": 181.6300409999676,
+      "startupMs": 202.53504200279713,
       "session": {
         "connect": {
           "n": 75,
-          "median": 4.008875000290573,
+          "median": 4.969042003154755,
           "ci95": [
-            3.732791999937035,
-            4.1812920002266765
+            4.720083005726337,
+            5.203708000015467
           ],
-          "p95": 5.6529830999632384,
-          "min": 3.218542000046,
-          "max": 7.168832999999722,
-          "mean": 4.153398373331996,
+          "p95": 6.284349800366908,
+          "min": 3.281708002090454,
+          "max": 7.128624998033047,
+          "mean": 4.9798533601360395,
           "ok": 75,
           "total": 75
         },
         "firstPage": {
           "n": 75,
-          "median": 15.838250000029802,
+          "median": 18.81633400171995,
           "ci95": [
-            15.268833000212908,
-            16.41037500021048
+            18.139583997428417,
+            19.493125000037253
           ],
-          "p95": 21.33724109999948,
-          "min": 12.82024999987334,
-          "max": 27.449124999999185,
-          "mean": 16.453347226662373,
+          "p95": 24.329770595417354,
+          "min": 13.33516599982977,
+          "max": 25.209167003631592,
+          "mean": 18.93673998648301,
           "ok": 75,
           "total": 75
         }
@@ -3073,71 +4092,71 @@
       "pageload": {
         "static": {
           "n": 75,
-          "median": 16.073749999981374,
+          "median": 16.86074999999255,
           "ci95": [
-            15.85004199994728,
-            16.40120800002478
+            16.315000000060536,
+            17.64124999998603
           ],
-          "p95": 20.963424999966808,
-          "min": 12.317833000095561,
-          "max": 27.09508399999868,
-          "mean": 16.35449602666983,
+          "p95": 21.148416797071693,
+          "min": 12.66754099726677,
+          "max": 25.515083998441696,
+          "mean": 17.319746133217897,
           "ok": 75,
           "total": 75
         },
         "spa": {
           "n": 75,
-          "median": 29.349458000000595,
+          "median": 30.26520799996797,
           "ci95": [
-            28.856207999866456,
-            30.283818050000615
+            29.861874997615814,
+            31.79304099828005
           ],
-          "p95": 34.472979300032236,
-          "min": 24.77266599982977,
-          "max": 38.347124999998414,
-          "mean": 29.679226679989856,
+          "p95": 37.29142949730158,
+          "min": 25.469541996717453,
+          "max": 43.39904199540615,
+          "mean": 31.234990572777267,
           "ok": 75,
           "total": 75
         },
         "dom": {
           "n": 75,
-          "median": 35.79524999996647,
+          "median": 35.50991700589657,
           "ci95": [
-            35.3315419999999,
-            36.605624999967404
+            35.187958002090454,
+            35.659083001315594
           ],
-          "p95": 38.81837050000213,
-          "min": 31.891875000001164,
-          "max": 40.028542000000016,
-          "mean": 35.8835266666604,
+          "p95": 38.222315999364945,
+          "min": 32.99158300459385,
+          "max": 39.43920899927616,
+          "mean": 35.61066001380173,
           "ok": 75,
           "total": 75
         },
         "assets": {
           "n": 75,
-          "median": 16.19637499982491,
+          "median": 16.8975840061903,
           "ci95": [
-            15.802875000052154,
-            16.998791999649256
+            16.228458002209663,
+            17.314416997134686
           ],
-          "p95": 20.574178799999753,
-          "min": 12.417832999955863,
-          "max": 26.035916999999245,
-          "mean": 16.59728054667384,
+          "p95": 20.0148206025362,
+          "min": 12.472708001732826,
+          "max": 21.40150000154972,
+          "mean": 16.923642227295787,
           "ok": 75,
           "total": 75
         },
         "compute": {
           "n": 75,
-          "median": 96.94804199994542,
+          "median": 98.39958399999887,
           "ci95": [
-            96.38147219998646,
-            98.4829590000445
+            97.50633399933577,
+            98.9904169999063
           ],
-          "p95": 102.26968750002561,
-          "min": 91.28991700000006,
-          "max": 104.86633300001267,
-          "mean": 97.49540832003048,
+          "p95": 101.72054189816117,
+          "min": 93.1088750064373,
+          "max": 103.09141699969769,
+          "mean": 98.00408447994695,
           "ok": 75,
           "total": 75
         }
@@ -3145,55 +4164,55 @@
       "latency": {
         "evaluate": {
           "n": 1000,
-          "median": 0.47152099994946184,
+          "median": 0.5778749989694916,
           "ci95": [
-            0.4657919999990554,
-            0.4771255124767094
+            0.5621213672682643,
+            0.6019999999552965
           ],
-          "p95": 0.7043243999185506,
-          "min": 0.3956659999676049,
-          "max": 2.2835419999901205,
-          "mean": 0.5097765740031064,
+          "p95": 1.0099749997258185,
+          "min": 0.4013340026140213,
+          "max": 4.077707998454571,
+          "mean": 0.6380011639366858,
           "ok": 1000,
           "total": 1000
         },
         "query": {
           "n": 1000,
-          "median": 0.5851039999979548,
+          "median": 0.7330000014626421,
           "ci95": [
-            0.5787064125179313,
-            0.5899159999098629
+            0.7086459994316101,
+            0.7653140627924586
           ],
-          "p95": 0.9221371500038003,
-          "min": 0.4720839997753501,
-          "max": 12.730750000104308,
-          "mean": 0.6763999819976397,
+          "p95": 1.249363154545426,
+          "min": 0.4927920028567314,
+          "max": 15.46637500077486,
+          "mean": 0.8727175041388254,
           "ok": 1000,
           "total": 1000
         }
       },
       "memory": {
         "idle": {
-          "memMb": 15.5703125,
+          "memMb": 14.7734375,
           "range": [
-            7.09765625,
-            16.109375
+            6.25390625,
+            15.74609375
           ],
           "pids": 8
         },
         "onePage": {
-          "memMb": 21.08984375,
+          "memMb": 20.359375,
           "range": [
-            10.8125,
-            21.90625
+            12.3515625,
+            21.60546875
           ],
           "pids": 12
         },
         "tenPages": {
-          "memMb": 88.9375,
+          "memMb": 80.15234375,
           "range": [
-            59.96484375,
-            89.01953125
+            78.3125,
+            87.72265625
           ],
           "pids": 12
         },
@@ -3203,41 +4222,41 @@
         {
           "concurrency": 1,
           "runs": 5,
-          "pagesPerSec": 87.3462283298101,
+          "pagesPerSec": 82.96414790495064,
           "range": [
-            83.66624072999322,
-            92.1116680639531
+            73.22251263230885,
+            92.15067375499358
           ],
           "ok": 2000,
           "total": 2000,
-          "peakMemMb": 14.00390625,
-          "cpuMsPerPage": 8.36215
+          "peakMemMb": 14.234375,
+          "cpuMsPerPage": 8.5864275
         },
         {
           "concurrency": 4,
           "runs": 5,
-          "pagesPerSec": 335.9391243772445,
+          "pagesPerSec": 331.5353068521429,
           "range": [
-            315.24228972293145,
-            344.0182905924649
+            281.84695115995873,
+            341.68664643542763
           ],
           "ok": 2000,
           "total": 2000,
-          "peakMemMb": 27.53515625,
-          "cpuMsPerPage": 7.66902
+          "peakMemMb": 29.75390625,
+          "cpuMsPerPage": 7.906904999999999
         },
         {
           "concurrency": 8,
           "runs": 5,
-          "pagesPerSec": 463.39983583991295,
+          "pagesPerSec": 454.79289909125345,
           "range": [
-            443.34818379429015,
-            473.80483612546317
+            412.99348028257316,
+            470.4221574584902
           ],
           "ok": 2000,
           "total": 2000,
-          "peakMemMb": 42.7265625,
-          "cpuMsPerPage": 8.186585000000001
+          "peakMemMb": 44.4140625,
+          "cpuMsPerPage": 8.4298675
         }
       ],
       "compat": [
@@ -3789,6 +4808,975 @@
           "status": "pass"
         },
         {
+          "id": "evaluate-sees-page-globals",
+          "group": "automation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "expose-function",
+          "group": "automation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "console-event",
+          "group": "automation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "page-error-event",
+          "group": "automation",
+          "passes": 0,
+          "runs": 5,
+          "status": "fail",
+          "error": "page.waitForEvent: Timeout 8000ms exceeded while waiting for event \"pageerror\""
+        },
+        {
+          "id": "element-handles",
+          "group": "automation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "raw-cdp-session",
+          "group": "automation",
+          "passes": 0,
+          "runs": 5,
+          "status": "fail",
+          "error": "DOM.getDocument"
+        },
+        {
+          "id": "accessibility-snapshot",
+          "group": "automation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "set-content",
+          "group": "automation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        }
+      ],
+      "compatTotals": {
+        "pass": 75,
+        "flaky": 0,
+        "fail": 10,
+        "total": 85
+      },
+      "fingerprint": {
+        "webdriver-flag": 0,
+        "headless-ua": 0,
+        "ua-header-mismatch": 0,
+        "no-accept-language": 0,
+        "no-languages": 0,
+        "no-plugins": 0,
+        "no-chrome-object": 0,
+        "zero-outer-size": 0,
+        "software-webgl": 5,
+        "permissions-inconsistent": 0,
+        "platform-mismatch": 0,
+        "ua-data-mismatch": 0,
+        "cdp-runtime-leak": 5,
+        "no-media-codecs": 5
+      },
+      "fingerprintRuns": 5,
+      "fingerprintExposed": 3,
+      "fingerprintRaw": {
+        "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36",
+        "webdriver": false,
+        "languages": 2,
+        "plugins": 5,
+        "hasChrome": true,
+        "outer": [
+          1440,
+          860
+        ],
+        "webgl": "",
+        "notification": "default",
+        "permState": "prompt",
+        "platform": "Win32",
+        "brands": "Google Chrome,Chromium,Not A(Brand",
+        "uaDataPlatform": "Windows",
+        "cdpLeak": true,
+        "h264": "",
+        "aac": "",
+        "hardwareConcurrency": 16,
+        "deviceMemory": 2,
+        "headerUa": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36",
+        "acceptLanguage": "en-US,en;q=0.9"
+      },
+      "realworld": {
+        "example.com": {
+          "n": 10,
+          "median": 95.7986459992826,
+          "ci95": [
+            52.63533300161362,
+            149.08995900000446
+          ],
+          "p95": 708.947299697057,
+          "min": 41.60625000298023,
+          "max": 1149.9965000000084,
+          "mean": 198.68324580009795,
+          "ok": 10,
+          "total": 10
+        },
+        "books.toscrape.com (static catalogue)": {
+          "n": 10,
+          "median": 521.0276670008898,
+          "ci95": [
+            250.68845850258367,
+            781.130729498167
+          ],
+          "p95": 955.9456333004226,
+          "min": 201.85479100048542,
+          "max": 1071.9658330008388,
+          "mean": 544.9535250012065,
+          "ok": 10,
+          "total": 10
+        },
+        "quotes.toscrape.com/js (client-rendered)": {
+          "n": 10,
+          "median": 551.164624998928,
+          "ci95": [
+            380.41147949919105,
+            717.1804170012474
+          ],
+          "p95": 749.717618749605,
+          "min": 319.06633300334215,
+          "max": 772.0741249993443,
+          "mean": 546.6822667000815,
+          "ok": 10,
+          "total": 10
+        },
+        "quotes.toscrape.com/scroll (infinite scroll, XHR)": {
+          "n": 8,
+          "median": 560.2225414998829,
+          "ci95": [
+            495.82675000000745,
+            603.6740829944611
+          ],
+          "p95": 662.1350829980569,
+          "min": 474.2150419950485,
+          "max": 693.6140829999931,
+          "mean": 562.7571508741821,
+          "ok": 8,
+          "total": 10,
+          "firstError": "page.waitForFunction: Timeout 15000ms exceeded."
+        },
+        "scrapethissite.com (AJAX table)": {
+          "n": 10,
+          "median": 2328.4627915024757,
+          "ci95": [
+            2267.685832999996,
+            2778.6071249991655
+          ],
+          "p95": 2851.6206000017582,
+          "min": 2251.9004580006003,
+          "max": 2877.745125003159,
+          "mean": 2467.42622490112,
+          "ok": 10,
+          "total": 10
+        },
+        "en.wikipedia.org (large article)": {
+          "n": 10,
+          "median": 947.8082915022969,
+          "ci95": [
+            787.2561664991081,
+            1364.742541501997
+          ],
+          "p95": 1940.5922356028805,
+          "min": 721.7510000020266,
+          "max": 2134.787167005241,
+          "mean": 1118.599475001241,
+          "ok": 10,
+          "total": 10
+        },
+        "news.ycombinator.com": {
+          "n": 10,
+          "median": 491.81272900046315,
+          "ci95": [
+            132.64262499997858,
+            947.7770420014858
+          ],
+          "p95": 1268.2738647025074,
+          "min": 130.1914170011878,
+          "max": 1493.8394580036402,
+          "mean": 581.5608959006495,
+          "ok": 10,
+          "total": 10
+        }
+      }
+    },
+    "obscura-stealth": {
+      "rounds": 5,
+      "browserVersion": "145.0.0.0",
+      "startupMs": 215.33562500029802,
+      "session": {
+        "connect": {
+          "n": 75,
+          "median": 5.105875000357628,
+          "ci95": [
+            4.906749999965541,
+            5.197124995291233
+          ],
+          "p95": 5.87810789719224,
+          "min": 3.4137080013751984,
+          "max": 6.04791700001806,
+          "mean": 4.994489973527379,
+          "ok": 75,
+          "total": 75
+        },
+        "firstPage": {
+          "n": 75,
+          "median": 22.04766700003529,
+          "ci95": [
+            21.641957998275757,
+            22.345042005181313
+          ],
+          "p95": 26.27290009856224,
+          "min": 17.309041000902653,
+          "max": 28.332499995827675,
+          "mean": 22.376005506482908,
+          "ok": 75,
+          "total": 75
+        }
+      },
+      "pageload": {
+        "static": {
+          "n": 75,
+          "median": 18.718042001128197,
+          "ci95": [
+            18.067000000039116,
+            19.286874994635582
+          ],
+          "p95": 21.461021302640436,
+          "min": 15.065667003393173,
+          "max": 23.098124995827675,
+          "mean": 18.69759886602095,
+          "ok": 75,
+          "total": 75
+        },
+        "spa": {
+          "n": 75,
+          "median": 34.07637500000419,
+          "ci95": [
+            33.48783399909735,
+            34.92479199916124
+          ],
+          "p95": 38.79055450142477,
+          "min": 29.494874998927116,
+          "max": 40.71416600048542,
+          "mean": 34.17380669344838,
+          "ok": 75,
+          "total": 75
+        },
+        "dom": {
+          "n": 75,
+          "median": 39.9335829988122,
+          "ci95": [
+            39.570209697447716,
+            40.60575000196695
+          ],
+          "p95": 43.08178289830685,
+          "min": 37.6169999986887,
+          "max": 45.30145800113678,
+          "mean": 40.24307889297372,
+          "ok": 75,
+          "total": 75
+        },
+        "assets": {
+          "n": 75,
+          "median": 19.085790999233723,
+          "ci95": [
+            18.664708003401756,
+            19.44437500089407
+          ],
+          "p95": 23.171591901034116,
+          "min": 16.338957995176315,
+          "max": 30.159625001251698,
+          "mean": 19.572505040586304,
+          "ok": 75,
+          "total": 75
+        },
+        "compute": {
+          "n": 75,
+          "median": 100.53412500023842,
+          "ci95": [
+            99.73316700011492,
+            101.93779200315475
+          ],
+          "p95": 106.06905789896845,
+          "min": 95.89612499624491,
+          "max": 107.84700000000885,
+          "mean": 101.29264721290984,
+          "ok": 75,
+          "total": 75
+        }
+      },
+      "latency": {
+        "evaluate": {
+          "n": 1000,
+          "median": 0.674541998654604,
+          "ci95": [
+            0.6637500002980232,
+            0.6861670017242432
+          ],
+          "p95": 0.9988722997513831,
+          "min": 0.4143329933285713,
+          "max": 2.8421659991145134,
+          "mean": 0.6944828281010268,
+          "ok": 1000,
+          "total": 1000
+        },
+        "query": {
+          "n": 1000,
+          "median": 0.8637709990143776,
+          "ci95": [
+            0.8497263978235423,
+            0.8746250048279762
+          ],
+          "p95": 1.2623607479035854,
+          "min": 0.4989589974284172,
+          "max": 12.253083999967203,
+          "mean": 0.9394273830872844,
+          "ok": 1000,
+          "total": 1000
+        }
+      },
+      "memory": {
+        "idle": {
+          "memMb": 13.24609375,
+          "range": [
+            6.8515625,
+            71.7890625
+          ],
+          "pids": 8
+        },
+        "onePage": {
+          "memMb": 19.6171875,
+          "range": [
+            13.55078125,
+            77.59765625
+          ],
+          "pids": 12
+        },
+        "tenPages": {
+          "memMb": 104.95703125,
+          "range": [
+            90.7578125,
+            152.64453125
+          ],
+          "pids": 12
+        },
+        "tabsOpened": 10
+      },
+      "throughput": [
+        {
+          "concurrency": 1,
+          "runs": 5,
+          "pagesPerSec": 60.69889888217411,
+          "range": [
+            51.938994947528954,
+            62.075883499858726
+          ],
+          "ok": 2000,
+          "total": 2000,
+          "peakMemMb": 15.11328125,
+          "cpuMsPerPage": 12.319285000000002
+        },
+        {
+          "concurrency": 4,
+          "runs": 5,
+          "pagesPerSec": 231.56467216221353,
+          "range": [
+            190.61317481586738,
+            239.78790160679432
+          ],
+          "ok": 2000,
+          "total": 2000,
+          "peakMemMb": 31.34375,
+          "cpuMsPerPage": 12.4813425
+        },
+        {
+          "concurrency": 8,
+          "runs": 5,
+          "pagesPerSec": 288.32241942902294,
+          "range": [
+            214.14604131606737,
+            305.8768308207286
+          ],
+          "ok": 2000,
+          "total": 2000,
+          "peakMemMb": 53.5546875,
+          "cpuMsPerPage": 13.5004125
+        }
+      ],
+      "compat": [
+        {
+          "id": "goto-title",
+          "group": "navigation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "redirect-followed",
+          "group": "navigation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "http-404-status",
+          "group": "navigation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "page-content",
+          "group": "navigation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "go-back",
+          "group": "navigation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "link-click-navigates",
+          "group": "navigation",
+          "passes": 0,
+          "runs": 5,
+          "status": "fail",
+          "error": "page.waitForURL: Timeout 8000ms exceeded."
+        },
+        {
+          "id": "wait-for-selector-spa",
+          "group": "navigation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "wait-for-function",
+          "group": "navigation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "iframe-access",
+          "group": "navigation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "multiple-pages",
+          "group": "navigation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "eval-roundtrip",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "modern-js-syntax",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "promise-timer-ordering",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "fetch-json",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "fetch-post-body",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "xhr",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "abort-controller",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "local-storage",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "session-storage",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "document-cookie",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "indexeddb",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "mutation-observer",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "intersection-observer",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "resize-observer",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "request-animation-frame",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "shadow-dom",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "custom-elements",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "layout-bounding-rect",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "layout-flexbox",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "computed-style",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "element-from-point",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "canvas-2d-pixels",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "canvas-to-data-url",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "web-worker",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "webassembly",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "websocket-echo",
+          "group": "web-platform",
+          "passes": 0,
+          "runs": 5,
+          "status": "fail",
+          "error": "websocket-echo timed out after 20000ms"
+        },
+        {
+          "id": "crypto-get-random-values",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "history-push-state",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "intl-formatting",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "url-and-encoding-apis",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "dom-parser-and-serializer",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "css-selectors-advanced",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "match-media",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "performance-timing",
+          "group": "web-platform",
+          "passes": 0,
+          "runs": 5,
+          "status": "fail",
+          "error": "performance-timing: expected [\"number\",true], got [\"number\",false]"
+        },
+        {
+          "id": "dynamic-script-and-module",
+          "group": "web-platform",
+          "passes": 0,
+          "runs": 5,
+          "status": "fail",
+          "error": "page.evaluate: TypeError: Failed to fetch module data:text/javascript,export default 7: Network error: Forbidden URL scheme 'data' - only http, https, and file are allowed"
+        },
+        {
+          "id": "inner-text-vs-text-content",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "click",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "fill-fires-input",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "keyboard-type-per-key",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "press-enter-submits-form",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "select-option",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "check-checkbox",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "hover",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "get-by-role",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "get-by-label-and-text",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "form-login-post-redirect",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "file-upload",
+          "group": "interaction",
+          "passes": 0,
+          "runs": 5,
+          "status": "fail",
+          "error": "page.setInputFiles: ReferenceError: DataTransfer is not defined"
+        },
+        {
+          "id": "dialog-alert",
+          "group": "interaction",
+          "passes": 0,
+          "runs": 5,
+          "status": "fail",
+          "error": "dialog: expected [\"hello dialog\",\"alerted\"], got [\"\",\"alerted\"]"
+        },
+        {
+          "id": "scroll-into-view",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "screenshot-pixels",
+          "group": "capture",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "screenshot-full-page",
+          "group": "capture",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "screenshot-element",
+          "group": "capture",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "screenshot-text-rendered",
+          "group": "capture",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "pdf",
+          "group": "capture",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "viewport-resize",
+          "group": "capture",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "viewport-survives-first-navigation",
+          "group": "capture",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "emulate-dark-mode",
+          "group": "capture",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "response-events",
+          "group": "network",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "response-body",
+          "group": "network",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "route-fulfill-mock",
+          "group": "network",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "route-abort-images",
+          "group": "network",
+          "passes": 0,
+          "runs": 5,
+          "status": "fail",
+          "error": "loaded images: expected 0, got 30"
+        },
+        {
+          "id": "images-load",
+          "group": "network",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "extra-http-headers",
+          "group": "network",
+          "passes": 0,
+          "runs": 5,
+          "status": "fail",
+          "error": "header: expected \"hdr-1\", got \"\""
+        },
+        {
+          "id": "context-add-cookies",
+          "group": "network",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "context-read-server-cookie",
+          "group": "network",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "download-event",
+          "group": "network",
+          "passes": 0,
+          "runs": 5,
+          "status": "fail",
+          "error": "page.waitForEvent: Timeout 8000ms exceeded while waiting for event \"download\""
+        },
+        {
+          "id": "add-init-script",
+          "group": "automation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "evaluate-sees-page-globals",
+          "group": "automation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
           "id": "expose-function",
           "group": "automation",
           "passes": 5,
@@ -3843,8 +5831,8 @@
       "compatTotals": {
         "pass": 74,
         "flaky": 0,
-        "fail": 10,
-        "total": 84
+        "fail": 11,
+        "total": 85
       },
       "fingerprint": {
         "webdriver-flag": 0,
@@ -3865,126 +5853,2046 @@
       "fingerprintRuns": 5,
       "fingerprintExposed": 3,
       "fingerprintRaw": {
-        "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36",
+        "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
         "webdriver": false,
         "languages": 2,
         "plugins": 5,
         "hasChrome": true,
         "outer": [
-          1920,
-          1040
+          1680,
+          1010
         ],
         "webgl": "",
         "notification": "default",
         "permState": "prompt",
         "platform": "Win32",
-        "brands": "Google Chrome,Chromium,Not A(Brand",
+        "brands": "Not:A-Brand,Google Chrome,Chromium",
         "uaDataPlatform": "Windows",
         "cdpLeak": true,
         "h264": "",
         "aac": "",
-        "hardwareConcurrency": 4,
-        "deviceMemory": 2,
-        "headerUa": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36",
+        "hardwareConcurrency": 8,
+        "deviceMemory": 8,
+        "headerUa": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
         "acceptLanguage": "en-US,en;q=0.9"
       },
       "realworld": {
         "example.com": {
           "n": 10,
-          "median": 83.31964600004721,
+          "median": 116.94960450060898,
           "ci95": [
-            68.42366650002077,
-            167.63808399997652
+            80.1122080013156,
+            158.48541650059633
           ],
-          "p95": 685.1857919999701,
-          "min": 61.63420799999585,
-          "max": 1108.0687919999473,
-          "mean": 198.12222089999196,
+          "p95": 203.0181746990187,
+          "min": 78.15195800364017,
+          "max": 211.68937499821186,
+          "mean": 120.96265420081326,
           "ok": 10,
           "total": 10
         },
         "books.toscrape.com (static catalogue)": {
           "n": 10,
-          "median": 531.4693954999093,
+          "median": 775.7302499972284,
           "ci95": [
-            248.37027049998142,
-            1012.6587505000025
+            602.0467909947038,
+            896.5232499993872
           ],
-          "p95": 1245.0994209500145,
-          "min": 199.80354200000875,
-          "max": 1255.999208000023,
-          "mean": 620.3285750999734,
+          "p95": 1239.7436729493952,
+          "min": 580.9034999981523,
+          "max": 1454.0324169999221,
+          "mean": 804.5928208986413,
           "ok": 10,
           "total": 10
         },
         "quotes.toscrape.com/js (client-rendered)": {
           "n": 10,
-          "median": 532.3446669999466,
+          "median": 710.4964380002348,
           "ci95": [
-            386.1613749996759,
-            999.9201254999498
+            659.4907920062542,
+            866.5972080007195
           ],
-          "p95": 1306.0753251499962,
-          "min": 321.0620830000844,
-          "max": 1313.5182499999646,
-          "mean": 664.411212599984,
+          "p95": 891.4412600497075,
+          "min": 648.9197909981012,
+          "max": 904.2402909994125,
+          "mean": 750.0846707999124,
           "ok": 10,
           "total": 10
         },
         "quotes.toscrape.com/scroll (infinite scroll, XHR)": {
-          "n": 9,
-          "median": 524.8846660000272,
+          "n": 7,
+          "median": 828.4729999999981,
           "ci95": [
-            482.0690000001341,
-            600.0734999999404
+            743.4942080000183,
+            878.2672920003533
           ],
-          "p95": 640.671674999976,
-          "min": 460.73570799990557,
-          "max": 667.7371249999997,
-          "mean": 541.3193378889329,
-          "ok": 9,
+          "p95": 2479.0165582016093,
+          "min": 712.0518330037594,
+          "max": 3165.05195800215,
+          "mean": 1134.4772320009401,
+          "ok": 7,
           "total": 10,
           "firstError": "page.waitForFunction: Timeout 15000ms exceeded."
         },
         "scrapethissite.com (AJAX table)": {
           "n": 10,
-          "median": 2390.898812499945,
+          "median": 2537.575458500709,
           "ci95": [
-            2304.7111659999937,
-            2691.1289789998336
+            2458.3539590016007,
+            2732.895728997886
           ],
-          "p95": 3167.6261706498776,
-          "min": 2203.6687920000404,
-          "max": 3357.9593329997733,
-          "mean": 2520.744645699917,
+          "p95": 3258.8532104475416,
+          "min": 2199.910208001733,
+          "max": 3589.166916999966,
+          "mean": 2642.162741699477,
           "ok": 10,
           "total": 10
         },
         "en.wikipedia.org (large article)": {
           "n": 10,
-          "median": 1197.1526039999444,
+          "median": 1010.9743540026248,
           "ci95": [
-            967.5095000001602,
-            1328.2507705000462
+            972.1145830005407,
+            1020.5969580039382
           ],
-          "p95": 1624.120572950046,
-          "min": 833.4293329999782,
-          "max": 1772.4429170000076,
-          "mean": 1189.2183374000365,
+          "p95": 1170.5075918499494,
+          "min": 874.4665829986334,
+          "max": 1277.0530419999268,
+          "mean": 1017.2832832007437,
           "ok": 10,
           "total": 10
         },
         "news.ycombinator.com": {
           "n": 10,
-          "median": 703.6748330000555,
+          "median": 1059.9305415005656,
           "ci95": [
-            133.4657910000533,
-            905.4288330003619
+            772.6007909998298,
+            1187.8169795013964
           ],
-          "p95": 1465.251645649957,
-          "min": 132.4544159998186,
-          "max": 1907.9479580000043,
-          "mean": 663.6165664000349,
+          "p95": 1340.9154626499858,
+          "min": 706.4299170002341,
+          "max": 1458.7772499993443,
+          "mean": 1025.5620334006846,
+          "ok": 10,
+          "total": 10
+        }
+      }
+    },
+    "lightpanda": {
+      "rounds": 5,
+      "browserVersion": "124.0.6367.29",
+      "startupMs": 213.01341699808836,
+      "session": {
+        "connect": {
+          "n": 75,
+          "median": 4.65837500244379,
+          "ci95": [
+            4.453249998390675,
+            5.033416002988815
+          ],
+          "p95": 5.635504400730133,
+          "min": 3.1939579993486404,
+          "max": 6.52012500166893,
+          "mean": 4.669595492382844,
+          "ok": 75,
+          "total": 75
+        },
+        "firstPage": {
+          "n": 75,
+          "median": 10.992624998092651,
+          "ci95": [
+            10.124542005360126,
+            11.73641700297594
+          ],
+          "p95": 14.054341902583836,
+          "min": 7.471375003457069,
+          "max": 22.403665997087955,
+          "mean": 11.010043279925982,
+          "ok": 75,
+          "total": 75
+        }
+      },
+      "pageload": {
+        "static": {
+          "n": 75,
+          "median": 16.467291995882988,
+          "ci95": [
+            15.914374999701977,
+            17.023625001311302
+          ],
+          "p95": 19.76118749529123,
+          "min": 13.295625001192093,
+          "max": 22.253167003393173,
+          "mean": 16.581626146137715,
+          "ok": 75,
+          "total": 75
+        },
+        "spa": {
+          "n": 75,
+          "median": 29.598292000591755,
+          "ci95": [
+            29.148749999701977,
+            30.739416003227234
+          ],
+          "p95": 33.63202920332551,
+          "min": 24.770583003759384,
+          "max": 35.20154199749231,
+          "mean": 30.005858346621196,
+          "ok": 75,
+          "total": 75
+        },
+        "dom": {
+          "n": 75,
+          "median": 19.60479199886322,
+          "ci95": [
+            19.35233300179243,
+            19.896209001541138
+          ],
+          "p95": 22.16225449889898,
+          "min": 17.67212499678135,
+          "max": 22.590458996593952,
+          "mean": 19.760383919477462,
+          "ok": 75,
+          "total": 75
+        },
+        "assets": {
+          "n": 0,
+          "median": null,
+          "ci95": [
+            null,
+            null
+          ],
+          "p95": null,
+          "min": null,
+          "max": null,
+          "mean": null,
+          "ok": 0,
+          "total": 75,
+          "firstError": "assets not loaded 0,5"
+        },
+        "compute": {
+          "n": 75,
+          "median": 89.65870799869299,
+          "ci95": [
+            89.28637500107288,
+            90.36358299851418
+          ],
+          "p95": 95.15058380141855,
+          "min": 85.16558299958706,
+          "max": 108.83850000053644,
+          "mean": 89.99858554710944,
+          "ok": 75,
+          "total": 75
+        }
+      },
+      "latency": {
+        "evaluate": {
+          "n": 1000,
+          "median": 0.5845205001533031,
+          "ci95": [
+            0.5644585005939007,
+            0.5987290032207966
+          ],
+          "p95": 0.9524979483336207,
+          "min": 0.3611669987440109,
+          "max": 1.81912499666214,
+          "mean": 0.6030365070402622,
+          "ok": 1000,
+          "total": 1000
+        },
+        "query": {
+          "n": 1000,
+          "median": 0.758457999676466,
+          "ci95": [
+            0.7318750023841858,
+            0.7811670005321503
+          ],
+          "p95": 1.2719461519271134,
+          "min": 0.4499579966068268,
+          "max": 15.574167005717754,
+          "mean": 0.8532402139753104,
+          "ok": 1000,
+          "total": 1000
+        }
+      },
+      "memory": {
+        "idle": {
+          "memMb": 10.24609375,
+          "range": [
+            6.671875,
+            10.4296875
+          ],
+          "pids": 21
+        },
+        "onePage": {
+          "memMb": 12.4609375,
+          "range": [
+            8.140625,
+            24.1796875
+          ],
+          "pids": 23
+        },
+        "tenPages": {
+          "memMb": 38.2578125,
+          "range": [
+            27.6640625,
+            50.125
+          ],
+          "pids": 21
+        },
+        "tabsOpened": 10
+      },
+      "throughput": [
+        {
+          "concurrency": 1,
+          "runs": 5,
+          "pagesPerSec": 170.51020352069435,
+          "range": [
+            157.45559114738057,
+            173.22322281385584
+          ],
+          "ok": 2000,
+          "total": 2000,
+          "peakMemMb": 13.67578125,
+          "cpuMsPerPage": 5.2458575
+        },
+        {
+          "concurrency": 4,
+          "runs": 5,
+          "pagesPerSec": 510.6464467047383,
+          "range": [
+            484.87549623577803,
+            525.1997400246901
+          ],
+          "ok": 2000,
+          "total": 2000,
+          "peakMemMb": 24.984375,
+          "cpuMsPerPage": 5.301720000000001
+        },
+        {
+          "concurrency": 8,
+          "runs": 5,
+          "pagesPerSec": 697.0089169216211,
+          "range": [
+            496.76756944243687,
+            702.8917042048083
+          ],
+          "ok": 2000,
+          "total": 2000,
+          "peakMemMb": 36.80859375,
+          "cpuMsPerPage": 5.2801374999999995
+        }
+      ],
+      "compat": [
+        {
+          "id": "goto-title",
+          "group": "navigation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "redirect-followed",
+          "group": "navigation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "http-404-status",
+          "group": "navigation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "page-content",
+          "group": "navigation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "go-back",
+          "group": "navigation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "link-click-navigates",
+          "group": "navigation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "wait-for-selector-spa",
+          "group": "navigation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "wait-for-function",
+          "group": "navigation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "iframe-access",
+          "group": "navigation",
+          "passes": 0,
+          "runs": 5,
+          "status": "fail",
+          "error": "locator.innerText: Timeout 8000ms exceeded."
+        },
+        {
+          "id": "multiple-pages",
+          "group": "navigation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "eval-roundtrip",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "modern-js-syntax",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "promise-timer-ordering",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "fetch-json",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "fetch-post-body",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "xhr",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "abort-controller",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "local-storage",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "session-storage",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "document-cookie",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "indexeddb",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "mutation-observer",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "intersection-observer",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "resize-observer",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "request-animation-frame",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "shadow-dom",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "custom-elements",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "layout-bounding-rect",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "layout-flexbox",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "computed-style",
+          "group": "web-platform",
+          "passes": 0,
+          "runs": 5,
+          "status": "fail",
+          "error": "computed-style: expected \"rgb(0, 128, 0)\", got \"rgb(0, 0, 0)\""
+        },
+        {
+          "id": "element-from-point",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "canvas-2d-pixels",
+          "group": "web-platform",
+          "passes": 0,
+          "runs": 5,
+          "status": "fail",
+          "error": "canvas-2d-pixels: expected [10,20,30,255], got [0,0,0,0]"
+        },
+        {
+          "id": "canvas-to-data-url",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "web-worker",
+          "group": "web-platform",
+          "passes": 0,
+          "runs": 5,
+          "status": "fail",
+          "error": "web-worker timed out after 20000ms"
+        },
+        {
+          "id": "webassembly",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "websocket-echo",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "crypto-get-random-values",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "history-push-state",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "intl-formatting",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "url-and-encoding-apis",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "dom-parser-and-serializer",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "css-selectors-advanced",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "match-media",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "performance-timing",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "dynamic-script-and-module",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "inner-text-vs-text-content",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "click",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "fill-fires-input",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "keyboard-type-per-key",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "press-enter-submits-form",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "select-option",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "check-checkbox",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "hover",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "get-by-role",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "get-by-label-and-text",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "form-login-post-redirect",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "file-upload",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "dialog-alert",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "scroll-into-view",
+          "group": "interaction",
+          "passes": 0,
+          "runs": 5,
+          "status": "fail",
+          "error": "did not scroll"
+        },
+        {
+          "id": "screenshot-pixels",
+          "group": "capture",
+          "passes": 0,
+          "runs": 5,
+          "status": "fail",
+          "error": "pixels: expected [[255,0,0],[0,0,255]], got [[255,255,255],[255,255,255]]"
+        },
+        {
+          "id": "screenshot-full-page",
+          "group": "capture",
+          "passes": 0,
+          "runs": 5,
+          "status": "fail",
+          "error": "full page size 800x382"
+        },
+        {
+          "id": "screenshot-element",
+          "group": "capture",
+          "passes": 0,
+          "runs": 5,
+          "status": "fail",
+          "error": "element shot: expected [200,100,[255,0,0]], got [200,100,[255,255,255]]"
+        },
+        {
+          "id": "screenshot-text-rendered",
+          "group": "capture",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "pdf",
+          "group": "capture",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "viewport-resize",
+          "group": "capture",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "viewport-survives-first-navigation",
+          "group": "capture",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "emulate-dark-mode",
+          "group": "capture",
+          "passes": 0,
+          "runs": 5,
+          "status": "fail",
+          "error": "dark: expected [true,\"rgb(1, 2, 3)\"], got [false,\"rgb(0, 0, 0)\"]"
+        },
+        {
+          "id": "response-events",
+          "group": "network",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "response-body",
+          "group": "network",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "route-fulfill-mock",
+          "group": "network",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "route-abort-images",
+          "group": "network",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "images-load",
+          "group": "network",
+          "passes": 0,
+          "runs": 5,
+          "status": "fail",
+          "error": "assets: expected [30,\"5\"], got [0,\"5\"]"
+        },
+        {
+          "id": "extra-http-headers",
+          "group": "network",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "context-add-cookies",
+          "group": "network",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "context-read-server-cookie",
+          "group": "network",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "download-event",
+          "group": "network",
+          "passes": 0,
+          "runs": 5,
+          "status": "fail",
+          "error": "page.waitForEvent: Timeout 8000ms exceeded while waiting for event \"download\""
+        },
+        {
+          "id": "add-init-script",
+          "group": "automation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "evaluate-sees-page-globals",
+          "group": "automation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "expose-function",
+          "group": "automation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "console-event",
+          "group": "automation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "page-error-event",
+          "group": "automation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "element-handles",
+          "group": "automation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "raw-cdp-session",
+          "group": "automation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "accessibility-snapshot",
+          "group": "automation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "set-content",
+          "group": "automation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        }
+      ],
+      "compatTotals": {
+        "pass": 74,
+        "flaky": 0,
+        "fail": 11,
+        "total": 85
+      },
+      "fingerprint": {
+        "webdriver-flag": 0,
+        "headless-ua": 0,
+        "ua-header-mismatch": 0,
+        "no-accept-language": 0,
+        "no-languages": 0,
+        "no-plugins": 5,
+        "no-chrome-object": 0,
+        "zero-outer-size": 0,
+        "software-webgl": 5,
+        "permissions-inconsistent": 0,
+        "platform-mismatch": 0,
+        "ua-data-mismatch": 0,
+        "cdp-runtime-leak": 0,
+        "no-media-codecs": 0
+      },
+      "fingerprintRuns": 5,
+      "fingerprintExposed": 2,
+      "fingerprintRaw": {
+        "ua": "Lightpanda/1.0",
+        "webdriver": false,
+        "languages": 2,
+        "plugins": 0,
+        "hasChrome": false,
+        "outer": [
+          1920,
+          1080
+        ],
+        "webgl": "",
+        "notification": "default",
+        "permState": "prompt",
+        "platform": "Linux x86_64",
+        "brands": "Lightpanda",
+        "uaDataPlatform": "Linux",
+        "cdpLeak": false,
+        "h264": "probably",
+        "aac": "probably",
+        "hardwareConcurrency": 4,
+        "deviceMemory": 8,
+        "headerUa": "Lightpanda/1.0",
+        "acceptLanguage": "en-US,en;q=0.9"
+      },
+      "realworld": {
+        "example.com": {
+          "n": 10,
+          "median": 82.79122899845243,
+          "ci95": [
+            65.65679149702191,
+            110.88863697415191
+          ],
+          "p95": 141.24581684991716,
+          "min": 55.31820899993181,
+          "max": 141.55729199945927,
+          "mean": 88.41612509936094,
+          "ok": 10,
+          "total": 10
+        },
+        "books.toscrape.com (static catalogue)": {
+          "n": 10,
+          "median": 244.8421249985695,
+          "ci95": [
+            168.12449999898672,
+            311.30295799672604
+          ],
+          "p95": 389.0322062470018,
+          "min": 146.71954199671745,
+          "max": 427.0101249963045,
+          "mean": 247.6498540982604,
+          "ok": 10,
+          "total": 10
+        },
+        "quotes.toscrape.com/js (client-rendered)": {
+          "n": 10,
+          "median": 222.4852499999106,
+          "ci95": [
+            179.56612499803305,
+            283.2670415006578
+          ],
+          "p95": 595.3916687529529,
+          "min": 173.1422500014305,
+          "max": 820.0697500035167,
+          "mean": 282.2955041013658,
+          "ok": 10,
+          "total": 10
+        },
+        "quotes.toscrape.com/scroll (infinite scroll, XHR)": {
+          "n": 0,
+          "median": null,
+          "ci95": [
+            null,
+            null
+          ],
+          "p95": null,
+          "min": null,
+          "max": null,
+          "mean": null,
+          "ok": 0,
+          "total": 10,
+          "firstError": "page.waitForFunction: Timeout 15000ms exceeded."
+        },
+        "scrapethissite.com (AJAX table)": {
+          "n": 10,
+          "median": 2002.1588335037231,
+          "ci95": [
+            1898.172540999949,
+            2174.5097505003214
+          ],
+          "p95": 2359.913998249918,
+          "min": 1891.9884169995785,
+          "max": 2433.2056669965386,
+          "mean": 2058.6486835002897,
+          "ok": 10,
+          "total": 10
+        },
+        "en.wikipedia.org (large article)": {
+          "n": 10,
+          "median": 260.18099949881434,
+          "ci95": [
+            162.27479100227356,
+            328.53600000590086
+          ],
+          "p95": 394.41767879948014,
+          "min": 151.56283400207758,
+          "max": 422.1239160001278,
+          "mean": 261.8146082006395,
+          "ok": 10,
+          "total": 10
+        },
+        "news.ycombinator.com": {
+          "n": 10,
+          "median": 350.99579149857163,
+          "ci95": [
+            241.28793750330806,
+            455.6931454986334
+          ],
+          "p95": 479.92401479966935,
+          "min": 208.38525000214577,
+          "max": 488.4120839983225,
+          "mean": 350.594962400943,
+          "ok": 10,
+          "total": 10
+        }
+      }
+    },
+    "camoufox": {
+      "rounds": 5,
+      "browserVersion": "159.0-beta.43",
+      "startupMs": 919.0467920005322,
+      "session": {
+        "connect": {
+          "n": 75,
+          "median": 8.23754100000042,
+          "ci95": [
+            7.909249998629093,
+            8.438374996185303
+          ],
+          "p95": 13.142883599999367,
+          "min": 6.445374995470047,
+          "max": 25.242167000000336,
+          "mean": 8.84313442649281,
+          "ok": 75,
+          "total": 75
+        },
+        "firstPage": {
+          "n": 75,
+          "median": 108.59966600000007,
+          "ci95": [
+            104.12812499701977,
+            113.04383300244808
+          ],
+          "p95": 130.793066900572,
+          "min": 95.48891700059175,
+          "max": 154.05383399873972,
+          "mean": 110.91913052004641,
+          "ok": 75,
+          "total": 75
+        }
+      },
+      "pageload": {
+        "static": {
+          "n": 75,
+          "median": 28.635750003159046,
+          "ci95": [
+            28.010124996304512,
+            29.375167000001966
+          ],
+          "p95": 44.66016709797622,
+          "min": 24.7924590036273,
+          "max": 91.00004099999933,
+          "mean": 30.97522897297776,
+          "ok": 75,
+          "total": 75
+        },
+        "spa": {
+          "n": 75,
+          "median": 42.50050000101328,
+          "ci95": [
+            42.11670799553394,
+            43.272000000000844
+          ],
+          "p95": 118.5073752015829,
+          "min": 38.32320800423622,
+          "max": 152.85129100084305,
+          "mean": 50.235190546251545,
+          "ok": 75,
+          "total": 75
+        },
+        "dom": {
+          "n": 75,
+          "median": 66.75908300000083,
+          "ci95": [
+            65.16837500035763,
+            67.46262499690056
+          ],
+          "p95": 102.86680460050702,
+          "min": 61.18870799988508,
+          "max": 122.70454199999949,
+          "mean": 70.12427442661244,
+          "ok": 75,
+          "total": 75
+        },
+        "assets": {
+          "n": 75,
+          "median": 48.57704199850559,
+          "ci95": [
+            47.30658300220966,
+            49.442457999997714
+          ],
+          "p95": 64.12094560116526,
+          "min": 42.65687499940395,
+          "max": 101.00908299535513,
+          "mean": 50.75469597343428,
+          "ok": 75,
+          "total": 75
+        },
+        "compute": {
+          "n": 75,
+          "median": 64.60641700029373,
+          "ci95": [
+            64.18008299916983,
+            65.12395799905062
+          ],
+          "p95": 87.43728379979729,
+          "min": 59.13949999958277,
+          "max": 128.19970799982548,
+          "mean": 68.00070892021984,
+          "ok": 75,
+          "total": 75
+        }
+      },
+      "latency": {
+        "evaluate": {
+          "n": 1000,
+          "median": 1.4911460010753217,
+          "ci95": [
+            1.4580829742364585,
+            1.5308197893596571
+          ],
+          "p95": 2.208166645470192,
+          "min": 0.7438340038061142,
+          "max": 6.4806250000001455,
+          "mean": 1.5237203659568914,
+          "ok": 1000,
+          "total": 1000
+        },
+        "query": {
+          "n": 1000,
+          "median": 1.71212500333786,
+          "ci95": [
+            1.6809169986263441,
+            1.7426779640838503
+          ],
+          "p95": 2.478219047561288,
+          "min": 0.8951670005917549,
+          "max": 14.361166000366211,
+          "mean": 1.7943118570703882,
+          "ok": 1000,
+          "total": 1000
+        }
+      },
+      "memory": {
+        "idle": {
+          "memMb": 312.79296875,
+          "range": [
+            274.453125,
+            318.5078125
+          ],
+          "pids": 132
+        },
+        "onePage": {
+          "memMb": 1260.7265625,
+          "range": [
+            1157.4296875,
+            1406.0859375
+          ],
+          "pids": 180
+        },
+        "tenPages": {
+          "memMb": 1578.53125,
+          "range": [
+            1499.40625,
+            1595.265625
+          ],
+          "pids": 378
+        },
+        "tabsOpened": 10
+      },
+      "throughput": [
+        {
+          "concurrency": 1,
+          "runs": 5,
+          "pagesPerSec": 6.721085413933824,
+          "range": [
+            6.621373730641143,
+            6.789688738538807
+          ],
+          "ok": 1946,
+          "total": 2000,
+          "peakMemMb": 4096,
+          "cpuMsPerPage": 254.073921875,
+          "firstError": "page.close: page.goto: Browser closed"
+        },
+        {
+          "concurrency": 4,
+          "runs": 5,
+          "pagesPerSec": 6.63800739847948,
+          "range": [
+            6.470583752879933,
+            6.895646379966316
+          ],
+          "ok": 1884,
+          "total": 2000,
+          "peakMemMb": 4096,
+          "cpuMsPerPage": 275.7790620155038,
+          "firstError": "browserContext.newPage: Browser closed"
+        },
+        {
+          "concurrency": 8,
+          "runs": 5,
+          "pagesPerSec": 6.640194203159055,
+          "range": [
+            6.103601595713283,
+            7.020452718967919
+          ],
+          "ok": 1921,
+          "total": 2000,
+          "peakMemMb": 4096,
+          "cpuMsPerPage": 277.0638549222798,
+          "firstError": "browserContext.newPage: Browser closed"
+        }
+      ],
+      "compat": [
+        {
+          "id": "goto-title",
+          "group": "navigation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "redirect-followed",
+          "group": "navigation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "http-404-status",
+          "group": "navigation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "page-content",
+          "group": "navigation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "go-back",
+          "group": "navigation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "link-click-navigates",
+          "group": "navigation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "wait-for-selector-spa",
+          "group": "navigation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "wait-for-function",
+          "group": "navigation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "iframe-access",
+          "group": "navigation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "multiple-pages",
+          "group": "navigation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "eval-roundtrip",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "modern-js-syntax",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "promise-timer-ordering",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "fetch-json",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "fetch-post-body",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "xhr",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "abort-controller",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "local-storage",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "session-storage",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "document-cookie",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "indexeddb",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "mutation-observer",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "intersection-observer",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "resize-observer",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "request-animation-frame",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "shadow-dom",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "custom-elements",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "layout-bounding-rect",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "layout-flexbox",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "computed-style",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "element-from-point",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "canvas-2d-pixels",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "canvas-to-data-url",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "web-worker",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "webassembly",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "websocket-echo",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "crypto-get-random-values",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "history-push-state",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "intl-formatting",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "url-and-encoding-apis",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "dom-parser-and-serializer",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "css-selectors-advanced",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "match-media",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "performance-timing",
+          "group": "web-platform",
+          "passes": 0,
+          "runs": 5,
+          "status": "fail",
+          "error": "performance-timing: expected [\"number\",true], got [\"number\",false]"
+        },
+        {
+          "id": "dynamic-script-and-module",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "inner-text-vs-text-content",
+          "group": "web-platform",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "click",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "fill-fires-input",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "keyboard-type-per-key",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "press-enter-submits-form",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "select-option",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "check-checkbox",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "hover",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "get-by-role",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "get-by-label-and-text",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "form-login-post-redirect",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "file-upload",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "dialog-alert",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "scroll-into-view",
+          "group": "interaction",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "screenshot-pixels",
+          "group": "capture",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "screenshot-full-page",
+          "group": "capture",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "screenshot-element",
+          "group": "capture",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "screenshot-text-rendered",
+          "group": "capture",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "pdf",
+          "group": "capture",
+          "passes": 0,
+          "runs": 5,
+          "status": "fail",
+          "error": "page.pdf: PDF generation is only supported for Headless Chromium"
+        },
+        {
+          "id": "viewport-resize",
+          "group": "capture",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "viewport-survives-first-navigation",
+          "group": "capture",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "emulate-dark-mode",
+          "group": "capture",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "response-events",
+          "group": "network",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "response-body",
+          "group": "network",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "route-fulfill-mock",
+          "group": "network",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "route-abort-images",
+          "group": "network",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "images-load",
+          "group": "network",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "extra-http-headers",
+          "group": "network",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "context-add-cookies",
+          "group": "network",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "context-read-server-cookie",
+          "group": "network",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "download-event",
+          "group": "network",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "add-init-script",
+          "group": "automation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "evaluate-sees-page-globals",
+          "group": "automation",
+          "passes": 0,
+          "runs": 5,
+          "status": "fail",
+          "error": "page global: expected true, got undefined"
+        },
+        {
+          "id": "expose-function",
+          "group": "automation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "console-event",
+          "group": "automation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "page-error-event",
+          "group": "automation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "element-handles",
+          "group": "automation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "raw-cdp-session",
+          "group": "automation",
+          "passes": 0,
+          "runs": 5,
+          "status": "fail",
+          "error": "browserContext.newCDPSession: CDP session is only available in Chromium"
+        },
+        {
+          "id": "accessibility-snapshot",
+          "group": "automation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        },
+        {
+          "id": "set-content",
+          "group": "automation",
+          "passes": 5,
+          "runs": 5,
+          "status": "pass"
+        }
+      ],
+      "compatTotals": {
+        "pass": 81,
+        "flaky": 0,
+        "fail": 4,
+        "total": 85
+      },
+      "fingerprint": {
+        "webdriver-flag": 0,
+        "headless-ua": 0,
+        "ua-header-mismatch": 0,
+        "no-accept-language": 0,
+        "no-languages": 0,
+        "no-plugins": 0,
+        "no-chrome-object": 0,
+        "zero-outer-size": 0,
+        "software-webgl": 5,
+        "permissions-inconsistent": 0,
+        "platform-mismatch": 0,
+        "ua-data-mismatch": 0,
+        "cdp-runtime-leak": 0,
+        "no-media-codecs": 0
+      },
+      "fingerprintRuns": 5,
+      "fingerprintExposed": 1,
+      "fingerprintRaw": {
+        "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:159.0) Gecko/20100101 Firefox/159.0",
+        "webdriver": false,
+        "languages": 2,
+        "plugins": 5,
+        "hasChrome": false,
+        "outer": [
+          1280,
+          806
+        ],
+        "webgl": "",
+        "notification": "denied",
+        "permState": "prompt",
+        "platform": "MacIntel",
+        "brands": "",
+        "uaDataPlatform": "",
+        "cdpLeak": false,
+        "h264": "probably",
+        "aac": "probably",
+        "hardwareConcurrency": 10,
+        "deviceMemory": null,
+        "headerUa": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:159.0) Gecko/20100101 Firefox/159.0",
+        "acceptLanguage": "en-US,en;q=0.9"
+      },
+      "realworld": {
+        "example.com": {
+          "n": 10,
+          "median": 106.0499374999963,
+          "ci95": [
+            38.756999999284744,
+            109.06295900046825
+          ],
+          "p95": 189.62116044759733,
+          "min": 37.68870799988508,
+          "max": 253.23854199796915,
+          "mean": 100.03872089876458,
+          "ok": 10,
+          "total": 10
+        },
+        "books.toscrape.com (static catalogue)": {
+          "n": 10,
+          "median": 185.15414650077219,
+          "ci95": [
+            72.49433299899101,
+            486.9145835004747
+          ],
+          "p95": 712.2781185997354,
+          "min": 68.65245799720287,
+          "max": 739.8801250000033,
+          "mean": 269.073899999322,
+          "ok": 10,
+          "total": 10
+        },
+        "quotes.toscrape.com/js (client-rendered)": {
+          "n": 10,
+          "median": 303.5984795016666,
+          "ci95": [
+            150.33904100209475,
+            446.99816700071096
+          ],
+          "p95": 619.0209453507007,
+          "min": 136.57754199951887,
+          "max": 754.7663329999996,
+          "mean": 330.4409542002439,
+          "ok": 10,
+          "total": 10
+        },
+        "quotes.toscrape.com/scroll (infinite scroll, XHR)": {
+          "n": 10,
+          "median": 239.11208299687496,
+          "ci95": [
+            221.81520900130272,
+            280.89710399881005
+          ],
+          "p95": 312.5438666991889,
+          "min": 212.0942910015583,
+          "max": 322.3391669988632,
+          "mean": 250.90830399929763,
+          "ok": 10,
+          "total": 10
+        },
+        "scrapethissite.com (AJAX table)": {
+          "n": 10,
+          "median": 2239.1460215009793,
+          "ci95": [
+            2051.0114579945803,
+            2432.703487312589
+          ],
+          "p95": 3664.055204347519,
+          "min": 2001.9796659999993,
+          "max": 4519.613166995347,
+          "mean": 2456.547858399093,
+          "ok": 10,
+          "total": 10
+        },
+        "en.wikipedia.org (large article)": {
+          "n": 10,
+          "median": 265.17570799589157,
+          "ci95": [
+            146.1787909939885,
+            433.9075420010995
+          ],
+          "p95": 515.641127600945,
+          "min": 137.23587499558926,
+          "max": 537.78508400172,
+          "mean": 292.7518415982064,
+          "ok": 10,
+          "total": 10
+        },
+        "news.ycombinator.com": {
+          "n": 10,
+          "median": 487.61527049794677,
+          "ci95": [
+            160.11714667957278,
+            1062.35687449947
+          ],
+          "p95": 1372.876954051107,
+          "min": 129.76745800673962,
+          "max": 1425.8119169995189,
+          "mean": 605.5299915004667,
           "ok": 10,
           "total": 10
         }
