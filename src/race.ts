@@ -13,15 +13,16 @@ const ROOT = join(fileURLToPath(new URL('.', import.meta.url)), '..');
 const { meta, summary } = JSON.parse(await readFile(join(ROOT, 'results/summary.json'), 'utf8'));
 const CONN = 8, PAGES = meta.trials.throughputPages as number;
 const FPS = 15, RACE_S = 10, HOLD_S = 2.5;
+const PAGES_SHOWN = 800; // two passes over the page set, so the fast engines stay visible for more than a blink
 
 const lanes = (meta.providers as any[]).map((p) => {
-  const pps = summary[p.id].throughput.find((t: any) => t.concurrency === CONN).pagesPerSec as number;
+  const pps = summary[p.id].throughputReuse.find((t: any) => t.concurrency === CONN).pagesPerSec as number;
   return { name: p.label.replace(' (baseline)', '').replace('chromedp ', ''), pps, muted: p.id === 'chromium' || p.id === 'playwright-chromium' };
 }).sort((a, b) => b.pps - a.pps);
 
-const cols = 20;
-const GRID_COLS = lanes.length > 4 ? 4 : 2;
-const H = lanes.length > 4 ? 640 : 600;
+const cols = (meta.providers as any[]).length > 8 ? 40 : 20;
+const GRID_COLS = lanes.length > 8 ? 3 : lanes.length > 4 ? 4 : 2;
+const H = lanes.length > 8 ? 830 : lanes.length > 4 ? 640 : 600;
 const html = `<!doctype html><meta charset="utf-8"><style>
   * { box-sizing: border-box; }
   body { margin: 0; width: 880px; height: ${H}px; background: #1a1a19; color: #f0efec; font: 14px -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; padding: 22px 24px; }
@@ -39,12 +40,12 @@ const html = `<!doctype html><meta charset="utf-8"><style>
   .foot { margin-top: 8px; font-size: ${lanes.length > 4 ? 11 : 13}px; font-variant-numeric: tabular-nums; display: flex; justify-content: space-between; color: #c3c2b7; }
   .foot b { color: #f0efec; font-weight: 600; }
 </style>
-<h1>Scraping ${PAGES} pages: real-time replay of measured throughput</h1>
-<div class="sub"><span>Median verified pages per second at ${CONN} connections, ${meta.rounds} rounds. Each square is one page. Gray panels are reference Chromium.</span><span class="clock" id="clock"></span></div>
+<h1>Scraping ${PAGES_SHOWN} pages: real-time replay of measured throughput</h1>
+<div class="sub"><span>Median verified pages/s at ${CONN} connections, one reused tab each, ${meta.rounds} rounds. One square = one page. Gray = reference Chromium.</span><span class="clock" id="clock"></span></div>
 <div class="grid">${lanes.map((l, i) => `<div class="lane${l.muted ? ' muted' : ''}"><div class="head"><span class="name">${l.name}</span><span class="rate">${l.pps < 100 ? l.pps.toFixed(1) : Math.round(l.pps)}/s</span></div>
-<div class="tiles" id="t${i}">${'<i></i>'.repeat(PAGES)}</div><div class="foot"><span id="c${i}"></span><span id="d${i}"></span></div></div>`).join('')}</div>
+<div class="tiles" id="t${i}">${'<i></i>'.repeat(PAGES_SHOWN)}</div><div class="foot"><span id="c${i}"></span><span id="d${i}"></span></div></div>`).join('')}</div>
 <script>
-  const lanes = ${JSON.stringify(lanes)}, PAGES = ${PAGES};
+  const lanes = ${JSON.stringify(lanes)}, PAGES = ${PAGES_SHOWN};
   window.setTime = (t) => {
     document.getElementById('clock').textContent = t.toFixed(1) + ' s';
     lanes.forEach((l, i) => {

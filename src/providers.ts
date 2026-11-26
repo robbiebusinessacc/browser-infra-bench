@@ -58,6 +58,7 @@ const probe = (open: () => Promise<Session>, what: string) => () =>
 const openObscuraStealth = () => viaCdp('ws://127.0.0.1:9307', undefined, { Authorization: `Bearer ${TOKEN}` });
 const openLightpanda = () => viaCdp('ws://127.0.0.1:9308');
 const openCamoufox = () => viaPlaywright(firefox150 as unknown as BrowserType, 'ws://127.0.0.1:9305/bench');
+const openBrowserlessPw = () => viaPlaywright(chromium, `ws://127.0.0.1:9309/chromium/playwright?token=${TOKEN}`);
 const openPwChromium = () => viaPlaywright(chromium, 'ws://127.0.0.1:9306/');
 
 const httpOk = (url: string) => async () => (await fetch(url, { signal: AbortSignal.timeout(2000) })).ok;
@@ -90,7 +91,7 @@ export const providers: Provider[] = [
   },
   {
     id: 'browserless',
-    label: 'Browserless',
+    label: 'Browserless (CDP)',
     engine: 'Chromium behind the Browserless router',
     license: 'SSPL-1.0 or commercial',
     container: {
@@ -101,6 +102,20 @@ export const providers: Provider[] = [
     ready: () => waitFor(httpOk(`http://127.0.0.1:9302/json/version?token=${TOKEN}`), 60_000, 'browserless').then(() => {}),
     open: () => viaCdp(`ws://127.0.0.1:9302?token=${TOKEN}`),
     openMany: (c) => Promise.all(Array.from({ length: c }, () => viaCdp(`ws://127.0.0.1:9302?token=${TOKEN}`))),
+  },
+  {
+    id: 'browserless-pw',
+    label: 'Browserless (Playwright endpoint)',
+    engine: 'Same image, through its documented /chromium/playwright endpoint (Playwright protocol)',
+    license: 'SSPL-1.0 or commercial',
+    container: {
+      name: 'bench-browserless-pw', image: 'ghcr.io/browserless/chromium:latest', ports: { 9309: 3000 },
+      env: { TOKEN, CONCURRENT: '20', QUEUED: '20', TIMEOUT: '120000' },
+    },
+    sessionSemantics: 'Each connection launches a new Chromium process, driven through Playwright\'s own protocol.',
+    ready: probe(openBrowserlessPw, 'browserless-pw'),
+    open: openBrowserlessPw,
+    openMany: many(openBrowserlessPw),
   },
   {
     id: 'steel',
@@ -162,7 +177,8 @@ export const providers: Provider[] = [
     label: 'Lightpanda',
     engine: 'Own Zig engine with V8 (not Chromium, no rendering)',
     license: 'AGPL-3.0',
-    container: { name: 'bench-lightpanda', image: 'lightpanda/browser:latest', ports: { 9308: 9222 } },
+    // Lightpanda sends usage telemetry by default; turned off here (no measurable effect on results).
+    container: { name: 'bench-lightpanda', image: 'lightpanda/browser:latest', ports: { 9308: 9222 }, env: { LIGHTPANDA_DISABLE_TELEMETRY: 'true' } },
     sessionSemantics: 'Each CDP connection gets its own browser instance inside one server process.',
     ready: probe(openLightpanda, 'lightpanda'),
     open: openLightpanda,

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-25T00:32:03.479Z",
+  "generatedAt": "2026-11-25T21:40:36.309Z",
   "seed": 20261124,
   "rounds": 5,
   "trials": {
@@ -10,6 +10,10 @@
     "concurrency": [
       1,
       4,
+      8
+    ],
+    "reuseConcurrency": [
+      1,
       8
     ],
     "realWorld": 2
@@ -65,10 +69,22 @@
     },
     {
       "id": "browserless",
-      "label": "Browserless",
+      "label": "Browserless (CDP)",
       "engine": "Chromium behind the Browserless router",
       "license": "SSPL-1.0 or commercial",
       "sessionSemantics": "Each WebSocket connection launches a new Chromium process, which is killed on disconnect.",
+      "image": "ghcr.io/browserless/chromium:latest",
+      "digest": "ghcr.io/browserless/chromium@sha256:62a1025c4f92a6fbe11e00a58d67f9f7b8b99e0e500b3f99e192bd5f25d14c7a",
+      "created": "2026-11-24T19:18:40.686353941Z",
+      "arch": "arm64",
+      "sizeMb": 1012
+    },
+    {
+      "id": "browserless-pw",
+      "label": "Browserless (Playwright endpoint)",
+      "engine": "Same image, through its documented /chromium/playwright endpoint (Playwright protocol)",
+      "license": "SSPL-1.0 or commercial",
+      "sessionSemantics": "Each connection launches a new Chromium process, driven through Playwright's own protocol.",
       "image": "ghcr.io/browserless/chromium:latest",
       "digest": "ghcr.io/browserless/chromium@sha256:62a1025c4f92a6fbe11e00a58d67f9f7b8b99e0e500b3f99e192bd5f25d14c7a",
       "created": "2026-11-24T19:18:40.686353941Z",

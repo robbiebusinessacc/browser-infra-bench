@@ -13,7 +13,8 @@ Times are medians in milliseconds. Square brackets are the 95% bootstrap confide
 | --- | --- | --- | --- | --- | --- |
 | chromedp headless-shell | Chromium headless-shell, no wrapper | 159.0.8154.13 | `chromedp/headless-shell:latest`<br>`sha256:381353d3530a` | 147 MB | BSD-3-Clause |
 | Playwright Chromium (baseline) | Playwright's own Chromium build and launch flags, via `playwright run-server` | 159.0.8154.6 | `mcr.microsoft.com/playwright:v1.65.1-noble`<br>`sha256:1507cbfc550a` | 943 MB | Apache-2.0 |
-| Browserless | Chromium behind the Browserless router | 159.0.8154.6 | `ghcr.io/browserless/chromium:latest`<br>`sha256:62a1025c4f92` | 1,012 MB | SSPL-1.0 or commercial |
+| Browserless (CDP) | Chromium behind the Browserless router | 159.0.8154.6 | `ghcr.io/browserless/chromium:latest`<br>`sha256:62a1025c4f92` | 1,012 MB | SSPL-1.0 or commercial |
+| Browserless (Playwright endpoint) | Same image, through its documented /chromium/playwright endpoint (Playwright protocol) | 159.0.8154.6 | `ghcr.io/browserless/chromium:latest`<br>`sha256:62a1025c4f92` | 1,012 MB | SSPL-1.0 or commercial |
 | Steel Browser | Chromium behind the Steel session API | 156.0.8078.108 | `ghcr.io/steel-dev/steel-browser:latest`<br>`sha256:c68ff8d92912` | 967 MB | Apache-2.0 |
 | Obscura | Own Rust engine with V8 (not Chromium) | 145.0.0.0 | `h4ckf0r0day/obscura:latest`<br>`sha256:e70c2abc925f` | 97 MB | Apache-2.0 |
 | Obscura (stealth) | Obscura stealth build, run with --stealth | 145.0.0.0 | `bench/obscura-stealth`<br>`sha256:275a4820dd10` | 81 MB | Apache-2.0 |
@@ -24,7 +25,8 @@ What "opening a session" means for each:
 
 - **chromedp headless-shell:** Connects to an already-running browser process and uses its default context.
 - **Playwright Chromium (baseline):** Each connection launches a new Chromium process with Playwright's default flags (Playwright protocol, not CDP).
-- **Browserless:** Each WebSocket connection launches a new Chromium process, which is killed on disconnect.
+- **Browserless (CDP):** Each WebSocket connection launches a new Chromium process, which is killed on disconnect.
+- **Browserless (Playwright endpoint):** Each connection launches a new Chromium process, driven through Playwright's own protocol.
 - **Steel Browser:** POST /v1/sessions relaunches Chromium with a clean profile; the client then connects over CDP. One session at a time.
 - **Obscura:** Each CDP connection gets its own thread and V8 isolates inside one long-lived server process.
 - **Obscura (stealth):** Same as Obscura.
@@ -33,31 +35,31 @@ What "opening a session" means for each:
 
 ## Session start
 
-|  | chromedp headless-shell | Playwright Chromium | Browserless | Steel Browser | Obscura | Obscura (stealth) | Lightpanda | Camoufox |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| Container start to ready | 295 | 2,041 | 1,165 | 1,005 | 203 | 215 | 213 | 919 |
-| WebSocket connected | 27 [21, 33] | 23 [22, 24] | 89 [88, 89] | 273 [272, 276] | 5.0 [4.7, 5.2] | 5.1 [4.9, 5.2] | **4.7 [4.5, 5.0]** | 8.2 [7.9, 8.4] |
-| First page loaded | 172 [164, 191] | 46 [44, 46] | 114 [113, 115] | 367 [365, 373] | 19 [18, 19] | 22 [22, 22] | **11 [10, 12]** | 109 [104, 113] |
-| p95, first page loaded | 269 | 51 | 208 | 446 | 24 | 26 | 14 | 131 |
+|  | chromedp headless-shell | Playwright Chromium | Browserless (CDP) | Browserless (Playwright endpoint) | Steel Browser | Obscura | Obscura (stealth) | Lightpanda | Camoufox |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| Container start to ready | 298 | 2,189 | 1,237 | 1,249 | 1,049 | 204 | 225 | 201 | 833 |
+| WebSocket connected | 32 [30, 37] | 23 [23, 24] | 92 [91, 94] | 53 [53, 55] | 284 [282, 290] | 5.1 [5.0, 5.5] | 5.4 [5.1, 5.6] | **4.9 [4.6, 5.2]** | 8.5 [8.3, 9.1] |
+| First page loaded | 185 [175, 201] | 46 [46, 46] | 119 [117, 119] | 103 [102, 104] | 386 [381, 391] | 20 [19, 20] | 23 [23, 25] | **11 [11, 12]** | 113 [105, 120] |
+| p95, first page loaded | 1,096 | 50 | 224 | 113 | 468 | 25 | 92 | 36 | 653 |
 
 ## Page load
 
-|  | chromedp headless-shell | Playwright Chromium | Browserless | Steel Browser | Obscura | Obscura (stealth) | Lightpanda | Camoufox |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| Server-rendered HTML, 40 paragraphs | 74 [73, 74] | 17 [17, 17] | 31 [30, 32] | 69 [68, 70] | 17 [16, 18] | 19 [18, 19] | **16 [16, 17]** | 29 [28, 29] |
-| Client-rendered: fetch JSON, build 200 rows | 143 [142, 145] | **28 [28, 29]** | 52 [51, 54] | 94 [93, 96] | 30 [30, 32] | 34 [33, 35] | 30 [29, 31] | 43 [42, 43] |
-| 5,000-row table (15,000 cells) | 133 [132, 133] | 82 [81, 83] | 96 [95, 97] | 1,358 [1,350, 1,370] | 36 [35, 36] | 40 [40, 41] | **20 [19, 20]** | 67 [65, 67] |
-| 30 images, 5 scripts, 3 stylesheets | 63 [63, 64] | **16 [16, 17]** | 35 [34, 35] | 83 [80, 84] | 17 [16, 17] | 19 [19, 19] | failed (0/75) | 49 [47, 49] |
-| Inline script: 300k-iteration loop and sort | 112 [111, 113] | 94 [91, 105] | 123 [121, 125] | 158 [155, 160] | 98 [98, 99] | 101 [100, 102] | 90 [89, 90] | **65 [64, 65]** |
+|  | chromedp headless-shell | Playwright Chromium | Browserless (CDP) | Browserless (Playwright endpoint) | Steel Browser | Obscura | Obscura (stealth) | Lightpanda | Camoufox |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| Server-rendered HTML, 40 paragraphs | 76 [75, 77] | **18 [17, 18]** | 32 [31, 33] | 21 [21, 22] | 73 [72, 74] | 19 [18, 19] | 20 [20, 21] | 18 [18, 18] | 29 [29, 31] |
+| Client-rendered: fetch JSON, build 200 rows | 148 [147, 150] | **29 [29, 30]** | 54 [52, 55] | 34 [33, 34] | 100 [98, 101] | 35 [35, 37] | 37 [36, 38] | 31 [31, 33] | 43 [43, 46] |
+| 5,000-row table (15,000 cells) | 135 [134, 136] | 85 [85, 86] | 101 [100, 101] | 95 [94, 96] | 1,385 [1,371, 1,398] | 37 [37, 38] | 43 [42, 44] | **20 [20, 21]** | 67 [66, 69] |
+| 30 images, 5 scripts, 3 stylesheets | 64 [63, 65] | **17 [17, 17]** | 34 [33, 35] | 22 [21, 22] | 86 [84, 87] | 19 [19, 20] | 21 [20, 22] | failed (0/75) | 49 [47, 53] |
+| Inline script: 300k-iteration loop and sort | 116 [114, 153] | 95 [93, 97] | 125 [123, 126] | 114 [113, 115] | 164 [162, 166] | 101 [100, 102] | 103 [102, 104] | 91 [90, 92] | **66 [65, 67]** |
 
 ## Command round trip
 
 One CDP command on an already-open page, 20 warm-up calls discarded.
 
-|  | chromedp headless-shell | Playwright Chromium | Browserless | Steel Browser | Obscura | Obscura (stealth) | Lightpanda | Camoufox |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| `page.evaluate("1+1")` | 1.25 (p95 1.72) | 1.46 (p95 2.10) | 1.19 (p95 1.70) | 1.06 (p95 1.59) | **0.58 (p95 1.01)** | 0.67 (p95 1.00) | 0.58 (p95 0.95) | 1.49 (p95 2.21) |
-| `locator("p").count()` | 1.47 (p95 2.15) | 1.57 (p95 2.29) | 1.44 (p95 2.00) | 1.29 (p95 1.95) | **0.73 (p95 1.25)** | 0.86 (p95 1.26) | 0.76 (p95 1.27) | 1.71 (p95 2.48) |
+|  | chromedp headless-shell | Playwright Chromium | Browserless (CDP) | Browserless (Playwright endpoint) | Steel Browser | Obscura | Obscura (stealth) | Lightpanda | Camoufox |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| `page.evaluate("1+1")` | 1.53 (p95 4.23) | 1.53 (p95 2.03) | 1.20 (p95 1.72) | 1.78 (p95 2.40) | 1.26 (p95 1.79) | 0.72 (p95 1.14) | 0.76 (p95 2.64) | **0.65 (p95 2.76)** | 1.73 (p95 6.71) |
+| `locator("p").count()` | 1.81 (p95 5.23) | 1.63 (p95 2.20) | 1.44 (p95 2.10) | 1.89 (p95 2.51) | 1.50 (p95 2.17) | 0.92 (p95 1.49) | 0.98 (p95 3.63) | **0.85 (p95 4.04)** | 1.91 (p95 8.45) |
 
 ## Throughput
 
@@ -65,100 +67,115 @@ One CDP command on an already-open page, 20 warm-up calls discarded.
 
 **Verified pages per second (min to max across rounds)**
 
-| Connections | chromedp headless-shell | Playwright Chromium | Browserless | Steel Browser | Obscura | Obscura (stealth) | Lightpanda | Camoufox |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| 1 | 7.2 (7.2 to 7.4) | 44 (41 to 48) | 37 (36 to 40) | 14 (13 to 14) | 83 (73 to 92) | 61 (52 to 62) | **171 (157 to 173)** | 6.7 (6.6 to 6.8) |
-| 4 | 25 (24 to 26) | 77 (69 to 80) | 43 (41 to 43) | 19 (19 to 19) | 332 (282 to 342) | 232 (191 to 240) | **511 (485 to 525)** | 6.6 (6.5 to 6.9) |
-| 8 | 39 (24 to 40) | 82 (74 to 85) | 39 (38 to 41) | 15 (15 to 15) | 455 (413 to 470) | 288 (214 to 306) | **697 (497 to 703)** | 6.6 (6.1 to 7.0) |
+| Connections | chromedp headless-shell | Playwright Chromium | Browserless (CDP) | Browserless (Playwright endpoint) | Steel Browser | Obscura | Obscura (stealth) | Lightpanda | Camoufox |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| 1 | 7.2 (4.1 to 7.2) | 43 (41 to 46) | 36 (34 to 38) | 25 (23 to 26) | 13 (12 to 14) | 80 (78 to 83) | 56 (11 to 61) | **165 (24 to 172)** | 6.6 (2.5 to 6.7) |
+| 4 | 26 (4.6 to 26) | 78 (72 to 80) | 41 (38 to 43) | 23 (22 to 25) | 19 (17 to 19) | 323 (282 to 339) | 210 (25 to 234) | **498 (48 to 515)** | 6.5 (6.4 to 6.8) |
+| 8 | 40 (3.9 to 40) | 79 (74 to 82) | 37 (35 to 41) | 22 (20 to 23) | 15 (1.4 to 15) | 447 (425 to 463) | 264 (23 to 305) | **692 (43 to 705)** | 6.6 (6.5 to 6.9) |
 
 **Peak container memory during the run, MB**
 
-| Connections | chromedp headless-shell | Playwright Chromium | Browserless | Steel Browser | Obscura | Obscura (stealth) | Lightpanda | Camoufox |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| 1 | 121 | 337 | 635 | 654 | 14 | 15 | **14** | 4,096 |
-| 4 | 171 | 519 | 1,534 | 761 | 30 | 31 | **25** | 4,096 |
-| 8 | 245 | 749 | 2,724 | 1,037 | 44 | 54 | **37** | 4,096 |
+| Connections | chromedp headless-shell | Playwright Chromium | Browserless (CDP) | Browserless (Playwright endpoint) | Steel Browser | Obscura | Obscura (stealth) | Lightpanda | Camoufox |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| 1 | 119 | 333 | 637 | 484 | 649 | 14 | 15 | **14** | 4,096 |
+| 4 | 170 | 513 | 1,540 | 932 | 759 | 28 | 31 | **25** | 4,096 |
+| 8 | 245 | 748 | 2,740 | 1,505 | 1,042 | 44 | 53 | **37** | 4,096 |
 
 **Container CPU milliseconds per page**
 
-| Connections | chromedp headless-shell | Playwright Chromium | Browserless | Steel Browser | Obscura | Obscura (stealth) | Lightpanda | Camoufox |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| 1 | 74 | 45 | 83 | 190 | 8.6 | 12 | **5.2** | 254 |
-| 4 | 81 | 51 | 94 | 209 | 7.9 | 12 | **5.3** | 276 |
-| 8 | 100 | 49 | 102 | 261 | 8.4 | 14 | **5.3** | 277 |
+| Connections | chromedp headless-shell | Playwright Chromium | Browserless (CDP) | Browserless (Playwright endpoint) | Steel Browser | Obscura | Obscura (stealth) | Lightpanda | Camoufox |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| 1 | 74 | 46 | 85 | 140 | 200 | 8.8 | 13 | **5.3** | 267 |
+| 4 | 84 | 51 | 96 | 171 | 214 | 7.8 | 13 | **5.3** | 283 |
+| 8 | 99 | 50 | 107 | 184 | 266 | 8.5 | 15 | **5.3** | 280 |
 
 **Pages that returned correct data**
 
-| Connections | chromedp headless-shell | Playwright Chromium | Browserless | Steel Browser | Obscura | Obscura (stealth) | Lightpanda | Camoufox |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| 1 | 2000/2000 | 2000/2000 | 2000/2000 | 2000/2000 | 2000/2000 | 2000/2000 | 2000/2000 | 1946/2000 |
-| 4 | 2000/2000 | 2000/2000 | 2000/2000 | 2000/2000 | 2000/2000 | 2000/2000 | 2000/2000 | 1884/2000 |
-| 8 | 2000/2000 | 2000/2000 | 2000/2000 | 2000/2000 | 2000/2000 | 2000/2000 | 2000/2000 | 1921/2000 |
+| Connections | chromedp headless-shell | Playwright Chromium | Browserless (CDP) | Browserless (Playwright endpoint) | Steel Browser | Obscura | Obscura (stealth) | Lightpanda | Camoufox |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| 1 | 2000/2000 | 2000/2000 | 2000/2000 | 2000/2000 | 2000/2000 | 2000/2000 | 2000/2000 | 2000/2000 | 1925/2000 |
+| 4 | 2000/2000 | 2000/2000 | 2000/2000 | 2000/2000 | 2000/2000 | 2000/2000 | 2000/2000 | 2000/2000 | 1912/2000 |
+| 8 | 2000/2000 | 2000/2000 | 2000/2000 | 2000/2000 | 2000/2000 | 2000/2000 | 2000/2000 | 2000/2000 | 1904/2000 |
+
+### Reusing one tab per connection
+
+The same scrape, but each connection keeps one tab open and navigates it from page to page instead of opening a fresh tab per page.
+
+| Connections | chromedp headless-shell | Playwright Chromium | Browserless (CDP) | Browserless (Playwright endpoint) | Steel Browser | Obscura | Obscura (stealth) | Lightpanda | Camoufox |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| 1: pages per second | 20 (9.7 to 21) | 122 (112 to 135) | 82 (73 to 83) | 86 (79 to 94) | 26 (3.1 to 28) | 133 (125 to 148) | 134 (23 to 145) | **227 (31 to 234)** | 39 (37 to 40) |
+| 1: correct pages | 2000/2000 | 2000/2000 | 2000/2000 | 2000/2000 | 2000/2000 | 2000/2000 | 2000/2000 | 2000/2000 | 2000/2000 |
+| 1: peak memory, MB | 320 | 522 | 621 | 663 | 896 | 14 | 15 | 13 | 2,019 |
+| 1: CPU ms per page | 45 | 17 | 31 | 25 | 101 | 5.1 | 5.0 | 5.2 | 51 |
+| 8: pages per second | 71 (6.0 to 74) | 200 (191 to 213) | 102 (93 to 105) | 121 (112 to 122) | 23 (1.3 to 23) | **787 (750 to 796)** | 760 (58 to 791) | 740 (51 to 796) | 44 (43 to 45) |
+| 8: correct pages | 2000/2000 | 2000/2000 | 2000/2000 | 2000/2000 | 2000/2000 | 2000/2000 | 2000/2000 | 2000/2000 | 2000/2000 |
+| 8: peak memory, MB | 1,034 | 1,201 | 2,193 | 1,970 | 3,081 | 45 | 53 | 38 | 2,738 |
+| 8: CPU ms per page | 55 | 19 | 39 | 32 | 173 | 4.7 | 4.9 | 4.9 | 67 |
 
 ## Memory
 
 Container working set (memory in use minus inactive page cache), read from the kernel's cgroup counters. Median of rounds, with min to max.
 
-|  | chromedp headless-shell | Playwright Chromium | Browserless | Steel Browser | Obscura | Obscura (stealth) | Lightpanda | Camoufox |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| Idle, no session | 124 MB (41 to 239) | 272 MB (235 to 332) | 361 MB (316 to 366) | 588 MB (530 to 716) | 15 MB (6.3 to 16) | 13 MB (6.9 to 72) | **10 MB (6.7 to 10)** | 313 MB (274 to 319) |
-| One tab open | 194 MB (110 to 339) | 332 MB (296 to 392) | 533 MB (488 to 541) | 653 MB (591 to 774) | 20 MB (12 to 22) | 20 MB (14 to 78) | **12 MB (8.1 to 24)** | 1,261 MB (1,157 to 1,406) |
-| Ten tabs open (2,000-row tables) | 600 MB (513 to 746) | 729 MB (692 to 790) | 1,039 MB (993 to 1,047) | 1,422 MB (1,368 to 1,618) | 80 MB (78 to 88) | 105 MB (91 to 153) | **38 MB (28 to 50)** | 1,579 MB (1,499 to 1,595) |
-| Processes and threads, ten tabs | 279 | 317 | 279 | 320 | 12 | 12 | 21 | 378 |
+|  | chromedp headless-shell | Playwright Chromium | Browserless (CDP) | Browserless (Playwright endpoint) | Steel Browser | Obscura | Obscura (stealth) | Lightpanda | Camoufox |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| Idle, no session | 64 MB (42 to 98) | 270 MB (258 to 472) | 313 MB (312 to 368) | 368 MB (314 to 370) | 592 MB (536 to 604) | 16 MB (7.0 to 17) | 13 MB (7.1 to 70) | **9.6 MB (6.6 to 10)** | 260 MB (258 to 262) |
+| One tab open | 132 MB (108 to 168) | 332 MB (319 to 577) | 488 MB (486 to 542) | 525 MB (463 to 528) | 646 MB (595 to 672) | 21 MB (13 to 22) | 19 MB (14 to 77) | **11 MB (8.8 to 12)** | 1,304 MB (438 to 1,409) |
+| Ten tabs open (2,000-row tables) | 538 MB (515 to 569) | 728 MB (715 to 973) | 994 MB (991 to 1,048) | 927 MB (865 to 929) | 1,436 MB (1,419 to 1,484) | 88 MB (80 to 88) | 100 MB (83 to 154) | **37 MB (27 to 38)** | 1,518 MB (1,487 to 1,838) |
+| Processes and threads, ten tabs | 278 | 316 | 275 | 369 | 319 | 12 | 12 | 20 | 377 |
 
 ## Compatibility
 
 85 checks driven through stock Playwright, each with a fixed expected result, repeated every round. A check counts as passed only if it passed in every round; "flaky" means it passed in some rounds.
 
-|  | chromedp headless-shell | Playwright Chromium | Browserless | Steel Browser | Obscura | Obscura (stealth) | Lightpanda | Camoufox |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| Passed every round | 85/85 | 85/85 | 83/85 | 81/85 | 75/85 | 74/85 | 74/85 | 81/85 |
-| Flaky | 0 | 0 | 0 | 2 | 0 | 0 | 0 | 0 |
-| Failed every round | 0 | 0 | 2 | 2 | 10 | 11 | 11 | 4 |
+|  | chromedp headless-shell | Playwright Chromium | Browserless (CDP) | Browserless (Playwright endpoint) | Steel Browser | Obscura | Obscura (stealth) | Lightpanda | Camoufox |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| Passed every round | 85/85 | 85/85 | 83/85 | 85/85 | 81/85 | 75/85 | 74/85 | 74/85 | 81/85 |
+| Flaky | 0 | 0 | 0 | 0 | 3 | 0 | 0 | 0 | 0 |
+| Failed every round | 0 | 0 | 2 | 0 | 1 | 10 | 11 | 11 | 4 |
 
-| Passed every round, by area | chromedp headless-shell | Playwright Chromium | Browserless | Steel Browser | Obscura | Obscura (stealth) | Lightpanda | Camoufox |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| navigation | 10/10 | 10/10 | 9/10 | 9/10 | 9/10 | 9/10 | 9/10 | 10/10 |
-| web-platform | 36/36 | 36/36 | 36/36 | 36/36 | 33/36 | 33/36 | 33/36 | 35/36 |
-| interaction | 13/13 | 13/13 | 13/13 | 13/13 | 11/13 | 11/13 | 12/13 | 13/13 |
-| capture | 8/8 | 8/8 | 7/8 | 5/8 | 8/8 | 8/8 | 4/8 | 7/8 |
-| network | 9/9 | 9/9 | 9/9 | 9/9 | 7/9 | 6/9 | 7/9 | 9/9 |
-| automation | 9/9 | 9/9 | 9/9 | 9/9 | 7/9 | 7/9 | 9/9 | 7/9 |
+| Passed every round, by area | chromedp headless-shell | Playwright Chromium | Browserless (CDP) | Browserless (Playwright endpoint) | Steel Browser | Obscura | Obscura (stealth) | Lightpanda | Camoufox |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| navigation | 10/10 | 10/10 | 9/10 | 10/10 | 9/10 | 9/10 | 9/10 | 9/10 | 10/10 |
+| web-platform | 36/36 | 36/36 | 36/36 | 36/36 | 36/36 | 33/36 | 33/36 | 33/36 | 35/36 |
+| interaction | 13/13 | 13/13 | 13/13 | 13/13 | 13/13 | 11/13 | 11/13 | 12/13 | 13/13 |
+| capture | 8/8 | 8/8 | 7/8 | 8/8 | 5/8 | 8/8 | 8/8 | 4/8 | 7/8 |
+| network | 9/9 | 9/9 | 9/9 | 9/9 | 9/9 | 7/9 | 6/9 | 7/9 | 9/9 |
+| automation | 9/9 | 9/9 | 9/9 | 9/9 | 9/9 | 7/9 | 7/9 | 9/9 | 7/9 |
 
 Every check that did not pass everywhere:
 
-| Check | chromedp headless-shell | Playwright Chromium | Browserless | Steel Browser | Obscura | Obscura (stealth) | Lightpanda | Camoufox |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| `go-back` | pass | pass | **fail** | **fail** | pass | pass | pass | pass |
-| `link-click-navigates` | pass | pass | pass | pass | **fail** | **fail** | pass | pass |
-| `iframe-access` | pass | pass | pass | pass | pass | pass | **fail** | pass |
-| `computed-style` | pass | pass | pass | pass | pass | pass | **fail** | pass |
-| `canvas-2d-pixels` | pass | pass | pass | pass | pass | pass | **fail** | pass |
-| `web-worker` | pass | pass | pass | pass | pass | pass | **fail** | pass |
-| `websocket-echo` | pass | pass | pass | pass | **fail** | **fail** | pass | pass |
-| `performance-timing` | pass | pass | pass | pass | **fail** | **fail** | pass | **fail** |
-| `dynamic-script-and-module` | pass | pass | pass | pass | **fail** | **fail** | pass | pass |
-| `file-upload` | pass | pass | pass | pass | **fail** | **fail** | pass | pass |
-| `dialog-alert` | pass | pass | pass | pass | **fail** | **fail** | pass | pass |
-| `scroll-into-view` | pass | pass | pass | pass | pass | pass | **fail** | pass |
-| `screenshot-pixels` | pass | pass | pass | pass | pass | pass | **fail** | pass |
-| `screenshot-full-page` | pass | pass | pass | **fail** | pass | pass | **fail** | pass |
-| `screenshot-element` | pass | pass | pass | pass | pass | pass | **fail** | pass |
-| `pdf` | pass | pass | pass | pass | pass | pass | pass | **fail** |
-| `viewport-resize` | pass | pass | pass | flaky (3/5) | pass | pass | pass | pass |
-| `viewport-survives-first-navigation` | pass | pass | **fail** | flaky (1/5) | pass | pass | pass | pass |
-| `emulate-dark-mode` | pass | pass | pass | pass | pass | pass | **fail** | pass |
-| `route-abort-images` | pass | pass | pass | pass | **fail** | **fail** | pass | pass |
-| `images-load` | pass | pass | pass | pass | pass | pass | **fail** | pass |
-| `extra-http-headers` | pass | pass | pass | pass | pass | **fail** | pass | pass |
-| `download-event` | pass | pass | pass | pass | **fail** | **fail** | **fail** | pass |
-| `evaluate-sees-page-globals` | pass | pass | pass | pass | pass | pass | pass | **fail** |
-| `page-error-event` | pass | pass | pass | pass | **fail** | **fail** | pass | pass |
-| `raw-cdp-session` | pass | pass | pass | pass | **fail** | **fail** | pass | **fail** |
+| Check | chromedp headless-shell | Playwright Chromium | Browserless (CDP) | Browserless (Playwright endpoint) | Steel Browser | Obscura | Obscura (stealth) | Lightpanda | Camoufox |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| `go-back` | pass | pass | **fail** | pass | **fail** | pass | pass | pass | pass |
+| `link-click-navigates` | pass | pass | pass | pass | pass | **fail** | **fail** | pass | pass |
+| `iframe-access` | pass | pass | pass | pass | pass | pass | pass | **fail** | pass |
+| `computed-style` | pass | pass | pass | pass | pass | pass | pass | **fail** | pass |
+| `canvas-2d-pixels` | pass | pass | pass | pass | pass | pass | pass | **fail** | pass |
+| `web-worker` | pass | pass | pass | pass | pass | pass | pass | **fail** | pass |
+| `websocket-echo` | pass | pass | pass | pass | pass | **fail** | **fail** | pass | pass |
+| `performance-timing` | pass | pass | pass | pass | pass | **fail** | **fail** | pass | **fail** |
+| `dynamic-script-and-module` | pass | pass | pass | pass | pass | **fail** | **fail** | pass | pass |
+| `file-upload` | pass | pass | pass | pass | pass | **fail** | **fail** | pass | pass |
+| `dialog-alert` | pass | pass | pass | pass | pass | **fail** | **fail** | pass | pass |
+| `scroll-into-view` | pass | pass | pass | pass | pass | pass | pass | **fail** | pass |
+| `screenshot-pixels` | pass | pass | pass | pass | pass | pass | pass | **fail** | pass |
+| `screenshot-full-page` | pass | pass | pass | pass | flaky (2/5) | pass | pass | **fail** | pass |
+| `screenshot-element` | pass | pass | pass | pass | pass | pass | pass | **fail** | pass |
+| `pdf` | pass | pass | pass | pass | pass | pass | pass | pass | **fail** |
+| `viewport-resize` | pass | pass | pass | pass | flaky (4/5) | pass | pass | pass | pass |
+| `viewport-survives-first-navigation` | pass | pass | **fail** | pass | flaky (2/5) | pass | pass | pass | pass |
+| `emulate-dark-mode` | pass | pass | pass | pass | pass | pass | pass | **fail** | pass |
+| `route-abort-images` | pass | pass | pass | pass | pass | **fail** | **fail** | pass | pass |
+| `images-load` | pass | pass | pass | pass | pass | pass | pass | **fail** | pass |
+| `extra-http-headers` | pass | pass | pass | pass | pass | pass | **fail** | pass | pass |
+| `download-event` | pass | pass | pass | pass | pass | **fail** | **fail** | **fail** | pass |
+| `evaluate-sees-page-globals` | pass | pass | pass | pass | pass | pass | pass | pass | **fail** |
+| `page-error-event` | pass | pass | pass | pass | pass | **fail** | **fail** | pass | pass |
+| `raw-cdp-session` | pass | pass | pass | pass | pass | **fail** | **fail** | pass | **fail** |
 
 <details><summary>Error message for each failure</summary>
 
-**Browserless**
+**Browserless (CDP)**
 
 - `go-back`: page.goBack: Timeout 8000ms exceeded.
 - `viewport-survives-first-navigation`: viewport: expected [1024,700], got [800,600]
@@ -168,7 +185,7 @@ Every check that did not pass everywhere:
 - `go-back`: page.goBack: Timeout 8000ms exceeded.
 - `screenshot-full-page`: full page size 1920x3010
 - `viewport-resize`: viewport: expected [1024,700], got [1920,1080]
-- `viewport-survives-first-navigation`: viewport: expected [1024,700], got [1920,1080]
+- `viewport-survives-first-navigation`: viewport: expected [1024,700], got [1920,993]
 
 **Obscura**
 
@@ -224,44 +241,44 @@ Every check that did not pass everywhere:
 
 Which well-known "this browser is automated or headless" signals each default configuration shows to a page. Measured on the local fixture site only. This is a fingerprint self-check, not a test against any anti-bot product.
 
-| Signal | chromedp headless-shell | Playwright Chromium | Browserless | Steel Browser | Obscura | Obscura (stealth) | Lightpanda | Camoufox |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| navigator.webdriver is true | exposed | exposed | exposed | - | - | - | - | - |
-| User-Agent contains "Headless" | - | exposed | exposed | exposed | - | - | - | - |
-| HTTP User-Agent differs from navigator.userAgent | - | - | - | exposed | - | - | - | - |
-| No Accept-Language request header | exposed | exposed | - | - | - | - | - | - |
-| navigator.languages is empty | - | - | - | - | - | - | - | - |
-| navigator.plugins is empty | exposed | exposed | - | exposed | - | - | exposed | - |
-| UA claims Chrome but window.chrome is missing | exposed | exposed | - | - | - | - | - | - |
-| window.outerWidth/outerHeight is 0 | - | - | - | - | - | - | - | - |
-| WebGL missing or reports a software renderer | exposed | exposed | exposed | exposed | exposed | exposed | exposed | exposed |
-| Chrome only: Notification.permission contradicts permissions.query | exposed | exposed | - | - | - | - | - | - |
-| UA operating system contradicts navigator.platform | - | - | - | - | - | - | - | - |
-| UA claims Chrome but navigator.userAgentData is missing or inconsistent | exposed | exposed | exposed | exposed | - | - | - | - |
-| Page can observe the CDP Runtime domain serialising console arguments | - | - | - | - | exposed | exposed | - | - |
-| No H.264 or AAC playback support (Chrome builds have it) | exposed | - | - | - | exposed | exposed | - | - |
-| **Total exposed** | **8/14** | **8/14** | **4/14** | **5/14** | **3/14** | **3/14** | **2/14** | **1/14** |
+| Signal | chromedp headless-shell | Playwright Chromium | Browserless (CDP) | Browserless (Playwright endpoint) | Steel Browser | Obscura | Obscura (stealth) | Lightpanda | Camoufox |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| navigator.webdriver is true | exposed | exposed | exposed | exposed | - | - | - | - | - |
+| User-Agent contains "Headless" | - | exposed | exposed | exposed | exposed | - | - | - | - |
+| HTTP User-Agent differs from navigator.userAgent | - | - | - | - | exposed | - | - | - | - |
+| No Accept-Language request header | exposed | exposed | - | - | - | - | - | - | - |
+| navigator.languages is empty | - | - | - | - | - | - | - | - | - |
+| navigator.plugins is empty | exposed | exposed | - | - | exposed | - | - | exposed | - |
+| UA claims Chrome but window.chrome is missing | exposed | exposed | - | - | - | - | - | - | - |
+| window.outerWidth/outerHeight is 0 | - | - | - | - | - | - | - | - | - |
+| WebGL missing or reports a software renderer | exposed | exposed | exposed | exposed | exposed | exposed | exposed | exposed | exposed |
+| Chrome only: Notification.permission contradicts permissions.query | exposed | exposed | - | - | - | - | - | - | - |
+| UA operating system contradicts navigator.platform | - | - | - | - | - | - | - | - | - |
+| UA claims Chrome but navigator.userAgentData is missing or inconsistent | exposed | exposed | exposed | exposed | exposed | - | - | - | - |
+| Page can observe the CDP Runtime domain serialising console arguments | - | - | - | - | - | exposed | exposed | - | - |
+| No H.264 or AAC playback support (Chrome builds have it) | exposed | - | - | - | - | exposed | exposed | - | - |
+| **Total exposed** | **8/14** | **8/14** | **4/14** | **4/14** | **5/14** | **3/14** | **3/14** | **2/14** | **1/14** |
 
-| Reported value | chromedp headless-shell | Playwright Chromium | Browserless | Steel Browser | Obscura | Obscura (stealth) | Lightpanda | Camoufox |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| User-Agent | `Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/159.0.8154.13 Safari/537.36` | `Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/159.0.8154.6 Safari/537.36` | `Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/159.0.0.0 Safari/537.36` | `Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36` | `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36` | `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36` | `Lightpanda/1.0` | `Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:159.0) Gecko/20100101 Firefox/159.0` |
-| WebGL renderer | `ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)` | `ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)` | `(none)` | `ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 16.0.0) (0x0000C0DE)), SwiftShader driver)` | `(none)` | `(none)` | `(none)` | `(none)` |
-| navigator.platform | `Linux x86_64` | `Linux x86_64` | `Linux x86_64` | `Linux` | `Win32` | `Win32` | `Linux x86_64` | `MacIntel` |
-| UA client-hint brands | `(none)` | `(none)` | `(none)` | `(none)` | `Google Chrome,Chromium,Not A(Brand` | `Not:A-Brand,Google Chrome,Chromium` | `Lightpanda` | `(none)` |
+| Reported value | chromedp headless-shell | Playwright Chromium | Browserless (CDP) | Browserless (Playwright endpoint) | Steel Browser | Obscura | Obscura (stealth) | Lightpanda | Camoufox |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| User-Agent | `Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/159.0.8154.13 Safari/537.36` | `Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/159.0.8154.6 Safari/537.36` | `Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/159.0.0.0 Safari/537.36` | `Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/159.0.0.0 Safari/537.36` | `Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36` | `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36` | `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36` | `Lightpanda/1.0` | `Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:159.0) Gecko/20100101 Firefox/159.0` |
+| WebGL renderer | `ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)` | `ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)` | `(none)` | `ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 10.0.0) (0x0000C0DE)), SwiftShader driver)` | `ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (LLVM 16.0.0) (0x0000C0DE)), SwiftShader driver)` | `(none)` | `(none)` | `(none)` | `(none)` |
+| navigator.platform | `Linux x86_64` | `Linux x86_64` | `Linux x86_64` | `Linux x86_64` | `Linux x86_64` | `Win32` | `Win32` | `Linux x86_64` | `Win32` |
+| UA client-hint brands | `(none)` | `(none)` | `(none)` | `(none)` | `(none)` | `Google Chrome,Chromium,Not A(Brand` | `Not:A-Brand,Google Chrome,Chromium` | `Lightpanda` | `(none)` |
 
 ## Real sites
 
 A content assertion on each of seven public pages. Timings include the public internet from one location, so read them as context, not as a ranking. The result that matters is whether the assertion held.
 
-| Site | chromedp headless-shell | Playwright Chromium | Browserless | Steel Browser | Obscura | Obscura (stealth) | Lightpanda | Camoufox |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| example.com | 10/10 ok, 150 ms | 10/10 ok, 57 ms | 10/10 ok, 92 ms | 10/10 ok, 120 ms | 10/10 ok, 96 ms | 10/10 ok, 117 ms | 10/10 ok, 83 ms | 10/10 ok, 106 ms |
-| books.toscrape.com (static catalogue) | 10/10 ok, 246 ms | 10/10 ok, 191 ms | 10/10 ok, 193 ms | 10/10 ok, 392 ms | 10/10 ok, 521 ms | 10/10 ok, 776 ms | 10/10 ok, 245 ms | 10/10 ok, 185 ms |
-| quotes.toscrape.com/js (client-rendered) | 10/10 ok, 417 ms | 10/10 ok, 367 ms | 10/10 ok, 339 ms | 10/10 ok, 340 ms | 10/10 ok, 551 ms | 10/10 ok, 710 ms | 10/10 ok, 222 ms | 10/10 ok, 304 ms |
-| quotes.toscrape.com/scroll (infinite scroll, XHR) | 10/10 ok, 456 ms | 10/10 ok, 302 ms | 10/10 ok, 293 ms | 10/10 ok, 303 ms | 8/10 ok, 560 ms | 7/10 ok, 828 ms | 0/10 ok | 10/10 ok, 239 ms |
-| scrapethissite.com (AJAX table) | 10/10 ok, 2,222 ms | 10/10 ok, 2,144 ms | 10/10 ok, 2,235 ms | 10/10 ok, 2,266 ms | 10/10 ok, 2,328 ms | 10/10 ok, 2,538 ms | 10/10 ok, 2,002 ms | 10/10 ok, 2,239 ms |
-| en.wikipedia.org (large article) | 10/10 ok, 342 ms | 10/10 ok, 253 ms | 10/10 ok, 302 ms | 10/10 ok, 625 ms | 10/10 ok, 948 ms | 10/10 ok, 1,011 ms | 10/10 ok, 260 ms | 10/10 ok, 265 ms |
-| news.ycombinator.com | 10/10 ok, 422 ms | 10/10 ok, 601 ms | 10/10 ok, 438 ms | 10/10 ok, 644 ms | 10/10 ok, 492 ms | 10/10 ok, 1,060 ms | 10/10 ok, 351 ms | 10/10 ok, 488 ms |
+| Site | chromedp headless-shell | Playwright Chromium | Browserless (CDP) | Browserless (Playwright endpoint) | Steel Browser | Obscura | Obscura (stealth) | Lightpanda | Camoufox |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| example.com | 10/10 ok, 112 ms | 10/10 ok, 62 ms | 10/10 ok, 84 ms | 10/10 ok, 85 ms | 10/10 ok, 116 ms | 10/10 ok, 77 ms | 10/10 ok, 116 ms | 10/10 ok, 102 ms | 10/10 ok, 117 ms |
+| books.toscrape.com (static catalogue) | 10/10 ok, 315 ms | 10/10 ok, 177 ms | 10/10 ok, 226 ms | 10/10 ok, 171 ms | 10/10 ok, 406 ms | 10/10 ok, 500 ms | 10/10 ok, 737 ms | 10/10 ok, 260 ms | 10/10 ok, 330 ms |
+| quotes.toscrape.com/js (client-rendered) | 10/10 ok, 480 ms | 10/10 ok, 312 ms | 10/10 ok, 278 ms | 10/10 ok, 287 ms | 10/10 ok, 346 ms | 10/10 ok, 546 ms | 10/10 ok, 737 ms | 10/10 ok, 241 ms | 10/10 ok, 384 ms |
+| quotes.toscrape.com/scroll (infinite scroll, XHR) | 10/10 ok, 475 ms | 10/10 ok, 279 ms | 10/10 ok, 285 ms | 10/10 ok, 277 ms | 10/10 ok, 337 ms | 6/10 ok, 488 ms | 6/10 ok, 814 ms | 0/10 ok | 10/10 ok, 363 ms |
+| scrapethissite.com (AJAX table) | 10/10 ok, 2,201 ms | 10/10 ok, 2,152 ms | 10/10 ok, 2,218 ms | 10/10 ok, 2,137 ms | 10/10 ok, 2,176 ms | 10/10 ok, 2,287 ms | 10/10 ok, 2,477 ms | 10/10 ok, 2,233 ms | 10/10 ok, 2,264 ms |
+| en.wikipedia.org (large article) | 10/10 ok, 359 ms | 10/10 ok, 260 ms | 10/10 ok, 274 ms | 10/10 ok, 248 ms | 10/10 ok, 689 ms | 10/10 ok, 962 ms | 10/10 ok, 1,013 ms | 10/10 ok, 303 ms | 10/10 ok, 253 ms |
+| news.ycombinator.com | 10/10 ok, 446 ms | 10/10 ok, 425 ms | 10/10 ok, 404 ms | 10/10 ok, 401 ms | 10/10 ok, 521 ms | 10/10 ok, 527 ms | 10/10 ok, 947 ms | 10/10 ok, 359 ms | 10/10 ok, 448 ms |
 
 Failures:
 

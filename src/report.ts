@@ -56,8 +56,8 @@ for (const id of order) {
     memMb: med(mem.map((m) => m[k].memMb)), range: range(mem.map((m) => m[k].memMb)), pids: med(mem.map((m) => m[k].pids)),
   }]));
   s.memory.tabsOpened = Math.min(...mem.map((m) => m.tabsOpened));
-  s.throughput = meta.trials.concurrency.map((c: number) => {
-    const t = rs.map((r) => (r.throughput ?? []).find((x: any) => x.concurrency === c)).filter((x) => x && !x.failed);
+  const tpAgg = (key: 'throughput' | 'throughputReuse', levels: number[]) => levels.map((c: number) => {
+    const t = rs.map((r) => (r[key] ?? []).find((x: any) => x.concurrency === c)).filter((x) => x && !x.failed);
     return {
       concurrency: c, runs: t.length,
       pagesPerSec: med(t.map((x) => x.pagesPerSec)), range: range(t.map((x) => x.pagesPerSec)),
@@ -66,6 +66,8 @@ for (const id of order) {
       firstError: t.flatMap((x) => x.errors)[0],
     };
   });
+  s.throughput = tpAgg('throughput', meta.trials.concurrency);
+  s.throughputReuse = tpAgg('throughputReuse', meta.trials.reuseConcurrency ?? []);
   const compatRuns = rs.map((r) => r.compat).filter(Array.isArray);
   s.compat = (compatRuns[0] ?? []).map((c: any) => {
     const all = compatRuns.map((run) => run.find((x: any) => x.id === c.id));
@@ -106,6 +108,10 @@ await chart('page-load', 'Page load by page type', 'Navigate and verify the cont
 await chart('throughput', 'Scraping throughput', 'Verified pages per second at 1, 4 and 8 concurrent connections. Median of rounds, higher is better.',
   [{ rows: order.map((id) => ({ label: short(id), series: summary[id].throughput.map((t: any) => ({ value: t.pagesPerSec, lo: t.range[0], hi: t.range[1] })) })), fmt: fmtN }],
   { legend: meta.trials.concurrency.map((c: number) => `${c} connection${c > 1 ? 's' : ''}`) });
+if (meta.trials.reuseConcurrency?.length)
+  await chart('throughput-reuse', 'Scraping throughput, reusing one tab per connection', `Same ${meta.trials.throughputPages} pages, but each connection navigates one long-lived tab. Median of rounds, higher is better.`,
+    [{ rows: order.map((id) => ({ label: short(id), series: summary[id].throughputReuse.map((t: any) => ({ value: t.pagesPerSec, lo: t.range[0], hi: t.range[1] })) })), fmt: fmtN }],
+    { legend: meta.trials.reuseConcurrency.map((c: number) => `${c} connection${c > 1 ? 's' : ''}`) });
 await chart('memory', 'Container memory', 'Working set in MB, lower is better. Median of rounds; whiskers show min and max.',
   [['idle', 'Idle, no session'], ['onePage', 'One tab open'], ['tenPages', 'Ten tabs open']].map(([k, heading]) => ({
     heading, fmt: fmtN, rows: rowsOf((id) => ({ value: summary[id].memory[k].memMb, lo: summary[id].memory[k].range[0], hi: summary[id].memory[k].range[1] })),
@@ -176,6 +182,19 @@ for (const [title, get, lower] of [
   }));
 }
 
+if (meta.trials.reuseConcurrency?.length) {
+  L.push('### Reusing one tab per connection', '', 'The same scrape, but each connection keeps one tab open and navigates it from page to page instead of opening a fresh tab per page.', '');
+  table(['Connections', ...order.map(short)], meta.trials.reuseConcurrency.flatMap((c: number, i: number) => {
+    const b = best(order.map((id) => summary[id].throughputReuse[i].pagesPerSec), false);
+    return [
+      [`${c}: pages per second`, ...order.map((id) => { const t = summary[id].throughputReuse[i]; return bold(`${fmtN(t.pagesPerSec)} (${fmtN(t.range[0])} to ${fmtN(t.range[1])})`, t.pagesPerSec === b); })],
+      [`${c}: correct pages`, ...order.map((id) => `${summary[id].throughputReuse[i].ok}/${summary[id].throughputReuse[i].total}`)],
+      [`${c}: peak memory, MB`, ...order.map((id) => fmtN(summary[id].throughputReuse[i].peakMemMb))],
+      [`${c}: CPU ms per page`, ...order.map((id) => fmtMs(summary[id].throughputReuse[i].cpuMsPerPage))],
+    ];
+  }));
+}
+
 L.push('## Memory', '', 'Container working set (memory in use minus inactive page cache), read from the kernel\'s cgroup counters. Median of rounds, with min to max.', '');
 table(heads, [['idle', 'Idle, no session'], ['onePage', 'One tab open'], ['tenPages', 'Ten tabs open (2,000-row tables)']].map(([k, name]) => {
   const b = best(order.map((id) => summary[id].memory[k].memMb));
@@ -225,4 +244,35 @@ if (meta.sites?.length) {
 }
 
 await writeFile(join(outDir, 'RESULTS.md'), L.join('\n'));
+
+// ---- README scoreboard (injected between markers so the headline numbers are never hand-typed) ----
+{
+  const fresh = (id: string) => summary[id].throughput.at(-1);
+  const reuse = (id: string) => summary[id].throughputReuse.at(-1);
+  const cols: [string, (id: string) => number, boolean, (id: string) => string][] = [
+    [`Pages/s, fresh tab`, (id) => fresh(id).pagesPerSec, false, (id) => fmtN(fresh(id).pagesPerSec) + (fresh(id).ok < fresh(id).total ? ' \\*' : '')],
+    [`Pages/s, reused tab`, (id) => reuse(id)?.pagesPerSec, false, (id) => fmtN(reuse(id)?.pagesPerSec)],
+    ['CPU ms/page', (id) => reuse(id)?.cpuMsPerPage, true, (id) => fmtMs(reuse(id)?.cpuMsPerPage)],
+    ['Idle MB', (id) => summary[id].memory.idle.memMb, true, (id) => fmtN(summary[id].memory.idle.memMb)],
+    ['First page ms', (id) => summary[id].session.firstPage.median, true, (id) => fmtMs(summary[id].session.firstPage.median)],
+    [`Checks passed (of ${summary[order[0]].compatTotals.total})`, (id) => summary[id].compatTotals.pass, false, (id) => String(summary[id].compatTotals.pass)],
+    [`Signals exposed (of ${meta.fingerprintSignals.length})`, (id) => summary[id].fingerprintExposed, true, (id) => String(summary[id].fingerprintExposed)],
+  ];
+  const contenders = order.filter((id) => !isReference(id));
+  const S: string[] = [];
+  S.push(`| Browser | ${cols.map((c) => c[0]).join(' | ')} |`, `| --- | ${cols.map(() => '---:').join(' | ')} |`);
+  for (const id of order) {
+    S.push(`| ${isReference(id) ? `*${short(id)} (reference)*` : short(id)} | ${cols.map(([, get, lower, show]) => {
+      const b = best(contenders.map(get), lower);
+      return !isReference(id) && get(id) === b ? `**${show(id)}**` : show(id);
+    }).join(' | ')} |`);
+  }
+  const c8 = meta.trials.concurrency.at(-1);
+  S.push('', `Throughput and CPU are at ${c8} connections; CPU is for the reused-tab mode. Bold is the best contender in each column (references excluded). \\* Some pages failed; see [Throughput](#throughput).`);
+  const readme = join(ROOT, 'README.md');
+  const text = await readFile(readme, 'utf8').catch(() => '');
+  const a = '<!-- scoreboard:start -->', b = '<!-- scoreboard:end -->';
+  if (text.includes(a) && text.includes(b))
+    await writeFile(readme, text.slice(0, text.indexOf(a) + a.length) + '\n' + S.join('\n') + '\n' + text.slice(text.indexOf(b)));
+}
 console.log(`wrote ${join(outDir, 'summary.json')}, RESULTS.md and ${chartDir}/*.svg`);

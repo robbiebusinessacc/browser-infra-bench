@@ -131,7 +131,7 @@ export async function commandLatency(s: Session, n: number) {
 // 4. Throughput: scrape `total` distinct pages with `c` concurrent connections,
 //    one fresh tab per URL, verifying a per-page token so wrong data counts as failure.
 // ---------------------------------------------------------------------------
-export async function throughput(p: Provider, c: number, total: number) {
+export async function throughput(p: Provider, c: number, total: number, reuseTab = false) {
   const sessions = await withTimeout(p.openMany(c), 90_000, 'openMany');
   // Warm each connection once so the measurement is steady-state scraping, not session start.
   await Promise.all(sessions.map(async (s) => { const pg = await freshPage(s); await pg.goto(`${BASE}/static`).catch(() => {}); await pg.close().catch(() => {}); }));
@@ -141,11 +141,14 @@ export async function throughput(p: Provider, c: number, total: number) {
   const perPage: number[] = [];
   const t0 = performance.now();
   await Promise.all(sessions.map(async (s) => {
+    // reuseTab: one long-lived tab per connection, navigated from page to page.
+    let shared = reuseTab ? await freshPage(s).catch(() => undefined) : undefined;
     for (;;) {
       const i = next++;
       if (i >= total) return;
       const t = await timed(async () => {
-        const page = await freshPage(s);
+        if (reuseTab && (!shared || shared.isClosed())) shared = await freshPage(s);
+        const page = shared ?? (await freshPage(s));
         try {
           await page.goto(`${BASE}/page?i=${i}`, { waitUntil: 'load' });
           const d = await page.evaluate(() => ({
@@ -154,7 +157,7 @@ export async function throughput(p: Provider, c: number, total: number) {
           }));
           if (d.title !== `Item ${i}` || d.tok !== token(i) || d.price !== `$${(i * 1.5 + 9.99).toFixed(2)}` || !d.next?.endsWith(`/page?i=${i + 1}`))
             throw new Error(`wrong data for page ${i}: ${JSON.stringify(d)}`);
-        } finally { await page.close().catch(() => {}); }
+        } finally { if (!reuseTab) await page.close().catch(() => {}); }
       }, 20_000);
       if (t.ok) { okCount++; perPage.push(t.ms); } else if (errors.length < 5) errors.push(t.error!);
     }
@@ -163,7 +166,7 @@ export async function throughput(p: Provider, c: number, total: number) {
   const usage = await samp.stop();
   await Promise.all(sessions.map((s) => s.close()));
   return {
-    concurrency: c, total, ok: okCount, wallMs, pagesPerSec: okCount / (wallMs / 1000), perPageMs: perPage, errors,
+    concurrency: c, reuseTab, total, ok: okCount, wallMs, pagesPerSec: okCount / (wallMs / 1000), perPageMs: perPage, errors,
     ...usage, cpuMsPerPage: okCount ? (usage.cpuSec * 1000) / okCount : NaN,
   };
 }

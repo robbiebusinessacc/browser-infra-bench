@@ -24,6 +24,7 @@ const N = {
   commands: Number(opt('commands', quick ? '30' : '200')),
   throughputPages: Number(opt('throughput-pages', quick ? '40' : '400')),
   concurrency: opt('concurrency', quick ? '1,4' : '1,4,8').split(',').map(Number),
+  reuseConcurrency: opt('reuse-concurrency', quick ? '4' : '1,8').split(',').map(Number),
   realWorld: Number(opt('real-world', quick ? '1' : '2')),
 };
 const selected: Provider[] = opt('providers', providers.map((p) => p.id).join(',')).split(',').map(byId);
@@ -77,6 +78,14 @@ async function runProvider(p: Provider, round: number) {
         tp.push('failed' in (r as object) ? { concurrency: c, ...(r as object) } : r);
       }
       result.throughput = tp;
+      // Same scrape, but each connection keeps one tab and navigates it, instead of a fresh tab per page.
+      const reuse = [];
+      for (const c of N.reuseConcurrency) {
+        await stop(p); await start(p); await sleep(2000);
+        const r = await step('throughput', () => w.throughput(p, c, N.throughputPages, true));
+        reuse.push('failed' in (r as object) ? { concurrency: c, ...(r as object) } : r);
+      }
+      result.throughputReuse = reuse;
     }
   } finally {
     result.logsTail = (await docker('logs', '--tail', '5', p.container.name).catch(() => '')).slice(-1500);

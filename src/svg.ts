@@ -57,7 +57,7 @@ export function barPanels(o: { title: string; subtitle: string; panels: Panel[];
   if (o.legend) {
     let lx = PAD;
     o.legend.forEach((name, i) => {
-      out.push(`<rect x="${lx}" y="${66}" width="12" height="12" rx="2" fill="${t.ramp[i]}"/><text x="${lx + 18}" y="${76}" font-size="12" fill="${t.text2}">${esc(name)}</text>`);
+      out.push(`<rect x="${lx}" y="${66}" width="12" height="12" rx="2" fill="${o.legend!.length === 2 ? [t.ramp[0], t.ramp[2]][i] : t.ramp[i]}"/><text x="${lx + 18}" y="${76}" font-size="12" fill="${t.text2}">${esc(name)}</text>`);
       lx += 18 + textW(name) + 22;
     });
   }
@@ -85,7 +85,7 @@ export function barPanels(o: { title: string; subtitle: string; panels: Panel[];
       out.push(`<text x="${x0 - 10}" y="${ry + blockH / 2 + 4}" font-size="12" text-anchor="end" fill="${t.text}">${esc(r.label)}</text>`);
       series.forEach((s, si) => {
         const by = ry + si * (barH + 2);
-        const fill = r.series ? t.ramp[si] : r.muted ? t.muted : t.bar;
+        const fill = r.series ? (r.series.length === 2 ? [t.ramp[0], t.ramp[2]][si] : t.ramp[si]) : r.muted ? t.muted : t.bar;
         if (!Number.isFinite(s.value)) {
           out.push(`<text x="${x0 + 6}" y="${by + barH / 2 + 4}" font-size="12" fill="${t.text2}">n/a</text>`);
           return;

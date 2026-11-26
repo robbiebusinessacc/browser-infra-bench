@@ -1,31 +1,34 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 324" width="860" height="324" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-label="Automation signals exposed by default">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 354" width="860" height="354" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-label="Automation signals exposed by default">
 <title>Automation signals exposed by default</title><desc>Of 14 well-known headless or automation tells. Lower is better.</desc>
-<rect width="860" height="324" rx="8" fill="#1a1a19"/>
+<rect width="860" height="354" rx="8" fill="#1a1a19"/>
 <text x="24" y="32" font-size="16" font-weight="600" fill="#f0efec">Automation signals exposed by default</text>
 <text x="24" y="52" font-size="12" fill="#c3c2b7">Of 14 well-known headless or automation tells. Lower is better.</text>
-<line x1="190.56" y1="68" x2="190.56" y2="302" stroke="#2e2e2c" stroke-width="1"/>
-<text x="180.56" y="80" font-size="12" text-anchor="end" fill="#f0efec">chromedp headless-shell</text>
-<path d="M190.56,68h355.2685714285714a4,4 0 0 1 4,4v8a4,4 0 0 1 -4,4h-355.2685714285714z" fill="#6f6e68"/>
-<text x="555.8285714285714" y="80" font-size="12" fill="#f0efec" style="font-variant-numeric: tabular-nums">8</text>
-<text x="180.56" y="110" font-size="12" text-anchor="end" fill="#f0efec">Playwright Chromium</text>
-<path d="M190.56,98h355.2685714285714a4,4 0 0 1 4,4v8a4,4 0 0 1 -4,4h-355.2685714285714z" fill="#6f6e68"/>
-<text x="555.8285714285714" y="110" font-size="12" fill="#f0efec" style="font-variant-numeric: tabular-nums">8</text>
-<text x="180.56" y="140" font-size="12" text-anchor="end" fill="#f0efec">Browserless</text>
-<path d="M190.56,128h175.6342857142857a4,4 0 0 1 4,4v8a4,4 0 0 1 -4,4h-175.6342857142857z" fill="#3987e5"/>
-<text x="376.1942857142857" y="140" font-size="12" fill="#f0efec" style="font-variant-numeric: tabular-nums">4</text>
-<text x="180.56" y="170" font-size="12" text-anchor="end" fill="#f0efec">Steel Browser</text>
-<path d="M190.56,158h220.54285714285714a4,4 0 0 1 4,4v8a4,4 0 0 1 -4,4h-220.54285714285714z" fill="#3987e5"/>
-<text x="421.10285714285715" y="170" font-size="12" fill="#f0efec" style="font-variant-numeric: tabular-nums">5</text>
-<text x="180.56" y="200" font-size="12" text-anchor="end" fill="#f0efec">Obscura</text>
-<path d="M190.56,188h130.72571428571428a4,4 0 0 1 4,4v8a4,4 0 0 1 -4,4h-130.72571428571428z" fill="#3987e5"/>
-<text x="331.2857142857143" y="200" font-size="12" fill="#f0efec" style="font-variant-numeric: tabular-nums">3</text>
-<text x="180.56" y="230" font-size="12" text-anchor="end" fill="#f0efec">Obscura (stealth)</text>
-<path d="M190.56,218h130.72571428571428a4,4 0 0 1 4,4v8a4,4 0 0 1 -4,4h-130.72571428571428z" fill="#3987e5"/>
-<text x="331.2857142857143" y="230" font-size="12" fill="#f0efec" style="font-variant-numeric: tabular-nums">3</text>
-<text x="180.56" y="260" font-size="12" text-anchor="end" fill="#f0efec">Lightpanda</text>
-<path d="M190.56,248h85.81714285714285a4,4 0 0 1 4,4v8a4,4 0 0 1 -4,4h-85.81714285714285z" fill="#3987e5"/>
-<text x="286.37714285714287" y="260" font-size="12" fill="#f0efec" style="font-variant-numeric: tabular-nums">2</text>
-<text x="180.56" y="290" font-size="12" text-anchor="end" fill="#f0efec">Camoufox</text>
-<path d="M190.56,278h40.90857142857143a4,4 0 0 1 4,4v8a4,4 0 0 1 -4,4h-40.90857142857143z" fill="#3987e5"/>
-<text x="241.46857142857144" y="290" font-size="12" fill="#f0efec" style="font-variant-numeric: tabular-nums">1</text>
+<line x1="257.76" y1="68" x2="257.76" y2="332" stroke="#2e2e2c" stroke-width="1"/>
+<text x="247.76" y="80" font-size="12" text-anchor="end" fill="#f0efec">chromedp headless-shell</text>
+<path d="M257.76,68h316.8685714285714a4,4 0 0 1 4,4v8a4,4 0 0 1 -4,4h-316.8685714285714z" fill="#6f6e68"/>
+<text x="584.6285714285714" y="80" font-size="12" fill="#f0efec" style="font-variant-numeric: tabular-nums">8</text>
+<text x="247.76" y="110" font-size="12" text-anchor="end" fill="#f0efec">Playwright Chromium</text>
+<path d="M257.76,98h316.8685714285714a4,4 0 0 1 4,4v8a4,4 0 0 1 -4,4h-316.8685714285714z" fill="#6f6e68"/>
+<text x="584.6285714285714" y="110" font-size="12" fill="#f0efec" style="font-variant-numeric: tabular-nums">8</text>
+<text x="247.76" y="140" font-size="12" text-anchor="end" fill="#f0efec">Browserless (CDP)</text>
+<path d="M257.76,128h156.4342857142857a4,4 0 0 1 4,4v8a4,4 0 0 1 -4,4h-156.4342857142857z" fill="#3987e5"/>
+<text x="424.1942857142857" y="140" font-size="12" fill="#f0efec" style="font-variant-numeric: tabular-nums">4</text>
+<text x="247.76" y="170" font-size="12" text-anchor="end" fill="#f0efec">Browserless (Playwright endpoint)</text>
+<path d="M257.76,158h156.4342857142857a4,4 0 0 1 4,4v8a4,4 0 0 1 -4,4h-156.4342857142857z" fill="#3987e5"/>
+<text x="424.1942857142857" y="170" font-size="12" fill="#f0efec" style="font-variant-numeric: tabular-nums">4</text>
+<text x="247.76" y="200" font-size="12" text-anchor="end" fill="#f0efec">Steel Browser</text>
+<path d="M257.76,188h196.54285714285714a4,4 0 0 1 4,4v8a4,4 0 0 1 -4,4h-196.54285714285714z" fill="#3987e5"/>
+<text x="464.30285714285714" y="200" font-size="12" fill="#f0efec" style="font-variant-numeric: tabular-nums">5</text>
+<text x="247.76" y="230" font-size="12" text-anchor="end" fill="#f0efec">Obscura</text>
+<path d="M257.76,218h116.32571428571427a4,4 0 0 1 4,4v8a4,4 0 0 1 -4,4h-116.32571428571427z" fill="#3987e5"/>
+<text x="384.0857142857143" y="230" font-size="12" fill="#f0efec" style="font-variant-numeric: tabular-nums">3</text>
+<text x="247.76" y="260" font-size="12" text-anchor="end" fill="#f0efec">Obscura (stealth)</text>
+<path d="M257.76,248h116.32571428571427a4,4 0 0 1 4,4v8a4,4 0 0 1 -4,4h-116.32571428571427z" fill="#3987e5"/>
+<text x="384.0857142857143" y="260" font-size="12" fill="#f0efec" style="font-variant-numeric: tabular-nums">3</text>
+<text x="247.76" y="290" font-size="12" text-anchor="end" fill="#f0efec">Lightpanda</text>
+<path d="M257.76,278h76.21714285714285a4,4 0 0 1 4,4v8a4,4 0 0 1 -4,4h-76.21714285714285z" fill="#3987e5"/>
+<text x="343.97714285714284" y="290" font-size="12" fill="#f0efec" style="font-variant-numeric: tabular-nums">2</text>
+<text x="247.76" y="320" font-size="12" text-anchor="end" fill="#f0efec">Camoufox</text>
+<path d="M257.76,308h36.10857142857142a4,4 0 0 1 4,4v8a4,4 0 0 1 -4,4h-36.10857142857142z" fill="#3987e5"/>
+<text x="303.8685714285714" y="320" font-size="12" fill="#f0efec" style="font-variant-numeric: tabular-nums">1</text>
 </svg>
