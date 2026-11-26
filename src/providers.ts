@@ -29,6 +29,17 @@ export interface Provider {
   sessionSemantics: string;
 }
 
+// Images are pinned to the digests the published results were measured on, so a rerun
+// tests the same software. Set BENCH_LATEST=1 to benchmark whatever :latest is today.
+const PINNED: Record<string, string> = {
+  "chromedp/headless-shell:latest": "chromedp/headless-shell@sha256:381353d3530ab9d579d2fe8b9c0f4519c995617f5a71daf6bb649e2d12005bd9",
+  "ghcr.io/browserless/chromium:latest": "ghcr.io/browserless/chromium@sha256:62a1025c4f92a6fbe11e00a58d67f9f7b8b99e0e500b3f99e192bd5f25d14c7a",
+  "ghcr.io/steel-dev/steel-browser:latest": "ghcr.io/steel-dev/steel-browser@sha256:c68ff8d92912b8ddb5674c557075f6238fd80e33e366aac0e4a16c63e3d804b2",
+  "h4ckf0r0day/obscura:latest": "h4ckf0r0day/obscura@sha256:e70c2abc925f2194c9338762075432c69328032cae220d77393f1495e90c601a",
+  "lightpanda/browser:latest": "lightpanda/browser@sha256:c474699588315f2d5ba1574a0608feeaf29a31663b845b640d2dd87dd2781ce0"
+};
+const img = (tag: string) => (process.env.BENCH_LATEST ? tag : PINNED[tag] ?? tag);
+
 // Local-only token: containers publish to 127.0.0.1 and are torn down after each run.
 const TOKEN = 'bench0123456789abcdef0123456789abcdef0123456789abcdef0123456789';
 
@@ -69,7 +80,7 @@ export const providers: Provider[] = [
     label: 'chromedp headless-shell',
     engine: 'Chromium headless-shell, no wrapper',
     license: 'BSD-3-Clause',
-    container: { name: 'bench-chromium', image: 'chromedp/headless-shell:latest', ports: { 9301: 9222 } },
+    container: { name: 'bench-chromium', image: img('chromedp/headless-shell:latest'), ports: { 9301: 9222 } },
     sessionSemantics: 'Connects to an already-running browser process and uses its default context.',
     ready: () => waitFor(httpOk('http://127.0.0.1:9301/json/version'), 60_000, 'chromium').then(() => {}),
     open: () => viaCdp('http://127.0.0.1:9301'),
@@ -95,7 +106,7 @@ export const providers: Provider[] = [
     engine: 'Chromium behind the Browserless router',
     license: 'SSPL-1.0 or commercial',
     container: {
-      name: 'bench-browserless', image: 'ghcr.io/browserless/chromium:latest', ports: { 9302: 3000 },
+      name: 'bench-browserless', image: img('ghcr.io/browserless/chromium:latest'), ports: { 9302: 3000 },
       env: { TOKEN, CONCURRENT: '20', QUEUED: '20', TIMEOUT: '120000' },
     },
     sessionSemantics: 'Each WebSocket connection launches a new Chromium process, which is killed on disconnect.',
@@ -109,7 +120,7 @@ export const providers: Provider[] = [
     engine: 'Same image, through its documented /chromium/playwright endpoint (Playwright protocol)',
     license: 'SSPL-1.0 or commercial',
     container: {
-      name: 'bench-browserless-pw', image: 'ghcr.io/browserless/chromium:latest', ports: { 9309: 3000 },
+      name: 'bench-browserless-pw', image: img('ghcr.io/browserless/chromium:latest'), ports: { 9309: 3000 },
       env: { TOKEN, CONCURRENT: '20', QUEUED: '20', TIMEOUT: '120000' },
     },
     sessionSemantics: 'Each connection launches a new Chromium process, driven through Playwright\'s own protocol.',
@@ -122,7 +133,7 @@ export const providers: Provider[] = [
     label: 'Steel Browser',
     engine: 'Chromium behind the Steel session API',
     license: 'Apache-2.0',
-    container: { name: 'bench-steel', image: 'ghcr.io/steel-dev/steel-browser:latest', ports: { 9303: 3000 } },
+    container: { name: 'bench-steel', image: img('ghcr.io/steel-dev/steel-browser:latest'), ports: { 9303: 3000 } },
     sessionSemantics: 'POST /v1/sessions relaunches Chromium with a clean profile; the client then connects over CDP. One session at a time.',
     ready: () => waitFor(httpOk('http://127.0.0.1:9303/v1/health'), 90_000, 'steel').then(() => {}),
     // Creating a second Steel session relaunches the browser and drops the first,
@@ -148,7 +159,7 @@ export const providers: Provider[] = [
     license: 'Apache-2.0',
     container: {
       // Obscura rejects requests whose Host port differs from its listen port, so both sides use 9304.
-      name: 'bench-obscura', image: 'h4ckf0r0day/obscura:latest', ports: { 9304: 9304 },
+      name: 'bench-obscura', image: img('h4ckf0r0day/obscura:latest'), ports: { 9304: 9304 },
       env: { OBSCURA_CDP_TOKEN: TOKEN, OBSCURA_ALLOW_PRIVATE_NETWORK: '1' },
       cmd: ['serve', '--port', '9304', '--host', '0.0.0.0'],
     },
@@ -178,7 +189,7 @@ export const providers: Provider[] = [
     engine: 'Own Zig engine with V8 (not Chromium, no rendering)',
     license: 'AGPL-3.0',
     // Lightpanda sends usage telemetry by default; turned off here (no measurable effect on results).
-    container: { name: 'bench-lightpanda', image: 'lightpanda/browser:latest', ports: { 9308: 9222 }, env: { LIGHTPANDA_DISABLE_TELEMETRY: 'true' } },
+    container: { name: 'bench-lightpanda', image: img('lightpanda/browser:latest'), ports: { 9308: 9222 }, env: { LIGHTPANDA_DISABLE_TELEMETRY: 'true' } },
     sessionSemantics: 'Each CDP connection gets its own browser instance inside one server process.',
     ready: probe(openLightpanda, 'lightpanda'),
     open: openLightpanda,

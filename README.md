@@ -19,10 +19,11 @@
   <a href="#method">Method</a> ·
   <a href="#limitations">Limitations</a> ·
   <a href="#run-it-yourself">Run it</a> ·
+  <a href="#corrections">Corrections</a> ·
   <a href="results/RESULTS.md">Full tables</a>
 </p>
 
-![Real-time replay of each browser scraping pages at its measured throughput](results/charts/race.gif)
+<p align="center"><img src="results/charts/race.gif" width="720" alt="Real-time replay of each browser scraping pages at its measured throughput"></p>
 
 <p align="center"><sub>Real-time replay of measured median throughput (8 connections, one reused tab each). Drawn from the results data, not screen-recorded.</sub></p>
 
@@ -178,7 +179,7 @@ Image digests and browser versions are recorded in [results/raw/meta.json](resul
 
 ## Limitations
 
-- **One machine, one run date.** Images were pulled as `:latest` on 2026-11-24 and 25. Results will drift as the projects ship.
+- **One machine, one run date.** A single Apple-silicon laptop running Docker Desktop, not a Linux server. Images are pinned to the digests pulled on 2026-11-24 and 25, so a rerun tests the same software; results for newer releases will differ (`BENCH_LATEST=1` benchmarks whatever is current).
 - **Self-hosted images only, on a localhost network.** Client and browser are on the same machine. Nothing here measures any hosted service.
 - **Default configurations.** No proxies and no tuning. Two side tests checked that defaults were not holding a browser back: Obscura with `--workers 4` was no faster (395 vs 447 pages/s), and Lightpanda with telemetry off was unchanged. Lightpanda sends usage telemetry by default; it is turned off in this harness.
 - **Camoufox runs through its experimental server.** Its docs call the remote server experimental. It only started with Playwright 1.50, so its numbers come from a 1.50 client while the rest use 1.65.
@@ -211,6 +212,10 @@ Useful flags for `src/run.ts`: `--providers steel,obscura`, `--rounds 2`, `--onl
 3. Run the full benchmark and `npm run report`.
 
 A hosted service works the same way: `open()` creates a session through its API and returns the endpoint.
+
+## Corrections
+
+If you maintain one of these browsers and think it was run wrong, open an issue with the setup you recommend. Every adapter is about ten lines in [src/providers.ts](src/providers.ts), and I would rather rerun than be wrong. Two results in this README already changed that way: Browserless gained a row for its Playwright endpoint, and Camoufox's numbers were redone after its fresh-tab failure turned out to depend on the workload.
 
 ## Layout
 

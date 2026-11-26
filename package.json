@@ -1,7 +1,7 @@
 {
   "name": "browser-infra-bench",
   "version": "1.0.0",
-  "description": "",
+  "description": "Reproducible benchmark of self-hosted headless browsers for AI agents and scrapers",
   "scripts": {
     "bench": "tsx src/run.ts",
     "bench:quick": "tsx src/run.ts --quick",
@@ -9,16 +9,19 @@
     "typecheck": "tsc",
     "race": "tsx src/race.ts"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
-    "@types/node": "^26.6.7",
-    "playwright-core": "^1.65.1",
-    "playwright-core-1-50": "npm:playwright-core@^1.50.1",
-    "tsx": "^4.23.15",
-    "typescript": "^7.0.2"
+    "playwright-core": "1.65.1",
+    "playwright-core-1-50": "npm:playwright-core@1.50.1"
   },
   "type": "module",
-  "private": true
+  "private": true,
+  "devDependencies": {
+    "@types/node": "26.6.7",
+    "tsx": "4.23.15",
+    "typescript": "7.0.2"
+  },
+  "engines": {
+    "node": ">=22"
+  }
 }

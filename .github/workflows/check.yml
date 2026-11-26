@@ -1,0 +1,18 @@
+name: check
+on:
+  push:
+    branches: [main]
+  pull_request:
+jobs:
+  typecheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck
+      - name: Report regenerates from the committed raw results
+        run: npm run report && git diff --exit-code -- results/RESULTS.md README.md
