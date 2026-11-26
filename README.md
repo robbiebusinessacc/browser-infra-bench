@@ -28,20 +28,35 @@
 
 ## Scoreboard
 
-<!-- scoreboard:start -->
-| Browser | Pages/s, fresh tab | Pages/s, reused tab | CPU ms/page | Idle MB | First page ms | Checks passed (of 85) | Signals exposed (of 14) |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| *chromedp headless-shell (reference)* | 40 | 71 | 55 | 64 | 185 | 85 | 8 |
-| *Playwright Chromium (reference)* | 79 | 200 | 19 | 270 | 46 | 85 | 8 |
-| Browserless (CDP) | 37 | 102 | 39 | 313 | 119 | 83 | 4 |
-| Browserless (Playwright endpoint) | 22 | 121 | 32 | 368 | 103 | **85** | 4 |
-| Steel Browser | 15 | 23 | 173 | 592 | 386 | 81 | 5 |
-| Obscura | 447 | **787** | **4.7** | 16 | 20 | 75 | 3 |
-| Obscura (stealth) | 264 | 760 | 4.9 | 13 | 23 | 74 | 3 |
-| Lightpanda | **692** | 740 | 4.9 | **9.6** | **11** | 74 | 2 |
-| Camoufox | 6.6 \* | 44 | 67 | 260 | 113 | 81 | **1** |
+> **Fastest: Obscura.** **Lightest: Lightpanda.** **Most compatible: Browserless.** **Hardest to fingerprint: Camoufox.**
+> Best overall for high-volume work that still needs rendering: **Obscura**. Best if everything has to work: **Browserless** through its Playwright endpoint.
 
-Throughput and CPU are at 8 connections; CPU is for the reused-tab mode. Bold is the best contender in each column (references excluded). \* Some pages failed; see [Throughput](#throughput).
+<!-- scoreboard:start -->
+| Category | 🥇 Winner | Runner-up |
+| --- | --- | --- |
+| Throughput, reused tab | **Obscura** (787 pages/s) | Obscura (stealth) (760) |
+| Throughput, fresh tab | **Lightpanda** (692 pages/s) | Obscura (447) |
+| CPU per page | **Obscura** (4.7 ms) | Obscura (stealth) (4.9) |
+| Idle memory | **Lightpanda** (9.6 MB) | Obscura (stealth) (13) |
+| Time to first page | **Lightpanda** (11 ms) | Obscura (20) |
+| Playwright compatibility | **Browserless (Playwright endpoint)** (85 of 85 checks) | Browserless (CDP) (83) |
+| Smallest automation fingerprint | **Camoufox** (1 of 14 signals) | Lightpanda (2) |
+
+Category wins: Lightpanda 3, Obscura 2, Browserless (Playwright endpoint) 1, Camoufox 1. No browser wins on both speed and compatibility, so the ranking below is by speed with compatibility next to it.
+
+| # | Browser | Pages/s, fresh tab | Pages/s, reused tab | CPU ms/page | Idle MB | First page ms | Checks passed (of 85) | Signals exposed (of 14) |
+| ---: | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| 1 | Obscura | 447 | 🥇 **787** | 🥇 **4.7** | 16 | 20 | 75 | 3 |
+| 2 | Obscura (stealth) | 264 | 760 | 4.9 | 13 | 23 | 74 | 3 |
+| 3 | Lightpanda | 🥇 **692** | 740 | 4.9 | 🥇 **9.6** | 🥇 **11** | 74 | 2 |
+| 4 | Browserless (Playwright endpoint) | 22 | 121 | 32 | 368 | 103 | 🥇 **85** | 4 |
+| 5 | Browserless (CDP) | 37 | 102 | 39 | 313 | 119 | 83 | 4 |
+| 6 | Camoufox | 6.6 \* | 44 | 67 | 260 | 113 | 81 | 🥇 **1** |
+| 7 | Steel Browser | 15 | 23 | 173 | 592 | 386 | 81 | 5 |
+|  | *chromedp headless-shell (reference)* | 40 | 71 | 55 | 64 | 185 | 85 | 8 |
+|  | *Playwright Chromium (reference)* | 79 | 200 | 19 | 270 | 46 | 85 | 8 |
+
+Ranked by reused-tab throughput. Throughput and CPU are at 8 connections; CPU is for the reused-tab mode. 🥇 marks the best contender in each column; the two reference rows are plain Chromium for comparison and are not ranked. \* Some pages failed; see [Throughput](#throughput).
 <!-- scoreboard:end -->
 
 ## Which one should you use?

@@ -259,16 +259,37 @@ await writeFile(join(outDir, 'RESULTS.md'), L.join('\n'));
     [`Signals exposed (of ${meta.fingerprintSignals.length})`, (id) => summary[id].fingerprintExposed, true, (id) => String(summary[id].fingerprintExposed)],
   ];
   const contenders = order.filter((id) => !isReference(id));
-  const S: string[] = [];
-  S.push(`| Browser | ${cols.map((c) => c[0]).join(' | ')} |`, `| --- | ${cols.map(() => '---:').join(' | ')} |`);
-  for (const id of order) {
-    S.push(`| ${isReference(id) ? `*${short(id)} (reference)*` : short(id)} | ${cols.map(([, get, lower, show]) => {
-      const b = best(contenders.map(get), lower);
-      return !isReference(id) && get(id) === b ? `**${show(id)}**` : show(id);
-    }).join(' | ')} |`);
-  }
   const c8 = meta.trials.concurrency.at(-1);
-  S.push('', `Throughput and CPU are at ${c8} connections; CPU is for the reused-tab mode. Bold is the best contender in each column (references excluded). \\* Some pages failed; see [Throughput](#throughput).`);
+  const S: string[] = [];
+
+  // 1. Category winners, with the margin over the runner-up.
+  const cats: [string, number, string][] = [
+    ['Throughput, reused tab', 1, 'pages/s'], ['Throughput, fresh tab', 0, 'pages/s'], ['CPU per page', 2, 'ms'], ['Idle memory', 3, 'MB'],
+    ['Time to first page', 4, 'ms'], ['Playwright compatibility', 5, `of ${summary[order[0]].compatTotals.total} checks`], ['Smallest automation fingerprint', 6, `of ${meta.fingerprintSignals.length} signals`],
+  ];
+  const wins: Record<string, number> = Object.fromEntries(contenders.map((id) => [id, 0]));
+  S.push('| Category | 🥇 Winner | Runner-up |', '| --- | --- | --- |');
+  for (const [name, ci, unit] of cats) {
+    const [, get, lower, show] = cols[ci];
+    const ranked = contenders.filter((id) => Number.isFinite(get(id))).sort((x, y) => (lower ? get(x) - get(y) : get(y) - get(x)));
+    const top = ranked.filter((id) => get(id) === get(ranked[0]));
+    for (const id of top) wins[id]++;
+    const second = ranked[top.length];
+    S.push(`| ${name} | **${top.map(short).join(', ')}** (${show(ranked[0]).replace(' \\*', '')} ${unit}) | ${short(second)} (${show(second).replace(' \\*', '')}) |`);
+  }
+  const tally = contenders.filter((id) => wins[id]).sort((x, y) => wins[y] - wins[x]).map((id) => `${short(id)} ${wins[id]}`).join(', ');
+  S.push('', `Category wins: ${tally}. No browser wins on both speed and compatibility, so the ranking below is by speed with compatibility next to it.`, '');
+
+  // 2. Full table, fastest first, references last.
+  const rank = [...contenders].sort((x, y) => cols[1][1](y) - cols[1][1](x));
+  S.push(`| # | Browser | ${cols.map((c) => c[0]).join(' | ')} |`, `| ---: | --- | ${cols.map(() => '---:').join(' | ')} |`);
+  const row = (id: string, n: string) => `| ${n} | ${isReference(id) ? `*${short(id)} (reference)*` : short(id)} | ${cols.map(([, get, lower, show]) => {
+    const best1 = best(contenders.map(get), lower);
+    return !isReference(id) && get(id) === best1 ? `🥇 **${show(id)}**` : show(id);
+  }).join(' | ')} |`;
+  rank.forEach((id, i) => S.push(row(id, String(i + 1))));
+  for (const id of order.filter(isReference)) S.push(row(id, ''));
+  S.push('', `Ranked by reused-tab throughput. Throughput and CPU are at ${c8} connections; CPU is for the reused-tab mode. 🥇 marks the best contender in each column; the two reference rows are plain Chromium for comparison and are not ranked. \\* Some pages failed; see [Throughput](#throughput).`);
   const readme = join(ROOT, 'README.md');
   const text = await readFile(readme, 'utf8').catch(() => '');
   const a = '<!-- scoreboard:start -->', b = '<!-- scoreboard:end -->';
