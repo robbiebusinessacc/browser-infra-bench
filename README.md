@@ -32,7 +32,7 @@
 > Best overall for high-volume work that still needs rendering: **Obscura**. Best if everything has to work: **Browserless** through its Playwright endpoint.
 
 <!-- scoreboard:start -->
-| Category | 🥇 Winner | Runner-up |
+| Category | Winner | Runner-up |
 | --- | --- | --- |
 | Throughput, reused tab | **Obscura** (787 pages/s) | Obscura (stealth) (760) |
 | Throughput, fresh tab | **Lightpanda** (692 pages/s) | Obscura (447) |
@@ -44,19 +44,25 @@
 
 Category wins: Lightpanda 3, Obscura 2, Browserless (Playwright endpoint) 1, Camoufox 1. No browser wins on both speed and compatibility, so the ranking below is by speed with compatibility next to it.
 
+<picture><source media="(prefers-color-scheme: dark)" srcset="results/charts/scoreboard-dark.svg"><img src="results/charts/scoreboard-light.svg" alt="Scoreboard: all browsers ranked by reused-tab throughput, with the best three in each column shaded"></picture>
+
+<details><summary>Same numbers as a text table</summary>
+
 | # | Browser | Pages/s, fresh tab | Pages/s, reused tab | CPU ms/page | Idle MB | First page ms | Checks passed (of 85) | Signals exposed (of 14) |
 | ---: | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| 1 | Obscura | 447 | 🥇 **787** | 🥇 **4.7** | 16 | 20 | 75 | 3 |
+| 1 | Obscura | 447 | **787** | **4.7** | 16 | 20 | 75 | 3 |
 | 2 | Obscura (stealth) | 264 | 760 | 4.9 | 13 | 23 | 74 | 3 |
-| 3 | Lightpanda | 🥇 **692** | 740 | 4.9 | 🥇 **9.6** | 🥇 **11** | 74 | 2 |
-| 4 | Browserless (Playwright endpoint) | 22 | 121 | 32 | 368 | 103 | 🥇 **85** | 4 |
+| 3 | Lightpanda | **692** | 740 | 4.9 | **9.6** | **11** | 74 | 2 |
+| 4 | Browserless (Playwright endpoint) | 22 | 121 | 32 | 368 | 103 | **85** | 4 |
 | 5 | Browserless (CDP) | 37 | 102 | 39 | 313 | 119 | 83 | 4 |
-| 6 | Camoufox | 6.6 \* | 44 | 67 | 260 | 113 | 81 | 🥇 **1** |
+| 6 | Camoufox | 6.6 \* | 44 | 67 | 260 | 113 | 81 | **1** |
 | 7 | Steel Browser | 15 | 23 | 173 | 592 | 386 | 81 | 5 |
 |  | *chromedp headless-shell (reference)* | 40 | 71 | 55 | 64 | 185 | 85 | 8 |
 |  | *Playwright Chromium (reference)* | 79 | 200 | 19 | 270 | 46 | 85 | 8 |
 
-Ranked by reused-tab throughput. Throughput and CPU are at 8 connections; CPU is for the reused-tab mode. 🥇 marks the best contender in each column; the two reference rows are plain Chromium for comparison and are not ranked. \* Some pages failed; see [Throughput](#throughput).
+Bold is the best contender in each column. CPU is for the reused-tab mode. \* Some pages failed; see [Throughput](#throughput).
+
+</details>
 <!-- scoreboard:end -->
 
 ## Which one should you use?

@@ -106,3 +106,52 @@ export function barPanels(o: { title: string; subtitle: string; panels: Panel[];
   out.push('</svg>');
   return out.join('\n');
 }
+
+// ---------------------------------------------------------------------------
+// Scoreboard table as SVG. Markdown tables on GitHub cannot colour cells, so the
+// ranking is drawn: in each column the best three contenders are shaded, darkest = best.
+// ---------------------------------------------------------------------------
+export interface TableCell { text: string; /** 1 = best, 2, 3; 0 = not highlighted */ place: number }
+export interface TableRow { rank: string; label: string; muted?: boolean; cells: TableCell[] }
+
+export function tableSvg(o: { title: string; subtitle: string; columns: string[][]; rows: TableRow[]; footnote: string; mode: 'light' | 'dark' }) {
+  const t = THEME[o.mode];
+  const fills = o.mode === 'light' ? ['', '#2a78d6', '#86b6ef', '#cde2fb'] : ['', '#3987e5', '#1c5cab', '#0d366b'];
+  const onFill = o.mode === 'light' ? ['', '#ffffff', '#0b0b0b', '#0b0b0b'] : ['', '#ffffff', '#f0efec', '#f0efec'];
+  const W = 980, PAD = 24, rankW = 28, labelW = 232, rowH = 34, headH = 44, top = 70;
+  const colW = (W - 2 * PAD - rankW - labelW) / o.columns.length;
+  const H = top + headH + o.rows.length * rowH + 44;
+  const out: string[] = [];
+  out.push(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" font-family="${FONT}" role="img" aria-label="${esc(o.title)}">`);
+  out.push(`<title>${esc(o.title)}</title><desc>${esc(o.subtitle)}</desc><rect width="${W}" height="${H}" rx="8" fill="${t.surface}"/>`);
+  out.push(`<text x="${PAD}" y="32" font-size="16" font-weight="600" fill="${t.text}">${esc(o.title)}</text>`);
+  out.push(`<text x="${PAD}" y="52" font-size="12" fill="${t.text2}">${esc(o.subtitle)}</text>`);
+  // legend
+  let lx = W - PAD - 300;
+  ['Best', '2nd', '3rd'].forEach((name, i) => {
+    out.push(`<rect x="${lx}" y="22" width="14" height="14" rx="3" fill="${fills[i + 1]}"/><text x="${lx + 20}" y="33" font-size="12" fill="${t.text2}">${name}</text>`);
+    lx += 20 + textW(name) + 20;
+  });
+  out.push(`<text x="${lx}" y="33" font-size="12" fill="${t.text2}">in each column</text>`);
+  const x0 = PAD + rankW + labelW;
+  o.columns.forEach((lines, ci) => {
+    const cx = x0 + ci * colW + colW / 2;
+    lines.forEach((line, li) => out.push(`<text x="${cx}" y="${top + 16 + li * 14 + (lines.length === 1 ? 7 : 0)}" font-size="11.5" font-weight="600" text-anchor="middle" fill="${t.text2}">${esc(line)}</text>`));
+  });
+  out.push(`<line x1="${PAD}" y1="${top + headH - 4}" x2="${W - PAD}" y2="${top + headH - 4}" stroke="${t.grid}" stroke-width="1"/>`);
+  o.rows.forEach((r, ri) => {
+    const y = top + headH + ri * rowH;
+    if (ri > 0) out.push(`<line x1="${PAD}" y1="${y}" x2="${W - PAD}" y2="${y}" stroke="${t.grid}" stroke-width="1"/>`);
+    const ink = r.muted ? t.text2 : t.text;
+    out.push(`<text x="${PAD + 4}" y="${y + rowH / 2 + 4}" font-size="13" font-weight="600" fill="${t.text2}">${esc(r.rank)}</text>`);
+    out.push(`<text x="${PAD + rankW}" y="${y + rowH / 2 + 4}" font-size="13" ${r.muted ? 'font-style="italic"' : 'font-weight="600"'} fill="${ink}">${esc(r.label)}</text>`);
+    r.cells.forEach((c, ci) => {
+      const cx = x0 + ci * colW;
+      if (c.place) out.push(`<rect x="${cx + 5}" y="${y + 4}" width="${colW - 10}" height="${rowH - 8}" rx="5" fill="${fills[c.place]}"/>`);
+      out.push(`<text x="${cx + colW / 2}" y="${y + rowH / 2 + 4.5}" font-size="13" text-anchor="middle" ${c.place === 1 ? 'font-weight="700"' : ''} fill="${c.place ? onFill[c.place] : ink}" style="font-variant-numeric: tabular-nums">${esc(c.text)}</text>`);
+    });
+  });
+  out.push(`<text x="${PAD}" y="${H - 16}" font-size="11.5" fill="${t.text2}">${esc(o.footnote)}</text>`);
+  out.push('</svg>');
+  return out.join('\n');
+}

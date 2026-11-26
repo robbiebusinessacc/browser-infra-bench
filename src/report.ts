@@ -5,7 +5,7 @@ import { mkdir, readdir, readFile, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { median, sortNum, summarize, type Summary } from './stats.js';
-import { barPanels, type Panel } from './svg.js';
+import { barPanels, tableSvg, type Panel } from './svg.js';
 
 const ROOT = join(fileURLToPath(new URL('.', import.meta.url)), '..');
 const rawDir = join(ROOT, process.argv[2] ?? 'results/raw');
@@ -268,7 +268,7 @@ await writeFile(join(outDir, 'RESULTS.md'), L.join('\n'));
     ['Time to first page', 4, 'ms'], ['Playwright compatibility', 5, `of ${summary[order[0]].compatTotals.total} checks`], ['Smallest automation fingerprint', 6, `of ${meta.fingerprintSignals.length} signals`],
   ];
   const wins: Record<string, number> = Object.fromEntries(contenders.map((id) => [id, 0]));
-  S.push('| Category | 🥇 Winner | Runner-up |', '| --- | --- | --- |');
+  S.push('| Category | Winner | Runner-up |', '| --- | --- | --- |');
   for (const [name, ci, unit] of cats) {
     const [, get, lower, show] = cols[ci];
     const ranked = contenders.filter((id) => Number.isFinite(get(id))).sort((x, y) => (lower ? get(x) - get(y) : get(y) - get(x)));
@@ -280,16 +280,34 @@ await writeFile(join(outDir, 'RESULTS.md'), L.join('\n'));
   const tally = contenders.filter((id) => wins[id]).sort((x, y) => wins[y] - wins[x]).map((id) => `${short(id)} ${wins[id]}`).join(', ');
   S.push('', `Category wins: ${tally}. No browser wins on both speed and compatibility, so the ranking below is by speed with compatibility next to it.`, '');
 
-  // 2. Full table, fastest first, references last.
+  // 2. Full table, fastest first, references last. Drawn as an image so cells can be shaded;
+  //    the same numbers follow as a collapsible text table.
   const rank = [...contenders].sort((x, y) => cols[1][1](y) - cols[1][1](x));
-  S.push(`| # | Browser | ${cols.map((c) => c[0]).join(' | ')} |`, `| ---: | --- | ${cols.map(() => '---:').join(' | ')} |`);
-  const row = (id: string, n: string) => `| ${n} | ${isReference(id) ? `*${short(id)} (reference)*` : short(id)} | ${cols.map(([, get, lower, show]) => {
-    const best1 = best(contenders.map(get), lower);
-    return !isReference(id) && get(id) === best1 ? `🥇 **${show(id)}**` : show(id);
-  }).join(' | ')} |`;
-  rank.forEach((id, i) => S.push(row(id, String(i + 1))));
-  for (const id of order.filter(isReference)) S.push(row(id, ''));
-  S.push('', `Ranked by reused-tab throughput. Throughput and CPU are at ${c8} connections; CPU is for the reused-tab mode. 🥇 marks the best contender in each column; the two reference rows are plain Chromium for comparison and are not ranked. \\* Some pages failed; see [Throughput](#throughput).`);
+  const place = (ci: number, id: string) => {
+    if (isReference(id)) return 0;
+    const [, get, lower] = cols[ci];
+    const distinct = [...new Set(contenders.map(get).filter(Number.isFinite))].sort((x, y) => (lower ? x - y : y - x));
+    const p = distinct.indexOf(get(id)) + 1;
+    return p >= 1 && p <= 3 ? p : 0;
+  };
+  const tableRows = [...rank.map((id, i) => ({ id, rank: String(i + 1) })), ...order.filter(isReference).map((id) => ({ id, rank: '' }))];
+  for (const mode of ['light', 'dark'] as const)
+    await writeFile(join(chartDir, `scoreboard-${mode}.svg`), tableSvg({
+      title: 'Scoreboard', mode,
+      subtitle: `Ranked by reused-tab throughput. Median of ${meta.rounds} rounds; throughput and CPU at ${c8} connections.`,
+      columns: [['Pages/s', 'fresh tab'], ['Pages/s', 'reused tab'], ['CPU ms', 'per page'], ['Idle', 'MB'], ['First page', 'ms'], ['Checks passed', `of ${summary[order[0]].compatTotals.total}`], ['Signals exposed', `of ${meta.fingerprintSignals.length}`]],
+      rows: tableRows.map(({ id, rank: n }) => ({
+        rank: n, label: isReference(id) ? `${short(id)} (reference)` : short(id), muted: isReference(id),
+        cells: cols.map(([, , , show], ci) => ({ text: show(id).replace(' \\*', '*'), place: place(ci, id) })),
+      })),
+      footnote: 'Reference rows are plain Chromium and are not ranked. * Some pages failed in this mode; see Throughput.',
+    }));
+  S.push('<picture><source media="(prefers-color-scheme: dark)" srcset="results/charts/scoreboard-dark.svg"><img src="results/charts/scoreboard-light.svg" alt="Scoreboard: all browsers ranked by reused-tab throughput, with the best three in each column shaded"></picture>', '',
+    '<details><summary>Same numbers as a text table</summary>', '',
+    `| # | Browser | ${cols.map((c) => c[0]).join(' | ')} |`, `| ---: | --- | ${cols.map(() => '---:').join(' | ')} |`);
+  for (const { id, rank: n } of tableRows)
+    S.push(`| ${n} | ${isReference(id) ? `*${short(id)} (reference)*` : short(id)} | ${cols.map(([, , , show], ci) => (place(ci, id) === 1 ? `**${show(id)}**` : show(id))).join(' | ')} |`);
+  S.push('', `Bold is the best contender in each column. CPU is for the reused-tab mode. \\* Some pages failed; see [Throughput](#throughput).`, '', '</details>');
   const readme = join(ROOT, 'README.md');
   const text = await readFile(readme, 'utf8').catch(() => '');
   const a = '<!-- scoreboard:start -->', b = '<!-- scoreboard:end -->';

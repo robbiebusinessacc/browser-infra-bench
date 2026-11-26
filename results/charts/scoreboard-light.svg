@@ -1,0 +1,137 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 464" width="980" height="464" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-label="Scoreboard">
+<title>Scoreboard</title><desc>Ranked by reused-tab throughput. Median of 5 rounds; throughput and CPU at 8 connections.</desc><rect width="980" height="464" rx="8" fill="#fcfcfb"/>
+<text x="24" y="32" font-size="16" font-weight="600" fill="#0b0b0b">Scoreboard</text>
+<text x="24" y="52" font-size="12" fill="#52514e">Ranked by reused-tab throughput. Median of 5 rounds; throughput and CPU at 8 connections.</text>
+<rect x="656" y="22" width="14" height="14" rx="3" fill="#2a78d6"/><text x="676" y="33" font-size="12" fill="#52514e">Best</text>
+<rect x="722.88" y="22" width="14" height="14" rx="3" fill="#86b6ef"/><text x="742.88" y="33" font-size="12" fill="#52514e">2nd</text>
+<rect x="783.04" y="22" width="14" height="14" rx="3" fill="#cde2fb"/><text x="803.04" y="33" font-size="12" fill="#52514e">3rd</text>
+<text x="843.1999999999999" y="33" font-size="12" fill="#52514e">in each column</text>
+<text x="332" y="86" font-size="11.5" font-weight="600" text-anchor="middle" fill="#52514e">Pages/s</text>
+<text x="332" y="100" font-size="11.5" font-weight="600" text-anchor="middle" fill="#52514e">fresh tab</text>
+<text x="428" y="86" font-size="11.5" font-weight="600" text-anchor="middle" fill="#52514e">Pages/s</text>
+<text x="428" y="100" font-size="11.5" font-weight="600" text-anchor="middle" fill="#52514e">reused tab</text>
+<text x="524" y="86" font-size="11.5" font-weight="600" text-anchor="middle" fill="#52514e">CPU ms</text>
+<text x="524" y="100" font-size="11.5" font-weight="600" text-anchor="middle" fill="#52514e">per page</text>
+<text x="620" y="86" font-size="11.5" font-weight="600" text-anchor="middle" fill="#52514e">Idle</text>
+<text x="620" y="100" font-size="11.5" font-weight="600" text-anchor="middle" fill="#52514e">MB</text>
+<text x="716" y="86" font-size="11.5" font-weight="600" text-anchor="middle" fill="#52514e">First page</text>
+<text x="716" y="100" font-size="11.5" font-weight="600" text-anchor="middle" fill="#52514e">ms</text>
+<text x="812" y="86" font-size="11.5" font-weight="600" text-anchor="middle" fill="#52514e">Checks passed</text>
+<text x="812" y="100" font-size="11.5" font-weight="600" text-anchor="middle" fill="#52514e">of 85</text>
+<text x="908" y="86" font-size="11.5" font-weight="600" text-anchor="middle" fill="#52514e">Signals exposed</text>
+<text x="908" y="100" font-size="11.5" font-weight="600" text-anchor="middle" fill="#52514e">of 14</text>
+<line x1="24" y1="110" x2="956" y2="110" stroke="#e7e6e1" stroke-width="1"/>
+<text x="28" y="135" font-size="13" font-weight="600" fill="#52514e">1</text>
+<text x="52" y="135" font-size="13" font-weight="600" fill="#0b0b0b">Obscura</text>
+<rect x="289" y="118" width="86" height="26" rx="5" fill="#86b6ef"/>
+<text x="332" y="135.5" font-size="13" text-anchor="middle"  fill="#0b0b0b" style="font-variant-numeric: tabular-nums">447</text>
+<rect x="385" y="118" width="86" height="26" rx="5" fill="#2a78d6"/>
+<text x="428" y="135.5" font-size="13" text-anchor="middle" font-weight="700" fill="#ffffff" style="font-variant-numeric: tabular-nums">787</text>
+<rect x="481" y="118" width="86" height="26" rx="5" fill="#2a78d6"/>
+<text x="524" y="135.5" font-size="13" text-anchor="middle" font-weight="700" fill="#ffffff" style="font-variant-numeric: tabular-nums">4.7</text>
+<rect x="577" y="118" width="86" height="26" rx="5" fill="#cde2fb"/>
+<text x="620" y="135.5" font-size="13" text-anchor="middle"  fill="#0b0b0b" style="font-variant-numeric: tabular-nums">16</text>
+<rect x="673" y="118" width="86" height="26" rx="5" fill="#86b6ef"/>
+<text x="716" y="135.5" font-size="13" text-anchor="middle"  fill="#0b0b0b" style="font-variant-numeric: tabular-nums">20</text>
+<text x="812" y="135.5" font-size="13" text-anchor="middle"  fill="#0b0b0b" style="font-variant-numeric: tabular-nums">75</text>
+<rect x="865" y="118" width="86" height="26" rx="5" fill="#cde2fb"/>
+<text x="908" y="135.5" font-size="13" text-anchor="middle"  fill="#0b0b0b" style="font-variant-numeric: tabular-nums">3</text>
+<line x1="24" y1="148" x2="956" y2="148" stroke="#e7e6e1" stroke-width="1"/>
+<text x="28" y="169" font-size="13" font-weight="600" fill="#52514e">2</text>
+<text x="52" y="169" font-size="13" font-weight="600" fill="#0b0b0b">Obscura (stealth)</text>
+<rect x="289" y="152" width="86" height="26" rx="5" fill="#cde2fb"/>
+<text x="332" y="169.5" font-size="13" text-anchor="middle"  fill="#0b0b0b" style="font-variant-numeric: tabular-nums">264</text>
+<rect x="385" y="152" width="86" height="26" rx="5" fill="#86b6ef"/>
+<text x="428" y="169.5" font-size="13" text-anchor="middle"  fill="#0b0b0b" style="font-variant-numeric: tabular-nums">760</text>
+<rect x="481" y="152" width="86" height="26" rx="5" fill="#86b6ef"/>
+<text x="524" y="169.5" font-size="13" text-anchor="middle"  fill="#0b0b0b" style="font-variant-numeric: tabular-nums">4.9</text>
+<rect x="577" y="152" width="86" height="26" rx="5" fill="#86b6ef"/>
+<text x="620" y="169.5" font-size="13" text-anchor="middle"  fill="#0b0b0b" style="font-variant-numeric: tabular-nums">13</text>
+<rect x="673" y="152" width="86" height="26" rx="5" fill="#cde2fb"/>
+<text x="716" y="169.5" font-size="13" text-anchor="middle"  fill="#0b0b0b" style="font-variant-numeric: tabular-nums">23</text>
+<text x="812" y="169.5" font-size="13" text-anchor="middle"  fill="#0b0b0b" style="font-variant-numeric: tabular-nums">74</text>
+<rect x="865" y="152" width="86" height="26" rx="5" fill="#cde2fb"/>
+<text x="908" y="169.5" font-size="13" text-anchor="middle"  fill="#0b0b0b" style="font-variant-numeric: tabular-nums">3</text>
+<line x1="24" y1="182" x2="956" y2="182" stroke="#e7e6e1" stroke-width="1"/>
+<text x="28" y="203" font-size="13" font-weight="600" fill="#52514e">3</text>
+<text x="52" y="203" font-size="13" font-weight="600" fill="#0b0b0b">Lightpanda</text>
+<rect x="289" y="186" width="86" height="26" rx="5" fill="#2a78d6"/>
+<text x="332" y="203.5" font-size="13" text-anchor="middle" font-weight="700" fill="#ffffff" style="font-variant-numeric: tabular-nums">692</text>
+<rect x="385" y="186" width="86" height="26" rx="5" fill="#cde2fb"/>
+<text x="428" y="203.5" font-size="13" text-anchor="middle"  fill="#0b0b0b" style="font-variant-numeric: tabular-nums">740</text>
+<rect x="481" y="186" width="86" height="26" rx="5" fill="#cde2fb"/>
+<text x="524" y="203.5" font-size="13" text-anchor="middle"  fill="#0b0b0b" style="font-variant-numeric: tabular-nums">4.9</text>
+<rect x="577" y="186" width="86" height="26" rx="5" fill="#2a78d6"/>
+<text x="620" y="203.5" font-size="13" text-anchor="middle" font-weight="700" fill="#ffffff" style="font-variant-numeric: tabular-nums">9.6</text>
+<rect x="673" y="186" width="86" height="26" rx="5" fill="#2a78d6"/>
+<text x="716" y="203.5" font-size="13" text-anchor="middle" font-weight="700" fill="#ffffff" style="font-variant-numeric: tabular-nums">11</text>
+<text x="812" y="203.5" font-size="13" text-anchor="middle"  fill="#0b0b0b" style="font-variant-numeric: tabular-nums">74</text>
+<rect x="865" y="186" width="86" height="26" rx="5" fill="#86b6ef"/>
+<text x="908" y="203.5" font-size="13" text-anchor="middle"  fill="#0b0b0b" style="font-variant-numeric: tabular-nums">2</text>
+<line x1="24" y1="216" x2="956" y2="216" stroke="#e7e6e1" stroke-width="1"/>
+<text x="28" y="237" font-size="13" font-weight="600" fill="#52514e">4</text>
+<text x="52" y="237" font-size="13" font-weight="600" fill="#0b0b0b">Browserless (Playwright endpoint)</text>
+<text x="332" y="237.5" font-size="13" text-anchor="middle"  fill="#0b0b0b" style="font-variant-numeric: tabular-nums">22</text>
+<text x="428" y="237.5" font-size="13" text-anchor="middle"  fill="#0b0b0b" style="font-variant-numeric: tabular-nums">121</text>
+<text x="524" y="237.5" font-size="13" text-anchor="middle"  fill="#0b0b0b" style="font-variant-numeric: tabular-nums">32</text>
+<text x="620" y="237.5" font-size="13" text-anchor="middle"  fill="#0b0b0b" style="font-variant-numeric: tabular-nums">368</text>
+<text x="716" y="237.5" font-size="13" text-anchor="middle"  fill="#0b0b0b" style="font-variant-numeric: tabular-nums">103</text>
+<rect x="769" y="220" width="86" height="26" rx="5" fill="#2a78d6"/>
+<text x="812" y="237.5" font-size="13" text-anchor="middle" font-weight="700" fill="#ffffff" style="font-variant-numeric: tabular-nums">85</text>
+<text x="908" y="237.5" font-size="13" text-anchor="middle"  fill="#0b0b0b" style="font-variant-numeric: tabular-nums">4</text>
+<line x1="24" y1="250" x2="956" y2="250" stroke="#e7e6e1" stroke-width="1"/>
+<text x="28" y="271" font-size="13" font-weight="600" fill="#52514e">5</text>
+<text x="52" y="271" font-size="13" font-weight="600" fill="#0b0b0b">Browserless (CDP)</text>
+<text x="332" y="271.5" font-size="13" text-anchor="middle"  fill="#0b0b0b" style="font-variant-numeric: tabular-nums">37</text>
+<text x="428" y="271.5" font-size="13" text-anchor="middle"  fill="#0b0b0b" style="font-variant-numeric: tabular-nums">102</text>
+<text x="524" y="271.5" font-size="13" text-anchor="middle"  fill="#0b0b0b" style="font-variant-numeric: tabular-nums">39</text>
+<text x="620" y="271.5" font-size="13" text-anchor="middle"  fill="#0b0b0b" style="font-variant-numeric: tabular-nums">313</text>
+<text x="716" y="271.5" font-size="13" text-anchor="middle"  fill="#0b0b0b" style="font-variant-numeric: tabular-nums">119</text>
+<rect x="769" y="254" width="86" height="26" rx="5" fill="#86b6ef"/>
+<text x="812" y="271.5" font-size="13" text-anchor="middle"  fill="#0b0b0b" style="font-variant-numeric: tabular-nums">83</text>
+<text x="908" y="271.5" font-size="13" text-anchor="middle"  fill="#0b0b0b" style="font-variant-numeric: tabular-nums">4</text>
+<line x1="24" y1="284" x2="956" y2="284" stroke="#e7e6e1" stroke-width="1"/>
+<text x="28" y="305" font-size="13" font-weight="600" fill="#52514e">6</text>
+<text x="52" y="305" font-size="13" font-weight="600" fill="#0b0b0b">Camoufox</text>
+<text x="332" y="305.5" font-size="13" text-anchor="middle"  fill="#0b0b0b" style="font-variant-numeric: tabular-nums">6.6*</text>
+<text x="428" y="305.5" font-size="13" text-anchor="middle"  fill="#0b0b0b" style="font-variant-numeric: tabular-nums">44</text>
+<text x="524" y="305.5" font-size="13" text-anchor="middle"  fill="#0b0b0b" style="font-variant-numeric: tabular-nums">67</text>
+<text x="620" y="305.5" font-size="13" text-anchor="middle"  fill="#0b0b0b" style="font-variant-numeric: tabular-nums">260</text>
+<text x="716" y="305.5" font-size="13" text-anchor="middle"  fill="#0b0b0b" style="font-variant-numeric: tabular-nums">113</text>
+<rect x="769" y="288" width="86" height="26" rx="5" fill="#cde2fb"/>
+<text x="812" y="305.5" font-size="13" text-anchor="middle"  fill="#0b0b0b" style="font-variant-numeric: tabular-nums">81</text>
+<rect x="865" y="288" width="86" height="26" rx="5" fill="#2a78d6"/>
+<text x="908" y="305.5" font-size="13" text-anchor="middle" font-weight="700" fill="#ffffff" style="font-variant-numeric: tabular-nums">1</text>
+<line x1="24" y1="318" x2="956" y2="318" stroke="#e7e6e1" stroke-width="1"/>
+<text x="28" y="339" font-size="13" font-weight="600" fill="#52514e">7</text>
+<text x="52" y="339" font-size="13" font-weight="600" fill="#0b0b0b">Steel Browser</text>
+<text x="332" y="339.5" font-size="13" text-anchor="middle"  fill="#0b0b0b" style="font-variant-numeric: tabular-nums">15</text>
+<text x="428" y="339.5" font-size="13" text-anchor="middle"  fill="#0b0b0b" style="font-variant-numeric: tabular-nums">23</text>
+<text x="524" y="339.5" font-size="13" text-anchor="middle"  fill="#0b0b0b" style="font-variant-numeric: tabular-nums">173</text>
+<text x="620" y="339.5" font-size="13" text-anchor="middle"  fill="#0b0b0b" style="font-variant-numeric: tabular-nums">592</text>
+<text x="716" y="339.5" font-size="13" text-anchor="middle"  fill="#0b0b0b" style="font-variant-numeric: tabular-nums">386</text>
+<rect x="769" y="322" width="86" height="26" rx="5" fill="#cde2fb"/>
+<text x="812" y="339.5" font-size="13" text-anchor="middle"  fill="#0b0b0b" style="font-variant-numeric: tabular-nums">81</text>
+<text x="908" y="339.5" font-size="13" text-anchor="middle"  fill="#0b0b0b" style="font-variant-numeric: tabular-nums">5</text>
+<line x1="24" y1="352" x2="956" y2="352" stroke="#e7e6e1" stroke-width="1"/>
+<text x="28" y="373" font-size="13" font-weight="600" fill="#52514e"></text>
+<text x="52" y="373" font-size="13" font-style="italic" fill="#52514e">chromedp headless-shell (reference)</text>
+<text x="332" y="373.5" font-size="13" text-anchor="middle"  fill="#52514e" style="font-variant-numeric: tabular-nums">40</text>
+<text x="428" y="373.5" font-size="13" text-anchor="middle"  fill="#52514e" style="font-variant-numeric: tabular-nums">71</text>
+<text x="524" y="373.5" font-size="13" text-anchor="middle"  fill="#52514e" style="font-variant-numeric: tabular-nums">55</text>
+<text x="620" y="373.5" font-size="13" text-anchor="middle"  fill="#52514e" style="font-variant-numeric: tabular-nums">64</text>
+<text x="716" y="373.5" font-size="13" text-anchor="middle"  fill="#52514e" style="font-variant-numeric: tabular-nums">185</text>
+<text x="812" y="373.5" font-size="13" text-anchor="middle"  fill="#52514e" style="font-variant-numeric: tabular-nums">85</text>
+<text x="908" y="373.5" font-size="13" text-anchor="middle"  fill="#52514e" style="font-variant-numeric: tabular-nums">8</text>
+<line x1="24" y1="386" x2="956" y2="386" stroke="#e7e6e1" stroke-width="1"/>
+<text x="28" y="407" font-size="13" font-weight="600" fill="#52514e"></text>
+<text x="52" y="407" font-size="13" font-style="italic" fill="#52514e">Playwright Chromium (reference)</text>
+<text x="332" y="407.5" font-size="13" text-anchor="middle"  fill="#52514e" style="font-variant-numeric: tabular-nums">79</text>
+<text x="428" y="407.5" font-size="13" text-anchor="middle"  fill="#52514e" style="font-variant-numeric: tabular-nums">200</text>
+<text x="524" y="407.5" font-size="13" text-anchor="middle"  fill="#52514e" style="font-variant-numeric: tabular-nums">19</text>
+<text x="620" y="407.5" font-size="13" text-anchor="middle"  fill="#52514e" style="font-variant-numeric: tabular-nums">270</text>
+<text x="716" y="407.5" font-size="13" text-anchor="middle"  fill="#52514e" style="font-variant-numeric: tabular-nums">46</text>
+<text x="812" y="407.5" font-size="13" text-anchor="middle"  fill="#52514e" style="font-variant-numeric: tabular-nums">85</text>
+<text x="908" y="407.5" font-size="13" text-anchor="middle"  fill="#52514e" style="font-variant-numeric: tabular-nums">8</text>
+<text x="24" y="448" font-size="11.5" fill="#52514e">Reference rows are plain Chromium and are not ranked. * Some pages failed in this mode; see Throughput.</text>
+</svg>
