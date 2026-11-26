@@ -62,7 +62,7 @@ Three results that surprised me:
 
 - **Obscura is not faster than Chromium per page load.** Against a properly launched Chromium it is within a few milliseconds on four of five page types and wins only the large table (37 vs 85 ms). Its advantage is resource use.
 - **How you use tabs matters more than which Chromium wrapper you pick.** Reusing one tab instead of opening a fresh one per page made every browser faster: 2.5x for the Playwright reference, 5.6x for Browserless's Playwright endpoint, 6.7x for Camoufox.
-- **Obscura's stealth build exposed the same 3 signals as the normal build.** It was 41% slower with fresh tabs and about the same with reused tabs. Stealth features this benchmark does not measure, such as TLS impersonation and tracker blocking, may still matter.
+- **Obscura's stealth build scores the same as the normal build here (3 of 14), and that is expected.** Obscura's browser-profile fingerprint is built into both builds. Stealth changes the network layer, which this benchmark does not score. I checked that it was active: see [Automation signals](#automation-signals). It was 41% slower with fresh tabs and about the same with reused tabs.
 
 ## Results
 
@@ -131,6 +131,16 @@ Seven public sites were also loaded with a content assertion each, 10 times per 
 <picture><source media="(prefers-color-scheme: dark)" srcset="results/charts/fingerprint-dark.svg"><img src="results/charts/fingerprint-light.svg" alt="Automation signals exposed by default, out of 14"></picture>
 
 This counts which of 14 well-known headless or automation tells each default configuration shows to a page on the local fixture site. It is a self-check of the fingerprint. **It is not a test against any anti-bot product** and says nothing about whether a real site would block these browsers. Lightpanda's low count needs context: it announces itself with the User-Agent `Lightpanda/1.0`, which this list does not penalise.
+
+**Obscura stealth is a network-layer feature, so this list cannot show its effect.** A separate check confirmed it was switched on in the build tested:
+
+| | Normal build | Stealth build with `--stealth` |
+| --- | --- | --- |
+| TLS fingerprint (JA4), as seen by tls.peet.ws | `t13d1011h1_61a7ad8aa9b6_3fcd1a44f3e3` | `t13d1516h2_8daaf6152771_d8a2da3f94cd` |
+| HTTP version negotiated | HTTP/1.1 | HTTP/2 |
+| Loading a Google Tag Manager script | Request sent, 200 | No request sent, script `onerror` |
+
+Both the stealth build and the flag are needed: the stealth build without `--stealth`, and the normal build with it, kept the normal JA4. Whether the stealth fingerprint passes any particular bot detector was not tested.
 
 ## Method
 
